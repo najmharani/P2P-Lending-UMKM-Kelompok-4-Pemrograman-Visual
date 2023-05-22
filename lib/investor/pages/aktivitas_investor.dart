@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_topup/bank_account.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/topup.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_topup/detail_transaksi.dart';
 
 class AktivitasInvestor extends StatelessWidget {
   final List<String> transactionHistory = [
@@ -58,8 +61,7 @@ class AktivitasInvestor extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Button1Page(),
-                                    ),
+                                        builder: (context) => WithdrawalPage()),
                                   );
                                 },
                                 icon: Icon(Icons.attach_money_rounded),
@@ -116,7 +118,7 @@ class AktivitasInvestor extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Button3Page(),
+                                      builder: (context) => AccountDetailPage(),
                                     ),
                                   );
                                 },
@@ -160,6 +162,17 @@ class AktivitasInvestor extends StatelessWidget {
                       onTap: () {
                         // Handle transaction click
                         print('Clicked on: ${transactionHistory[index]}');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TransactionDetailPage(
+                              transactionId: transactionHistory[index],
+                              transactionType: 'Sample Type',
+                              transactionAmount: 'Sample Amount',
+                              transactionDate: 'Sample Date',
+                            ),
+                          ),
+                        );
                       },
                       title: Text(transactionHistory[index]),
                       subtitle: Text('Subtitle for transaction'),
@@ -169,46 +182,6 @@ class AktivitasInvestor extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class Button1Page extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Button 1 Page'),
-      ),
-      body: Center(
-        child: Text(
-          'Button 1 Page',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Button3Page extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Button 3 Page'),
-      ),
-      body: Center(
-        child: Text(
-          'Button 3 Page',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
         ),
       ),
     );
