@@ -108,7 +108,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Details'),
+        title: Text('Product Detail'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

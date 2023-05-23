@@ -49,6 +49,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.blue,
         onTap: _changePage,
         items: [
           BottomNavigationBarItem(
@@ -57,15 +59,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            label: 'Favorites',
+            label: 'Pinjaman',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            label: 'Aktivitas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Profil',
           ),
         ],
       ),
