@@ -15,9 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bottom Navigation App',
-      theme: ThemeData(
-        primarySwatch: primary,
-      ),
+      theme: ThemeData(primarySwatch: primary, fontFamily: 'lexend'),
       home: BottomNavigation(),
     );
   }

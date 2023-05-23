@@ -14,10 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bottom Navigation App',
-      theme: ThemeData(
-        primarySwatch: primary,
-      ),
+      title: 'Borrower',
+      theme: ThemeData(primarySwatch: primary, fontFamily: 'lexend'),
       home: BottomNavigation(),
     );
   }
