@@ -13,6 +13,7 @@ class P2PLendingUMKMApp extends StatelessWidget {
       title: 'P2PLendingUMKM',
       theme: ThemeData(
         primarySwatch: primary,
+        fontFamily: 'lexend',
       ),
       home: LandingPage(),
     );

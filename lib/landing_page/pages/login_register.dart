@@ -12,6 +12,7 @@ class LoginRegisterPage extends StatelessWidget {
       title: 'Home',
       theme: ThemeData(
         primarySwatch: primary,
+        fontFamily: 'lexend',
       ),
       home: HomePage(),
       routes: {
@@ -38,7 +39,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo.png', // Path ke logo Anda
+              'assets/images/logo.png', // Path ke logo Anda
               width: 100.0,
               height: 100.0,
             ),
