@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/landing_page/pages/info_peminjaman.dart';
 import 'package:p2plending_umkm/landing_page/pages/info_pendanaan.dart';
 import 'package:p2plending_umkm/landing_page/pages/info_aplikasi.dart';
@@ -30,24 +31,26 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.black,
+        selectedItemColor: primary,
         currentIndex: _currentIndex,
         onTap: _changePage,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Info Peminjaman',
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.attach_money),
-            label: 'Info Pendanaan',
+            icon: Icon(Icons.search),
+            label: 'Marketplace',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info Aplikasi',
+            icon: Icon(Icons.notifications),
+            label: 'Aktivitas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Login/Register',
+            label: 'Account',
           ),
         ],
       ),

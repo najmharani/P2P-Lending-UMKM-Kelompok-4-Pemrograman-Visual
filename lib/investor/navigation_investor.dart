@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/investor/pages/home_investor.dart';
 import 'package:p2plending_umkm/investor/pages/marketplace.dart';
 import 'package:p2plending_umkm/investor/pages/aktivitas_investor.dart';
@@ -14,9 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bottom Navigation App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: primary, fontFamily: 'lexend'),
       home: BottomNavigation(),
     );
   }
@@ -49,7 +48,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: primary,
         currentIndex: _currentIndex,
         onTap: _changePage,
         items: [
