@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 
-class AccountProfilePage extends StatefulWidget {
+class EditEmailPage extends StatefulWidget {
+  final String Email;
+
+  EditEmailPage({required this.Email});
+
   @override
-  _AccountProfilePageState createState() => _AccountProfilePageState();
+  _EditEmailPageState createState() => _EditEmailPageState();
 }
 
-class _AccountProfilePageState extends State<AccountProfilePage> {
-  String email = 'john.doe@example.com'; // Replace with actual user email
-  late TextEditingController _emailController;
+class _EditEmailPageState extends State<EditEmailPage> {
+  late TextEditingController _EmailController;
 
   @override
   void initState() {
-    _emailController = TextEditingController(text: email);
+    _EmailController = TextEditingController(text: widget.Email);
     super.initState();
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _EmailController.dispose();
     super.dispose();
   }
 
@@ -25,7 +28,7 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account Profile'),
+        title: Text('Edit Email'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -41,41 +44,17 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
             ),
             SizedBox(height: 10),
             TextFormField(
-              controller: _emailController,
+              controller: _EmailController,
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: 'Enter your Email',
                 // Add additional styling as desired
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                // Navigate to the password change page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PasswordChangePage(),
-                  ),
-                );
-              },
-              child: Text(
-                'Change Password',
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Save the updated email
-                String updatedEmail = _emailController.text;
-                // Perform the necessary update operation
-                // ...
-
-                // Show a snackbar or navigate back to the profile page
-                // ...
+                // Save the updated phone number
+                String updatedEmail = _EmailController.text;
               },
               child: Text('Save'),
             ),
@@ -189,8 +168,10 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
 }
 
 class ProfileInvestor extends StatelessWidget {
-  String fullName = 'John Doe'; // Replace with actual user full name
-  String dateOfBirth = '01/01/1990'; // Replace with actual user date of birth
+  String email = 'najma@gmail.com';
+  String pass = '*****';
+  String fullName = 'Najma Qalbi'; // Replace with actual user full name
+  String dateOfBirth = '02/09/2003'; // Replace with actual user date of birth
   String phoneNumber = '1234567890'; // Replace with actual user phone number
   String ktpStatus = 'Uploaded'; // Replace with actual KTP status
   String selfPictureStatus =
@@ -224,8 +205,46 @@ class ProfileInvestor extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
+          Divider(height: 10),
+          SizedBox(height: 10),
+          Text(
+            "Informasi Akun",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
           ListTile(
-            title: Text('Full Name'),
+            title: Text('Email'),
+            subtitle: Text(email),
+            onTap: () {
+              // Navigate to the edit full name page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditEmailPage(Email: email),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Password'),
+            subtitle: Text(pass),
+            onTap: () {
+              // Navigate to the edit date of birth page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PasswordChangePage(),
+                ),
+              );
+            },
+          ),
+          Divider(height: 10),
+          SizedBox(height: 10),
+          Text(
+            "Profil Pribadi",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          ListTile(
+            title: Text('Nama Lengkap'),
             subtitle: Text(fullName),
             onTap: () {
               // Navigate to the edit full name page
@@ -238,7 +257,7 @@ class ProfileInvestor extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Date of Birth'),
+            title: Text('Tanggal Lahir'),
             subtitle: Text(dateOfBirth),
             onTap: () {
               // Navigate to the edit date of birth page
@@ -252,7 +271,7 @@ class ProfileInvestor extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Phone Number'),
+            title: Text('No Hp'),
             subtitle: Text(phoneNumber),
             onTap: () {
               // Navigate to the edit phone number page
@@ -424,11 +443,6 @@ class _EditDateOfBirthPageState extends State<EditDateOfBirthPage> {
               onPressed: () {
                 // Save the updated date of birth
                 String updatedDateOfBirth = _dateOfBirthController.text;
-                // Perform the necessary update operation
-                // ...
-
-                // Show a snackbar or navigate back to the profile page
-                // ...
               },
               child: Text('Save'),
             ),
@@ -494,11 +508,6 @@ class _EditPhoneNumberPageState extends State<EditPhoneNumberPage> {
               onPressed: () {
                 // Save the updated phone number
                 String updatedPhoneNumber = _phoneNumberController.text;
-                // Perform the necessary update operation
-                // ...
-
-                // Show a snackbar or navigate back to the profile page
-                // ...
               },
               child: Text('Save'),
             ),
