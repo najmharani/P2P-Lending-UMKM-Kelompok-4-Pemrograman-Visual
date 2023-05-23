@@ -30,8 +30,8 @@ class HomeBorrower extends StatelessWidget {
                       height: 200.0,
                       width: double.infinity,
                       child: BorrowCard(
-                        title: 'Borrow Money',
-                        color: Colors.blue,
+                        title: 'Top Up & Kirim Dana',
+                        color: Color.fromARGB(255, 10, 150, 30),
                         onPressed: () {
                           // TODO: Implement borrowing functionality
                         },
@@ -40,8 +40,8 @@ class HomeBorrower extends StatelessWidget {
                           height: 50.0,
                           padding: EdgeInsets.only(left: 16.0),
                           child: BorrowCard(
-                            title: 'Nested Card',
-                            color: Color.fromARGB(255, 125, 125, 125),
+                            title: 'Total Dana',
+                            color: Color.fromARGB(255, 175, 175, 175),
                             onPressed: () {
                               // TODO: Implement nested card functionality
                             },
@@ -57,7 +57,7 @@ class HomeBorrower extends StatelessWidget {
                       height: 200.0,
                       width: double.infinity,
                       child: BorrowCard(
-                        title: 'Loan Status',
+                        title: 'Business Name',
                         color: Colors.green,
                         onPressed: () {
                           // TODO: Implement loan status functionality
@@ -73,8 +73,8 @@ class HomeBorrower extends StatelessWidget {
                         child: Container(
                           height: 100.0,
                           child: BorrowCard(
-                            title: 'Repay Loan',
-                            color: Colors.orange,
+                            title: 'Tenggat Waktu',
+                            color: Color.fromARGB(255, 0, 255, 100),
                             onPressed: () {
                               // TODO: Implement repayment functionality
                             },
@@ -86,8 +86,8 @@ class HomeBorrower extends StatelessWidget {
                         child: Container(
                           height: 100.0,
                           child: BorrowCard(
-                            title: 'Support',
-                            color: Colors.red,
+                            title: 'Omzet',
+                            color: Color.fromARGB(255, 20, 200, 40),
                             onPressed: () {
                               // TODO: Implement support functionality
                             },
