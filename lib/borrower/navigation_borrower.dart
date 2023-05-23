@@ -4,6 +4,7 @@ import 'package:p2plending_umkm/borrower/pages/home_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/pinjaman_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/aktivitas_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/profile_borrower.dart';
+import 'package:p2plending_umkm/colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bottom Navigation App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: primary,
       ),
       home: BottomNavigation(),
     );
@@ -50,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: primary,
         onTap: _changePage,
         items: [
           BottomNavigationBarItem(

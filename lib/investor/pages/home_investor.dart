@@ -1,6 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_topup/topup.dart';
 
 class HomeInvestor extends StatelessWidget {
   @override
@@ -71,9 +73,15 @@ class HomeInvestor extends StatelessWidget {
                               radius: 30,
                               backgroundColor: Colors.white,
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WithdrawalPage()),
+                                  );
+                                },
                                 icon: Icon(Icons.attach_money_rounded),
-                                color: Colors.blue,
+                                color: primary,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -94,9 +102,16 @@ class HomeInvestor extends StatelessWidget {
                               radius: 30,
                               backgroundColor: Colors.white,
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TopUpPage(),
+                                    ),
+                                  );
+                                },
                                 icon: Icon(Icons.add),
-                                color: Colors.blue,
+                                color: primary,
                               ),
                             ),
                             SizedBox(height: 5),

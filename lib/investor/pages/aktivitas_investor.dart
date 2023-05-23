@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';
-import 'package:p2plending_umkm/investor/pages/fitur_topup/bank_account.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/topup.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_topup/bank_account.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/detail_transaksi.dart';
 
 class AktivitasInvestor extends StatelessWidget {
@@ -25,7 +26,7 @@ class AktivitasInvestor extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Card(
-              color: Colors.blue,
+              color: primary,
               child: ListTile(
                 title: Column(
                   children: [
@@ -65,7 +66,7 @@ class AktivitasInvestor extends StatelessWidget {
                                   );
                                 },
                                 icon: Icon(Icons.attach_money_rounded),
-                                color: Colors.blue,
+                                color: primary,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -94,7 +95,7 @@ class AktivitasInvestor extends StatelessWidget {
                                   );
                                 },
                                 icon: Icon(Icons.add),
-                                color: Colors.blue,
+                                color: primary,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -123,7 +124,7 @@ class AktivitasInvestor extends StatelessWidget {
                                   );
                                 },
                                 icon: Icon(Icons.account_balance_wallet),
-                                color: Colors.blue,
+                                color: primary,
                               ),
                             ),
                             SizedBox(height: 5),
