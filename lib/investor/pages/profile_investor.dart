@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/investor/pages/fitur_profile/customer_service.dart';
 
 class EditEmailPage extends StatefulWidget {
   final String Email;
@@ -311,6 +312,20 @@ class ProfileInvestor extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Divider(height: 10),
+          SizedBox(height: 10),
+          Text(
+            "Customer Service",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          ListTile(
+            title: Text('Hubungi Kami'),
+            subtitle: Text("08190677882"),
+          ),
+          ListTile(
+            title: Text('Email'),
+            subtitle: Text("m2m@gmail.com"),
           ),
         ],
       ),

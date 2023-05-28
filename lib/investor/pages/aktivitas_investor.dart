@@ -30,6 +30,7 @@ class AktivitasInvestor extends StatelessWidget {
               child: ListTile(
                 title: Column(
                   children: [
+                    SizedBox(height: 10),
                     Text(
                       'Dana Tersedia',
                       style: TextStyle(
@@ -140,11 +141,12 @@ class AktivitasInvestor extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Text(
               'Transaction History',
               style: TextStyle(
@@ -162,21 +164,27 @@ class AktivitasInvestor extends StatelessWidget {
                     child: ListTile(
                       onTap: () {
                         // Handle transaction click
-                        print('Clicked on: ${transactionHistory[index]}');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => TransactionDetailPage(
                               transactionId: transactionHistory[index],
-                              transactionType: 'Sample Type',
-                              transactionAmount: 'Sample Amount',
-                              transactionDate: 'Sample Date',
+                              transactionType: 'Pengembalian',
+                              transactionAmount: '50.000',
+                              transactionDate: '27/05/2023',
                             ),
                           ),
                         );
                       },
                       title: Text(transactionHistory[index]),
                       subtitle: Text('Subtitle for transaction'),
+                      trailing: Column(children: [
+                        SizedBox(height: 14),
+                        Text(
+                          'Rp30.000',
+                          style: TextStyle(fontSize: 16, color: Colors.green),
+                        )
+                      ]),
                     ),
                   );
                 },

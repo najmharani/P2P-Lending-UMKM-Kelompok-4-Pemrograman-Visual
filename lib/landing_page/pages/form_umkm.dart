@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/investor/navigation_investor.dart';
 
 void main() {
   runApp(FormApp());
@@ -14,12 +16,12 @@ class FormApp extends StatelessWidget {
         primarySwatch: primary,
         fontFamily: 'lexend',
       ),
-      home: FormPage(),
+      home: RegisterBorrowerNextPage(),
     );
   }
 }
 
-class FormPage extends StatelessWidget {
+class RegisterBorrowerNextPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +74,12 @@ class FormPage extends StatelessWidget {
               ),
               child: Text('Register'),
               onPressed: () {
-                // Implementasi logika registrasi di sini
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BorrowerApp(),
+                  ),
+                );
               },
             ),
           ],
@@ -95,9 +102,7 @@ class FormPage extends StatelessWidget {
         ElevatedButton.icon(
           icon: Icon(icon),
           label: Text('Upload'),
-          onPressed: () {
-            // Implementasi logika upload di sini
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 40.0),
           ),

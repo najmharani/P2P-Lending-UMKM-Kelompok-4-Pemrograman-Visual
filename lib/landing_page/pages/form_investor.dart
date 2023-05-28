@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/investor/navigation_investor.dart';
 
 void main() {
   runApp(RegisterApp());
@@ -13,12 +14,12 @@ class RegisterApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: primary,
       ),
-      home: RegisterPage(),
+      home: RegisterInvestorNextPage(),
     );
   }
 }
 
-class RegisterPage extends StatelessWidget {
+class RegisterInvestorNextPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +61,10 @@ class RegisterPage extends StatelessWidget {
               ),
               child: Text('Register'),
               onPressed: () {
-                // Implementasi logika registrasi di sini
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InvestorApp()),
+                );
               },
             ),
           ],

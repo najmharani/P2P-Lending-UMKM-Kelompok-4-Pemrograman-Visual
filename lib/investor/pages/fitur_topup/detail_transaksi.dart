@@ -22,35 +22,104 @@ class TransactionDetailPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Icon(
+              Icons.check_circle_outline_outlined,
+              color: Colors.green,
+              size: 50.0,
+            ),
+            SizedBox(height: 10),
             Text(
-              'Transaction ID: $transactionId',
+              'Rp$transactionAmount',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 10),
             Text(
-              'Type: $transactionType',
+              '$transactionType dari UMKM Sahabat Jaya',
               style: TextStyle(
                 fontSize: 16,
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              'Amount: $transactionAmount',
-              style: TextStyle(
-                fontSize: 16,
-              ),
+            Divider(height: 10),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Status:',
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Completed',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
             ),
             SizedBox(height: 10),
-            Text(
-              'Date: $transactionDate',
-              style: TextStyle(
-                fontSize: 16,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Tanggal:',
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  '02 Mei 2023',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Waktu:',
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  '7:30',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Tipe Transaksi:',
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Pengembalian',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'ID Transaksi:',
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  '54321',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
             ),
           ],
         ),
