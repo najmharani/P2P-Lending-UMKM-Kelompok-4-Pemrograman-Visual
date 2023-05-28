@@ -1,17 +1,41 @@
 import 'package:flutter/material.dart';
 
-class Marketplace extends StatelessWidget {
+enum FilterOptions {
+  JenisUMKM,
+  LOKASI,
+  TrackRecord,
+}
+
+class Marketplace extends StatefulWidget {
+  const Marketplace({super.key});
+
+  @override
+  State<Marketplace> createState() => MarketplaceState();
+}
+
+class MarketplaceState extends State<Marketplace> {
+  bool jenisPertanian = false;
+  bool jenisKuliner = false;
+  bool jenisPakaian = false;
+  bool jenisKecantikan = false;
+  bool jenislayanan = false;
+
+  bool lokasiBandung = false;
+  bool lokasiJakarta = false;
+  bool lokasiJabodetabek = false;
+  bool lokasiJawaBarat = false;
+  bool lokasiBanten = false;
+  bool lokasiBali = false;
+
+  bool trackrecord1 = false;
+  bool trackrecord2 = false;
+  bool trackrecord3 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Marketplace'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -40,6 +64,203 @@ class Marketplace extends StatelessWidget {
           SizedBox(height: 16.0),
           _buildProductCard(context, 'Product 3', 'Description of Product 3'),
         ],
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.all(10),
+          children: [
+            const Text("Filter"),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Jenis UMKM",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            CheckboxListTile(
+              title: const Text("Pertanian"),
+              value: jenisPertanian,
+              onChanged: (bool? value) {
+                setState(() {
+                  jenisPertanian = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Kuliner"),
+              value: jenisKuliner,
+              onChanged: (bool? value) {
+                setState(() {
+                  jenisKuliner = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Pakaian"),
+              value: jenisPakaian,
+              onChanged: (bool? value) {
+                setState(() {
+                  jenisPakaian = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Kecantikan"),
+              value: jenisKecantikan,
+              onChanged: (bool? value) {
+                setState(() {
+                  jenisKecantikan = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Layanan"),
+              value: jenislayanan,
+              onChanged: (bool? value) {
+                setState(() {
+                  jenislayanan = value!;
+                });
+              },
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Lokasi",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            CheckboxListTile(
+              title: const Text("Bandung"),
+              value: lokasiBandung,
+              onChanged: (bool? value) {
+                setState(() {
+                  lokasiBandung = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Jakarta"),
+              value: lokasiJakarta,
+              onChanged: (bool? value) {
+                setState(() {
+                  lokasiJakarta = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Jabodetabek"),
+              value: lokasiJabodetabek,
+              onChanged: (bool? value) {
+                setState(() {
+                  lokasiJabodetabek = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Jawa Barat"),
+              value: lokasiJawaBarat,
+              onChanged: (bool? value) {
+                setState(() {
+                  lokasiJawaBarat = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Banten"),
+              value: lokasiBanten,
+              onChanged: (bool? value) {
+                setState(() {
+                  lokasiBanten = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Bali"),
+              value: lokasiBali,
+              onChanged: (bool? value) {
+                setState(() {
+                  lokasiBali = value!;
+                });
+              },
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Track Record",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            CheckboxListTile(
+              title: const Text("Akurasi Pembayaran"),
+              value: trackrecord1,
+              onChanged: (bool? value) {
+                setState(() {
+                  trackrecord1 = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Pendapatan"),
+              value: trackrecord2,
+              onChanged: (bool? value) {
+                setState(() {
+                  trackrecord2 = value!;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text("Penghargaan/penilaian?"),
+              value: trackrecord3,
+              onChanged: (bool? value) {
+                setState(() {
+                  trackrecord3 = value!;
+                });
+              },
+            ),
+            const SizedBox(height: 16.0),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          jenisPertanian = false;
+                          jenisKuliner = false;
+                          jenisPakaian = false;
+                          jenisKecantikan = false;
+                          jenislayanan = false;
+
+                          lokasiBandung = false;
+                          lokasiJakarta = false;
+                          lokasiJabodetabek = false;
+                          lokasiJawaBarat = false;
+                          lokasiBanten = false;
+                          lokasiBali = false;
+
+                          trackrecord1 = false;
+                          trackrecord2 = false;
+                          trackrecord3 = false;
+                        });
+                      },
+                      child: const Text("Atur Ulang"),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Pakai"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -126,6 +347,22 @@ class ProductDetailsScreen extends StatelessWidget {
             Text(
               description,
               style: TextStyle(fontSize: 16.0),
+            ),
+            Spacer(),
+            Text(
+              'Rp. 0',
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Logika yang ingin Anda lakukan ketika tombol "Danai" ditekan
+                },
+                child: Text('Danai'),
+              ),
             ),
           ],
         ),

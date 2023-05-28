@@ -77,7 +77,8 @@ class HomeInvestor extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => WithdrawalPage()),
+                                      builder: (context) => WithdrawalPage(),
+                                    ),
                                   );
                                 },
                                 icon: Icon(Icons.attach_money_rounded),
@@ -217,18 +218,111 @@ class HomeInvestor extends StatelessWidget {
                 child: ListTile(
                   leading: CircleAvatar(
                     // Ganti dengan avatar akun
-                    backgroundImage: AssetImage('assets/avatar.png'),
+                    backgroundImage: AssetImage('assets/logo.png'),
                   ),
                   title: Text('Nama Akun'),
                   subtitle: Text('Pendanaan Aktif'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    // Aksi saat card ditekan
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DetailAkunPage()),
+                    );
+                  },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    // Ganti dengan avatar akun
+                    backgroundImage: AssetImage('assets/logo.png'),
+                  ),
+                  title: Text('Nama Akun'),
+                  subtitle: Text('Pendanaan Aktif'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DetailAkunPage()),
+                    );
                   },
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailAkunPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detail Akun'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage('assets/logo.png'),
+              radius: 50,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Nama Akun',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Pendanaan Aktif',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Informasi tambahan tentang akun ini...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/profile_pic.png'),
+                    radius: 20,
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Nama Akun',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Icon(Icons.chat),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
