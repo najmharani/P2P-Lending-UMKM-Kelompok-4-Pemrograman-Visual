@@ -9,48 +9,55 @@ class HomeBorrower extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lending App'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              // Aksi saat tombol notifikasi ditekan
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 32.0),
-            Text(
-              'Welcome, Borrower!',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 32.0),
+            SizedBox(height: 16.0),
             Expanded(
               child: Column(
                 children: [
                   Expanded(
                     child: Container(
-                      height: 200.0,
+                      height: 50.0,
                       width: double.infinity,
-                      child: BorrowCard(
-                        title: 'Top Up & Kirim Dana',
-                        color: Color.fromARGB(255, 10, 150, 30),
-                        onPressed: () {
-                          // TODO: Implement borrowing functionality
-                        },
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          height: 50.0,
-                          padding: EdgeInsets.only(left: 16.0),
-                          child: BorrowCard(
-                            title: 'Total Dana',
-                            color: Color.fromARGB(255, 175, 175, 175),
-                            onPressed: () {
-                              // TODO: Implement nested card functionality
-                            },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: BorrowCard(
+                              title: 'Lorem ipsum',
+                              color: Color.fromARGB(255, 10, 150, 30),
+                              onPressed: () {
+                                // TODO: Implement borrowing functionality
+                              },
+                            ),
                           ),
-                        ),
+                          SizedBox(width: 16.0),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              height: 80.0,
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: BorrowCard(
+                                title: 'Total Dana',
+                                color: Color.fromARGB(255, 175, 175, 175),
+                                onPressed: () {
+                                  // TODO: Implement nested card functionality
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
