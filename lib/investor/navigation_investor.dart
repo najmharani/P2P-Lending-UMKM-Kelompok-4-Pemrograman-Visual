@@ -17,6 +17,7 @@ class InvestorApp extends StatelessWidget {
     return MaterialApp(
       title: 'Investor',
       theme: ThemeData(primarySwatch: primary, fontFamily: 'lexend'),
+      debugShowCheckedModeBanner: false,
       home: BottomNavigation(),
     );
   }

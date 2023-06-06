@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/colors.dart';
 
 enum FilterOptions {
   JenisUMKM,
@@ -27,9 +28,9 @@ class MarketplaceState extends State<Marketplace> {
   bool lokasiBanten = false;
   bool lokasiBali = false;
 
-  bool trackrecord1 = false;
-  bool trackrecord2 = false;
-  bool trackrecord3 = false;
+  bool rating1 = false;
+  bool rating2 = false;
+  bool rating3 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,25 +45,44 @@ class MarketplaceState extends State<Marketplace> {
             margin: EdgeInsets.symmetric(vertical: 20.0),
             padding: EdgeInsets.all(10.0),
             width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                // Tambahkan logika pencarian di sini
-              },
-              icon: Icon(Icons.search),
-              label: Text('Search'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Masukkan kata kunci',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(width: 8),
+                InkWell(
+                  onTap: () {
+                    // Tambahkan logika pencarian di sini
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: primary,
+                    ),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors
+                          .white, // Ganti dengan warna ikon yang diinginkan
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          _buildProductCard(context, 'Product 1', 'Description of Product 1'),
+          _buildProductCard(context, 'Product 1', 'Deskripsi produk 1'),
           SizedBox(height: 16.0),
-          _buildProductCard(context, 'Product 2', 'Description of Product 2'),
+          _buildProductCard(context, 'Product 2', 'Deskripsi produk 2'),
           SizedBox(height: 16.0),
-          _buildProductCard(context, 'Product 3', 'Description of Product 3'),
+          _buildProductCard(context, 'Product 3', 'Deskripsi produk 3'),
         ],
       ),
       endDrawer: Drawer(
@@ -191,29 +211,29 @@ class MarketplaceState extends State<Marketplace> {
               ),
             ),
             CheckboxListTile(
-              title: const Text("Akurasi Pembayaran"),
-              value: trackrecord1,
+              title: const Text("A"),
+              value: rating1,
               onChanged: (bool? value) {
                 setState(() {
-                  trackrecord1 = value!;
+                  rating1 = value!;
                 });
               },
             ),
             CheckboxListTile(
-              title: const Text("Pendapatan"),
-              value: trackrecord2,
+              title: const Text("A-"),
+              value: rating2,
               onChanged: (bool? value) {
                 setState(() {
-                  trackrecord2 = value!;
+                  rating2 = value!;
                 });
               },
             ),
             CheckboxListTile(
-              title: const Text("Penghargaan/penilaian?"),
-              value: trackrecord3,
+              title: const Text("B"),
+              value: rating3,
               onChanged: (bool? value) {
                 setState(() {
-                  trackrecord3 = value!;
+                  rating3 = value!;
                 });
               },
             ),
@@ -239,9 +259,9 @@ class MarketplaceState extends State<Marketplace> {
                           lokasiBanten = false;
                           lokasiBali = false;
 
-                          trackrecord1 = false;
-                          trackrecord2 = false;
-                          trackrecord3 = false;
+                          rating1 = false;
+                          rating2 = false;
+                          rating3 = false;
                         });
                       },
                       child: const Text("Atur Ulang"),
@@ -315,11 +335,13 @@ class MarketplaceState extends State<Marketplace> {
                     ),
                     CircleAvatar(
                       radius: 20,
-                      backgroundColor: Color.fromARGB(96, 223, 64, 251),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.add),
-                        color: Colors.purple,
+                      backgroundColor: primary,
+                      child: Text(
+                        'A',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],

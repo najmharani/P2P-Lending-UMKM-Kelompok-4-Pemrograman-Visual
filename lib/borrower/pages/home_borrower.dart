@@ -173,32 +173,31 @@ class HomeBorrower extends StatelessWidget {
               ),
               SizedBox(height: 25),
               Text(
-                'Tabel Kategori Mitra',
+                'Angsuran Pengembalian',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
               DataTable(
                 columns: [
                   DataColumn(
-                    label: Container(child: Text('Kategori'), width: 100),
+                    label: Container(child: Text('Tanggal'), width: 100),
                   ),
                   DataColumn(
-                    label: Container(child: Text('Mitra'), width: 100),
-                  ),
-                  DataColumn(
-                    label: Container(child: Text('Sisa Pokok'), width: 100),
+                    label: Container(child: Text('Status'), width: 100),
                   ),
                 ],
                 rows: [
                   DataRow(cells: [
-                    DataCell(Text('Mitra Lancar')),
-                    DataCell(Text('0')),
-                    DataCell(Text('Rp 0')),
+                    DataCell(Text('2 Juni 2023')),
+                    DataCell(Text('Tepat Waktu')),
                   ]),
                   DataRow(cells: [
-                    DataCell(Text('Mitra Terlambat')),
-                    DataCell(Text('0')),
-                    DataCell(Text('Rp 0')),
+                    DataCell(Text('5 Mei 2023')),
+                    DataCell(Text('Terlambat')),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('5 Juni 2023')),
+                    DataCell(Text('Belum Dibayar')),
                   ]),
                 ],
               ),
