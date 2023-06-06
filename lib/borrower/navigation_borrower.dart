@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/borrower/pages/home_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/pinjaman_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/aktivitas_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/profile_borrower.dart';
-import 'package:p2plending_umkm/colors.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(BorrowerApp());
 }
 
-class MyApp extends StatelessWidget {
+class BorrowerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

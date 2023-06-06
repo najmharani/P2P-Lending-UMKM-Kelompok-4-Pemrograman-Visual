@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/landing_page/pages/form_investor.dart';
+import 'package:p2plending_umkm/landing_page/pages/form_umkm.dart';
 
-void main() {
-  runApp(LoginRegisterPage());
-}
+// void main() {
+//   runApp(LoginRegisterPage());
+// }
 
-class LoginRegisterPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Home',
-      theme: ThemeData(
-        primarySwatch: primary,
-        fontFamily: 'lexend',
-      ),
-      home: HomePage(),
-      routes: {
-        '/login-borrower': (context) => LoginPage(userType: UserType.borrower),
-        '/login-investor': (context) => LoginPage(userType: UserType.investor),
-        '/register-borrower': (context) =>
-            RegisterPage(userType: UserType.borrower),
-        '/register-investor': (context) =>
-            RegisterPage(userType: UserType.investor),
-      },
-    );
-  }
-}
+// class LoginRegisterPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Home',
+//       theme: ThemeData(
+//         primarySwatch: primary,
+//         fontFamily: 'lexend',
+//       ),
+//       home: HomePage(),
+//       routes: {
+//         '/login-borrower': (context) => LoginPage(userType: UserType.borrower),
+//         '/login-investor': (context) => LoginPage(userType: UserType.investor),
+//         '/register-borrower': (context) =>
+//             RegisterPage(userType: UserType.borrower),
+//         '/register-investor': (context) =>
+//             RegisterPage(userType: UserType.investor),
+//       },
+//     );
+//   }
+// }
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Akun'),
       ),
       body: Center(
         child: Column(
@@ -47,14 +49,24 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               child: Text('Login as Borrower'),
               onPressed: () {
-                Navigator.pushNamed(context, '/login-borrower');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          LoginPage(userType: UserType.borrower)),
+                );
               },
             ),
             SizedBox(height: 8.0),
             ElevatedButton(
               child: Text('Login as Investor'),
               onPressed: () {
-                Navigator.pushNamed(context, '/login-investor');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          LoginPage(userType: UserType.investor)),
+                );
               },
             ),
           ],
@@ -118,9 +130,19 @@ class LoginPage extends StatelessWidget {
               child: Text(profile),
               onPressed: () {
                 if (userType == UserType.borrower) {
-                  Navigator.pushNamed(context, '/register-borrower');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            RegisterPage(userType: UserType.borrower)),
+                  );
                 } else {
-                  Navigator.pushNamed(context, '/register-investor');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            RegisterPage(userType: UserType.investor)),
+                  );
                 }
               },
             ),
@@ -183,7 +205,19 @@ class RegisterPage extends StatelessWidget {
             ElevatedButton(
               child: Text('Register'),
               onPressed: () {
-                // Implementasi logika registrasi di sini
+                if (userType == UserType.borrower) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegisterBorrowerNextPage()),
+                  );
+                } else if (userType == UserType.investor) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegisterInvestorNextPage()),
+                  );
+                }
               },
             ),
           ],

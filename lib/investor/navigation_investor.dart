@@ -7,14 +7,14 @@ import 'package:p2plending_umkm/investor/pages/aktivitas_investor.dart';
 import 'package:p2plending_umkm/investor/pages/profile_investor.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(InvestorApp());
 }
 
-class MyApp extends StatelessWidget {
+class InvestorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bottom Navigation App',
+      title: 'Investor',
       theme: ThemeData(primarySwatch: primary, fontFamily: 'lexend'),
       home: BottomNavigation(),
     );

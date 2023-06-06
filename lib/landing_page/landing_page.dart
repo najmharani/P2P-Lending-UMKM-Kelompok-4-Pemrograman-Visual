@@ -11,13 +11,13 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  int _currentIndex = 0;
+  int _currentIndex = 3;
 
   List<Widget> _pages = [
     InfoPeminjamanPage(),
     InfoPendanaanPage(),
     InfoAplikasiPage(),
-    LoginRegisterPage(),
+    HomePage(),
   ];
 
   void _changePage(int index) {
@@ -38,19 +38,19 @@ class _LandingPageState extends State<LandingPage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Info Pendanaan',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Marketplace',
+            label: 'Info Peminjaman',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            label: 'Aktivitas',
+            label: 'Info Aplikasi',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Account',
+            label: 'Akun',
           ),
         ],
       ),
