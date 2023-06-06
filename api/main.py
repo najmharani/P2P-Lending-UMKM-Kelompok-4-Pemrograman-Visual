@@ -138,7 +138,9 @@ def init_db():
         con.close()
     return {"status": "ok, db dan tabel berhasil dicreate"}
 
-#================= USER =====================#
+
+# ================= USER =====================#
+
 
 class User(BaseModel):
     ID_USER: int = None
@@ -247,37 +249,39 @@ def login_auth(email: str, password: str):
 
 # patch hanya sebagian saja yang diupdate
 # asumsikan kalau isinya "" dan 0 artinya tidak berubah
-@app.patch("/update_user/{id}",response_model=User)
-def update_user(response: Response,ID_USER: int, m: User ):
-    #update keseluruhan
+@app.patch("/update_user/{id}", response_model=User)
+def update_user(response: Response, ID_USER: int, m: User):
+    # update keseluruhan
     try:
         DB_NAME = "upi.db"
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
-        #proses yang isinya "" atau 0 dianggap tidak ada perubahan. asumsikan db diinit dengan "" dan 0 semua.
+        # proses yang isinya "" atau 0 dianggap tidak ada perubahan. asumsikan db diinit dengan "" dan 0 semua.
         # todo: memproses None atau Null
-        #sqlstr = "update mahasiswa set nama = '{}',id_prov = '{}', angkatan='{}', tinggi_badan={} where nim='{}'".format(m.nama,m.id_prov,m.angkatan,m.tinggi_badan,m.nim)
-        sqlstr = "update user set " #asumsi minimal ada satu update
-        if m.email!="":
+        # sqlstr = "update mahasiswa set nama = '{}',id_prov = '{}', angkatan='{}', tinggi_badan={} where nim='{}'".format(m.nama,m.id_prov,m.angkatan,m.tinggi_badan,m.nim)
+        sqlstr = "update user set "  # asumsi minimal ada satu update
+        if m.email != "":
             sqlstr = sqlstr + " email = '{}' ".format(m.email)
-        if m.password!="":
+        if m.password != "":
             sqlstr = sqlstr + " password = '{}' ".format(m.password)
-        if m.foto_profil!="":
+        if m.foto_profil != "":
             sqlstr = sqlstr + " foto_profil = '{}' ".format(m.foto_profil)
-        if m.saldo!=0:
+        if m.saldo != 0:
             sqlstr = sqlstr + " saldo = {} ".format(m.saldo)
         sqlstr = sqlstr + "where ID_USER='{}'".format(ID_USER)
-        print(sqlstr) # debug
+        print(sqlstr)  # debug
         cur.execute(sqlstr)
         con.commit()
         response.headers["location"] = "/user/{}".format(m.ID_USER)
     except:
-        return ({"status":"terjadi error"})
+        return {"status": "terjadi error"}
     finally:
         con.close()
     return m
 
-#=============== PEMINJAMAN ============#
+
+# =============== PEMINJAMAN ============#
+
 
 class Peminjaman(BaseModel):
     ID_PEMINJAMAN: int = None
@@ -294,6 +298,7 @@ class Peminjaman(BaseModel):
     sisa_tenor: int | None = None
     nilai_rating: str
     id_borrower: int = None
+
 
 # Status code 201 standard return creation
 # Return objek yang baru di-create (response_mode tipenya User)
@@ -319,7 +324,7 @@ def tambah_peminjaman(m: Peminjaman, response: Response, request: Request):
                 m.penghasilan_perbulan,
                 m.jumlah_angsuran,
                 m.sisa_tenor,
-                m.nilai_rating
+                m.nilai_rating,
             )
         )
         con.commit()
@@ -330,6 +335,7 @@ def tambah_peminjaman(m: Peminjaman, response: Response, request: Request):
     # tambah location
     response.headers["location"] = "/peminjaman/{}".format(m.ID_PEMINJAMAN)
     return m
+
 
 @app.get("/get_all_peminjaman/")
 def get_all_peminjaman():
@@ -345,7 +351,8 @@ def get_all_peminjaman():
     finally:
         con.close()
         return {"data": recs}
-    
+
+
 @app.get("/get_peminjaman/{id}")
 def get_peminjaman(id: int):
     try:
@@ -353,7 +360,9 @@ def get_peminjaman(id: int):
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute("select * from peminjaman WHERE ID_PEMINJAMAN={}".format(id)):
+        for row in cur.execute(
+            "select * from peminjaman WHERE ID_PEMINJAMAN={}".format(id)
+        ):
             recs.append(row)
     except:
         return {"status": "terjadi error"}
@@ -361,7 +370,9 @@ def get_peminjaman(id: int):
         con.close()
         return {"data": recs}
 
-#=========== TRANSAKSI ==========#
+
+# =========== TRANSAKSI ==========#
+
 
 class Transaksi(BaseModel):
     ID_TRANSAKSI: int = None
@@ -370,6 +381,7 @@ class Transaksi(BaseModel):
     jenis_transaksi: str
     detail_transaksi: str
     id_user: int | None = None
+
 
 # Status code 201 standard return creation
 # Return objek yang baru di-create (response_mode tipenya User)
@@ -388,7 +400,7 @@ def tambah_transaksi(m: Transaksi, response: Response, request: Request):
                 m.tanggal_waktu_transaksi,
                 m.jenis_transaksi,
                 m.detail_transaksi,
-                m.id_user
+                m.id_user,
             )
         )
         con.commit()
@@ -399,6 +411,7 @@ def tambah_transaksi(m: Transaksi, response: Response, request: Request):
     # tambah location
     response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
     return m
+
 
 @app.get("/get_all_transaksi/")
 def get_all_transaksi():
@@ -414,7 +427,8 @@ def get_all_transaksi():
     finally:
         con.close()
         return {"data": recs}
-    
+
+
 @app.get("/get_all_transaksi/{id_user}")
 def get_all_transaksi(id: int):
     try:
@@ -429,7 +443,8 @@ def get_all_transaksi(id: int):
     finally:
         con.close()
         return {"data": recs}
-    
+
+
 @app.get("/get_transaksi_byDate/")
 def get_transaksi_byDate(tgl_waktu: str):
     try:
@@ -437,13 +452,16 @@ def get_transaksi_byDate(tgl_waktu: str):
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute("select * from transaksi WHERE tanggal_waktu_transaksi={}".format(tgl_waktu)):
+        for row in cur.execute(
+            "select * from transaksi WHERE tanggal_waktu_transaksi={}".format(tgl_waktu)
+        ):
             recs.append(row)
     except:
         return {"status": "terjadi error"}
     finally:
         con.close()
         return {"data": recs}
+
 
 @app.get("/get_detil_transaksi/{id_transaksi}")
 def get_detil_transaksi(id: int):
@@ -452,7 +470,9 @@ def get_detil_transaksi(id: int):
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute("select detail_transaksi from transaksi WHERE ID_TRANSAKSI={}".format(id)):
+        for row in cur.execute(
+            "select detail_transaksi from transaksi WHERE ID_TRANSAKSI={}".format(id)
+        ):
             recs.append(row)
     except:
         return {"status": "terjadi error"}
@@ -460,7 +480,9 @@ def get_detil_transaksi(id: int):
         con.close()
         return {"data": recs}
 
-#============= BANK ACCOUNT ============#
+
+# ============= BANK ACCOUNT ============#
+
 
 class BANK(BaseModel):
     ID_BANK: int = None
@@ -468,7 +490,8 @@ class BANK(BaseModel):
     no_rekening: str
     nama_rekening: str
     id_user: int | None = None
-    
+
+
 # Status code 201 standard return creation
 # Return objek yang baru di-create (response_mode tipenya User)
 @app.post("/tambah_bank_akun/", response_model=BANK, status_code=201)
@@ -482,10 +505,7 @@ def tambah_bank_akun(m: BANK, response: Response, request: Request):
             """insert into bank_account
         (nama_bank, no_rekening, nama_rekening, id_user) values (
         "{}","{}","{}",{})""".format(
-                m.nama_bank,
-                m.no_rekening,
-                m.nama_rekening,
-                m.id_user
+                m.nama_bank, m.no_rekening, m.nama_rekening, m.id_user
             )
         )
         con.commit()
@@ -496,6 +516,7 @@ def tambah_bank_akun(m: BANK, response: Response, request: Request):
     # tambah location
     response.headers["location"] = "/bank_account/{}".format(m.ID_BANK)
     return m
+
 
 @app.get("/get_all_akun_bank/")
 def get_all_akun_bank():
@@ -511,7 +532,8 @@ def get_all_akun_bank():
     finally:
         con.close()
         return {"data": recs}
-    
+
+
 @app.get("/get_all_akun_bank/{id_user}")
 def get_all_akun_bank(id_user: int):
     try:
@@ -519,22 +541,9 @@ def get_all_akun_bank(id_user: int):
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute("select * from bank_account WHERE id_user={}".format(id_user)):
-            recs.append(row)
-    except:
-        return {"status": "terjadi error"}
-    finally:
-        con.close()
-        return {"data": recs}
-    
-@app.get("/get_detil_akun_bank/{id_bank}")
-def get_detil_akun_bank(id_bank: int):
-    try:
-        DB_NAME = "m2m.db"
-        con = sqlite3.connect(DB_NAME)
-        cur = con.cursor()
-        recs = []
-        for row in cur.execute("select * from bank_account WHERE ID_BANK={}".format(id_bank)):
+        for row in cur.execute(
+            "select * from bank_account WHERE id_user={}".format(id_user)
+        ):
             recs.append(row)
     except:
         return {"status": "terjadi error"}
@@ -542,7 +551,27 @@ def get_detil_akun_bank(id_bank: int):
         con.close()
         return {"data": recs}
 
-#================== INVESTOR =================#
+
+@app.get("/get_detil_akun_bank/{id_bank}")
+def get_detil_akun_bank(id_bank: int):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute(
+            "select * from bank_account WHERE ID_BANK={}".format(id_bank)
+        ):
+            recs.append(row)
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": recs}
+
+
+# ================== INVESTOR =================#
+
 
 class Investor(BaseModel):
     ID_INVESTOR: int | None = None
@@ -553,6 +582,7 @@ class Investor(BaseModel):
     foto_ktp: str
     foto_investor: str
     aset: str
+
 
 # Status code 201 standard return creation
 # Return objek yang baru di-create (response_mode tipenya User)
@@ -573,7 +603,7 @@ def tambah_investor(m: Investor, response: Response, request: Request):
                 m.nik,
                 m.foto_ktp,
                 m.foto_investor,
-                m.aset
+                m.aset,
             )
         )
         con.commit()
@@ -584,6 +614,7 @@ def tambah_investor(m: Investor, response: Response, request: Request):
     # tambah location
     response.headers["location"] = "/profil_investor/{}".format(m.ID_INVESTOR)
     return m
+
 
 @app.get("/get_all_investor/")
 def get_all_investor():

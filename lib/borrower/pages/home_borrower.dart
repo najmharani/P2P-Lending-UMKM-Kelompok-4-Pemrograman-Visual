@@ -25,16 +25,6 @@ class HomeBorrower extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 16),
-              Text(
-                'Total Omzet',
-                style: TextStyle(fontSize: 18),
-              ),
-              Text(
-                'Rp 10,000,000',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 2),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
                 padding: EdgeInsets.all(10.0),
@@ -134,11 +124,14 @@ class HomeBorrower extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 'Tenggat Waktu',
@@ -149,26 +142,42 @@ class HomeBorrower extends StatelessWidget {
                               SizedBox(width: 10.0),
                               Text(
                                 '20 Juni 2023',
-                                style: TextStyle(fontSize: 22, height: 1.5),
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  height: 1.5,
+                                ),
                               ),
-                            ]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  Expanded(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(children: [
-                          Text(
-                            'H-20 Pengembalian',
-                            style: TextStyle(fontSize: 16, height: 1.5),
+                            ],
                           ),
-                        ]),
+                          Container(
+                            height: 80, // Adjust the height as needed
+                            child: VerticalDivider(
+                              width: 2,
+                              thickness: 2,
+                            ),
+                          ),
+                          Text(
+                            '30 Hari Lagi',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                  )),
+                  SizedBox(width: 10.0),
+                  // Expanded(
+                  //   child: Card(
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(16.0),
+                  //       child: Column(children: [
+                  //         Text(
+                  //           'H-20 Pengembalian',
+                  //           style: TextStyle(fontSize: 16, height: 1.5),
+                  //         ),
+                  //       ]),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               SizedBox(height: 25),

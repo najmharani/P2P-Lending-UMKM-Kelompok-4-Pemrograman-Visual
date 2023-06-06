@@ -4,7 +4,128 @@ class PeminjamanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('Peminjaman'), // Replace with your actual form widget
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      width: double.infinity,
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 211, 195, 195),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Peminjaman Ke-1',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Investor A',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text('PLAFOND'),
+                                  Text('Rp 5.000.000')
+                                ],
+                              ),
+                              Column(
+                                children: [Text('%BAGI HASIL'), Text('12%')],
+                              ),
+                              Column(
+                                children: [Text('TENOR'), Text('50 Minggu')],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // CircleAvatar(
+                    //   backgroundImage: AssetImage('assets/logo.png'),
+                    //   radius: 50,
+                    // ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Detail Pinjaman',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 5),
+                Divider(
+                  thickness: 3,
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Status',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Completed',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Status',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Completed',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Status',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Completed',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
