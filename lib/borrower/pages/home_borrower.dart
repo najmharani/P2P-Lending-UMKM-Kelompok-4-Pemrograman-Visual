@@ -252,7 +252,7 @@ class HomeBorrower extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                'Angsuran Pengembalian',
+                'Angsuran Saat Ini',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
