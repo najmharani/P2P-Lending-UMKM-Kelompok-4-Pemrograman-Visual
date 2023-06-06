@@ -270,32 +270,80 @@ class MarketplaceState extends State<Marketplace> {
     return Card(
       elevation: 2.0,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            height: 200.0,
-          ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/logo.png'),
+                      radius: 50,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          description,
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.place,
+                              color: Colors.grey,
+                              size: 14.0,
+                            ),
+                            Text(
+                              'alamat',
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Color.fromARGB(96, 223, 64, 251),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.add),
+                        color: Colors.purple,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 8.0),
-                Text(
-                  description,
-                  style: TextStyle(fontSize: 16.0),
-                ),
               ],
             ),
           ),
-          Padding(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+              ),
+              Column(
+                children: [Text('%BAGI HASIL'), Text('12%')],
+              ),
+              Column(
+                children: [Text('TENOR'), Text('50 Minggu')],
+              ),
+            ],
+          ),
+          SizedBox(height: 16.0),
+          Container(
             padding: EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () {
@@ -331,41 +379,105 @@ class ProductDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Product Detail'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              name,
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 50),
+                      width: double.infinity,
+                      padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Nama Akun',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Alamat',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text('PLAFOND'),
+                                  Text('Rp 5.000.000')
+                                ],
+                              ),
+                              Column(
+                                children: [Text('%BAGI HASIL'), Text('12%')],
+                              ),
+                              Column(
+                                children: [Text('TENOR'), Text('50 Minggu')],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/logo.png'),
+                      radius: 50,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Informasi tambahan tentang akun ini...',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            SizedBox(height: 8.0),
-            Text(
-              description,
-              style: TextStyle(fontSize: 16.0),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(color: Colors.grey),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Rp. 0',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Logika yang ingin Anda lakukan ketika tombol "Danai" ditekan
+                    },
+                    child: Text('Danai'),
+                  ),
+                ),
+              ],
             ),
-            Spacer(),
-            Text(
-              'Rp. 0',
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Logika yang ingin Anda lakukan ketika tombol "Danai" ditekan
-                },
-                child: Text('Danai'),
-              ),
-            ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
