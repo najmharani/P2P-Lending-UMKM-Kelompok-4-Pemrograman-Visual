@@ -86,7 +86,7 @@ class PeminjamanPage extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Completed',
+                      'Dalam Proses',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -96,12 +96,12 @@ class PeminjamanPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Status',
+                      'Waktu Pengajuan',
                       style: TextStyle(fontSize: 15),
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Completed',
+                      '2 Juni 2023',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -111,12 +111,57 @@ class PeminjamanPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Status',
+                      'Waktu Pendanaan',
                       style: TextStyle(fontSize: 15),
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Completed',
+                      '5 Juni 2023',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Jatuh Tempo',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '5 Juli 2023',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Penghasilan per Bulan',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Rp. 3.500.000',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Jumlah Angsuran',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Rp. 700.000',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -391,7 +436,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Rp. 1.200.000',
+                      'Rp. 700.000',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
