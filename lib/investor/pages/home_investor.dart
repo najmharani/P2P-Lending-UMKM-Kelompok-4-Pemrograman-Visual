@@ -90,7 +90,7 @@ class HomeInvestor extends StatelessWidget {
                               'Withdraw',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.white,
+                                color: Colors.black54,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -120,7 +120,7 @@ class HomeInvestor extends StatelessWidget {
                               'Top Up',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.white,
+                                color: Colors.black54,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -261,68 +261,103 @@ class DetailAkunPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Akun'),
+        title: Text('Detail Pendanaan'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/logo.png'),
-              radius: 50,
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Nama Akun',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Pendanaan Aktif',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Informasi tambahan tentang akun ini...',
-              style: TextStyle(
-                fontSize: 16,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 16),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.topCenter,
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage('assets/profile_pic.png'),
-                    radius: 20,
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Nama Akun',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
+                  Container(
+                    margin: EdgeInsets.only(top: 50),
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Nama Akun',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Alamat',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                            ),
+                            Column(
+                              children: [Text('%BAGI HASIL'), Text('12%')],
+                            ),
+                            Column(
+                              children: [Text('TENOR'), Text('50 Minggu')],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(width: 8),
-                  Icon(Icons.chat),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/logo.png'),
+                    radius: 50,
+                  ),
                 ],
               ),
-            ),
-          ],
+              SizedBox(height: 16),
+              Text(
+                'Informasi tambahan tentang akun ini...',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 16),
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/profile_pic.png'),
+                      radius: 20,
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Nama Akun',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(Icons.chat),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
