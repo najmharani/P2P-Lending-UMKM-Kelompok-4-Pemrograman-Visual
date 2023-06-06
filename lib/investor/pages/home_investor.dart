@@ -10,14 +10,6 @@ class HomeInvestor extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hello, Investor!'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Aksi saat tombol notifikasi ditekan
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
