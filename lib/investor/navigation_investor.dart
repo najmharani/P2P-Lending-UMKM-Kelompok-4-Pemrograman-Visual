@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/icon.dart';
 import 'package:p2plending_umkm/investor/pages/home_investor.dart';
 import 'package:p2plending_umkm/investor/pages/marketplace.dart';
 import 'package:p2plending_umkm/investor/pages/aktivitas_investor.dart';
@@ -54,19 +55,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
         onTap: _changePage,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Custom_Icon.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(Custom_Icon.coins),
             label: 'Marketplace',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Custom_Icon.chart_line),
             label: 'Aktivitas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Custom_Icon.user),
             label: 'Account',
           ),
         ],
