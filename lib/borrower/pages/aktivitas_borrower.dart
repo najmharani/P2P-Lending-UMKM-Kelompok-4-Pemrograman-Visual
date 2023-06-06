@@ -1,18 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:intl/intl.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/withdraw.dart';
-import 'package:p2plending_umkm/borrower/pages/fitur_topup/bank_account.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/topup.dart';
+import 'package:p2plending_umkm/borrower/pages/fitur_topup/bank_account.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/detail_transaksi.dart';
 
-class AktivitasBorrower extends StatelessWidget {
-  final List<String> transactionHistory = [
-    'Transaction 1',
-    'Transaction 2',
-    'Transaction 3',
-    'Transaction 4',
-    'Transaction 5',
+class Transaction {
+  final String name;
+  final DateTime date;
+  final int amount;
+
+  Transaction(this.name, this.date, this.amount);
+}
+
+class AktivitasBorrower extends StatefulWidget {
+  @override
+  _AktivitasInvestorState createState() => _AktivitasInvestorState();
+}
+
+class _AktivitasInvestorState extends State<AktivitasBorrower> {
+  final List<Transaction> transactionHistory = [
+    Transaction('Transaction 1', DateTime(2023, 5, 15), 30000),
+    Transaction('Transaction 2', DateTime(2023, 5, 10), 25000),
+    Transaction('Transaction 3', DateTime(2023, 4, 25), 35000),
+    Transaction('Transaction 4', DateTime(2023, 4, 18), 20000),
+    Transaction('Transaction 5', DateTime(2023, 3, 30), 40000),
   ];
+  String selectedMonth = 'All';
+  late List<Transaction> filteredTransactions;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredTransactions = List.from(transactionHistory);
+  }
+
+  void filterTransactionsByMonth(String month) {
+    setState(() {
+      selectedMonth = month;
+      if (month == 'All') {
+        filteredTransactions = List.from(transactionHistory);
+      } else {
+        filteredTransactions = transactionHistory
+            .where((transaction) =>
+                DateFormat('MMMM yyyy').format(transaction.date) == month)
+            .toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +66,7 @@ class AktivitasBorrower extends StatelessWidget {
               child: ListTile(
                 title: Column(
                   children: [
+                    SizedBox(height: 10),
                     Text(
                       'Dana Tersedia',
                       style: TextStyle(
@@ -119,7 +156,8 @@ class AktivitasBorrower extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => AccountDetailPage(),
+                                      builder: (context) =>
+                                          BankAccountListPage(),
                                     ),
                                   );
                                 },
@@ -140,11 +178,12 @@ class AktivitasBorrower extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Text(
               'Transaction History',
               style: TextStyle(
@@ -154,29 +193,42 @@ class AktivitasBorrower extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
+            DropdownButton<String>(
+              value: selectedMonth,
+              hint: Text('Filter by Month'),
+              onChanged: (String? month) =>
+                  filterTransactionsByMonth(month ?? 'All'),
+              items: _buildDropdownItems(),
+            ),
             Expanded(
               child: ListView.builder(
-                itemCount: transactionHistory.length,
+                itemCount: filteredTransactions.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
                       onTap: () {
                         // Handle transaction click
-                        print('Clicked on: ${transactionHistory[index]}');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => TransactionDetailPage(
-                              transactionId: transactionHistory[index],
-                              transactionType: 'Sample Type',
-                              transactionAmount: 'Sample Amount',
-                              transactionDate: 'Sample Date',
+                              transactionId: filteredTransactions[index].name,
+                              transactionType: 'Pengembalian',
+                              transactionAmount: '50.000',
+                              transactionDate: '27/05/2023',
                             ),
                           ),
                         );
                       },
-                      title: Text(transactionHistory[index]),
+                      title: Text(filteredTransactions[index].name),
                       subtitle: Text('Subtitle for transaction'),
+                      trailing: Column(children: [
+                        SizedBox(height: 14),
+                        Text(
+                          'Rp30.000',
+                          style: TextStyle(fontSize: 16, color: Colors.green),
+                        )
+                      ]),
                     ),
                   );
                 },
@@ -186,5 +238,21 @@ class AktivitasBorrower extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> _buildDropdownItems() {
+    List<String> months = [
+      'All',
+      'May 2023',
+      'April 2023',
+      'March 2023',
+    ];
+
+    return months
+        .map((month) => DropdownMenuItem<String>(
+              value: month,
+              child: Text(month),
+            ))
+        .toList();
   }
 }

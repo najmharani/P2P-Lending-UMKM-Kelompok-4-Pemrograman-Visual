@@ -1,102 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/borrower/pages/fitur_topup/add_bank_account.dart';
 
-class AccountDetailPage extends StatefulWidget {
+class BankAccountListPage extends StatefulWidget {
   @override
-  _AccountDetailPageState createState() => _AccountDetailPageState();
+  _BankAccountListPageState createState() => _BankAccountListPageState();
 }
 
-class _AccountDetailPageState extends State<AccountDetailPage> {
-  TextEditingController _accountController = TextEditingController();
-  bool _isEditing = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Fetch the account details from storage or API
-    String accountDetails = 'Bank Account ABC';
-    _accountController.text = accountDetails;
-  }
+class _BankAccountListPageState extends State<BankAccountListPage> {
+  List<BankAccount> bankAccounts = [
+    BankAccount('Bank A', '1234567890', 'John Doe'),
+    BankAccount('Bank B', '0987654321', 'Jane Smith'),
+    // Add more bank accounts as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account Detail Page'),
+        title: Text('Bank Accounts'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Account Details',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: _accountController,
-              enabled: _isEditing,
-              decoration: InputDecoration(
-                hintText: 'Enter account details',
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _isEditing = !_isEditing;
-                    });
-                  },
-                  child: Text(_isEditing ? 'Save' : 'Edit'),
+      body: ListView.builder(
+        itemCount: bankAccounts.length,
+        itemBuilder: (BuildContext context, int index) {
+          BankAccount bankAccount = bankAccounts[index];
+          return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      BankAccountDetailPage(bankAccount: bankAccount),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Perform account change or deletion logic here
-                    // ...
-                    // Show a confirmation dialog or navigate back
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Confirmation'),
-                        content: Text('Do you want to delete this account?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              // Close the dialog and navigate back
-                              Navigator.pop(context);
-                              // You can also perform additional actions if needed
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Perform the deletion process
-                              // ...
-                              // Close the dialog and navigate back
-                              Navigator.pop(context);
-                              // You can also perform additional actions if needed
-                            },
-                            child: Text('Delete'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  child: Text('Delete'),
-                ),
-              ],
+              );
+            },
+            title: Text(bankAccount.bankName),
+            subtitle: Text('Account Name: ${bankAccount.accountName}'),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddBankAccountPage(),
             ),
-          ],
-        ),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class BankAccount {
+  final String bankName;
+  final String accountNumber;
+  final String accountName;
+
+  BankAccount(this.bankName, this.accountNumber, this.accountName);
+}
+
+class BankAccountDetailPage extends StatelessWidget {
+  final BankAccount bankAccount;
+
+  BankAccountDetailPage({required this.bankAccount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bank Account Detail'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            title: Text('Bank Name'),
+            subtitle: Text(bankAccount.bankName),
+          ),
+          ListTile(
+            title: Text('Account Number'),
+            subtitle: Text(bankAccount.accountNumber),
+          ),
+          ListTile(
+            title: Text('Account Name'),
+            subtitle: Text(bankAccount.accountName),
+          ),
+        ],
       ),
     );
   }
