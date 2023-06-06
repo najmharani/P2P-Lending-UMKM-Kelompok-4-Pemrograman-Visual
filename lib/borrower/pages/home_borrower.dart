@@ -172,6 +172,11 @@ class HomeBorrower extends StatelessWidget {
                   ],
                 ),
               ),
+              Text(
+                'Pengembalian ',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -207,15 +212,29 @@ class HomeBorrower extends StatelessWidget {
                               thickness: 2,
                             ),
                           ),
-                          Text(
-                            '30 Hari Lagi',
-                            style: TextStyle(fontSize: 18),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Jumlah Pengembalian',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Rp100.000',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                   )),
-                  SizedBox(width: 10.0),
                   // Expanded(
                   //   child: Card(
                   //     child: Padding(
@@ -231,7 +250,7 @@ class HomeBorrower extends StatelessWidget {
                   // ),
                 ],
               ),
-              SizedBox(height: 25),
+              SizedBox(height: 10),
               Text(
                 'Angsuran Pengembalian',
                 style: TextStyle(fontSize: 18),
