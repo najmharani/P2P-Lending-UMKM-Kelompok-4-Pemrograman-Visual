@@ -85,6 +85,9 @@ flutter:
     - family: lexend
       fonts:
         - asset: assets/fonts/Lexend-Regular.ttf
+    - family: Custom_Icon
+      fonts:
+        - asset: assets/fonts/Custom_Icon.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
