@@ -15,6 +15,7 @@ class P2PLendingUMKMApp extends StatelessWidget {
         primarySwatch: primary,
         fontFamily: 'lexend',
       ),
+      debugShowCheckedModeBanner: false,
       home: LandingPage(),
     );
   }
