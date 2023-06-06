@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/icon.dart';
 import 'package:p2plending_umkm/landing_page/pages/info_peminjaman.dart';
 import 'package:p2plending_umkm/landing_page/pages/info_pendanaan.dart';
 import 'package:p2plending_umkm/landing_page/pages/info_aplikasi.dart';
@@ -37,19 +38,19 @@ class _LandingPageState extends State<LandingPage> {
         onTap: _changePage,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Custom_Icon.home),
             label: 'Info Pendanaan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(Custom_Icon.coins),
             label: 'Info Peminjaman',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Custom_Icon.chart_line),
             label: 'Info Aplikasi',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Custom_Icon.user),
             label: 'Akun',
           ),
         ],

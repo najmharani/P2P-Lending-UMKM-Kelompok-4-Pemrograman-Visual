@@ -5,6 +5,7 @@ import 'package:p2plending_umkm/borrower/pages/home_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/pinjaman_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/aktivitas_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/profile_borrower.dart';
+import 'package:p2plending_umkm/icon.dart';
 
 void main() {
   runApp(BorrowerApp());
@@ -53,19 +54,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
         onTap: _changePage,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Custom_Icon.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+            icon: Icon(Custom_Icon.coins),
             label: 'Pinjaman',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Custom_Icon.chart_line),
             label: 'Aktivitas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Custom_Icon.user),
             label: 'Profil',
           ),
         ],
