@@ -17,6 +17,7 @@ class BorrowerApp extends StatelessWidget {
     return MaterialApp(
       title: 'Borrower',
       theme: ThemeData(primarySwatch: primary, fontFamily: 'lexend'),
+      debugShowCheckedModeBanner: false,
       home: BottomNavigation(),
     );
   }
