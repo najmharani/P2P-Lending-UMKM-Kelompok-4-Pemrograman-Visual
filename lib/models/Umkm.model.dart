@@ -53,8 +53,7 @@ class UmkmCubit extends Cubit<Umkm> {
           fotoUmkm: "",
           rating: "",
           omzet: 0,
-        )) {
-  }
+        ));
 
   //map dari json ke atribut
   void setFromJson(Map<String, dynamic> json) {
@@ -77,8 +76,7 @@ class UmkmCubit extends Cubit<Umkm> {
   }
 
   void fetchData() async {
-    String url =
-        "http://127.0.0.1:8000/login_auth/namaUmkm=$namaUmkm&alamatUmkmProvinsi=$alamatUmkmProvinsi";
+    String url = "";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       setFromJson(jsonDecode(response.body));
