@@ -182,6 +182,14 @@ class ProfileInvestor extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout_rounded),
+            onPressed: () {
+              // Aksi saat tombol notifikasi ditekan
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
