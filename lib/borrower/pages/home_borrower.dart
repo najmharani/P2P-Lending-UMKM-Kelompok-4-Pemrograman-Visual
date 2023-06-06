@@ -25,6 +25,57 @@ class HomeBorrower extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 50),
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 211, 195, 195),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'UMKM Jaya',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Najma Qalbi Dwiharani',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                            ),
+                            Column(
+                              children: [Text('%BAGI HASIL'), Text('12%')],
+                            ),
+                            Column(
+                              children: [Text('TENOR'), Text('50 Minggu')],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/logo.png'),
+                    radius: 50,
+                  ),
+                ],
+              ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
                 padding: EdgeInsets.all(10.0),
