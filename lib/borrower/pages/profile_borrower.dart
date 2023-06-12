@@ -177,11 +177,22 @@ class ProfileBorrower extends StatelessWidget {
   String selfPictureStatus =
       'Uploaded'; // Replace with actual self picture status
 
+  String namaUMKM = 'UMKM Sahabat Jaya'; // Replace with actual user full name
+  String alamatUMKM = '02/09/2003'; // Replace with actual user date of birth
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout_rounded),
+            onPressed: () {
+              // Aksi saat tombol notifikasi ditekan
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -233,6 +244,81 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => PasswordChangePage(),
+                ),
+              );
+            },
+          ),
+          Divider(height: 10),
+          SizedBox(height: 10),
+          Text(
+            "Profil UMKM",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          ListTile(
+            title: Text('Nama UMKM'),
+            subtitle: Text(fullName),
+            onTap: () {
+              // Navigate to the edit full name page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditFullNamePage(fullName: fullName),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Alamat'),
+            subtitle: Text(dateOfBirth),
+            onTap: () {
+              // Navigate to the edit date of birth page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('No Hp'),
+            subtitle: Text(phoneNumber),
+            onTap: () {
+              // Navigate to the edit phone number page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EditPhoneNumberPage(phoneNumber: phoneNumber),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('KTP'),
+            subtitle: Text(ktpStatus),
+            onTap: () {
+              // Navigate to the KTP detail page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      InvestorKTPDetailPage(ktpStatus: ktpStatus),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Self Picture'),
+            subtitle: Text(selfPictureStatus),
+            onTap: () {
+              // Navigate to the self picture detail page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InvestorSelfPictureDetailPage(
+                      selfPictureStatus: selfPictureStatus),
                 ),
               );
             },
@@ -311,6 +397,20 @@ class ProfileBorrower extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Divider(height: 10),
+          SizedBox(height: 10),
+          Text(
+            "Customer Service",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          ListTile(
+            title: Text('Hubungi Kami'),
+            subtitle: Text("08190677882"),
+          ),
+          ListTile(
+            title: Text('Email'),
+            subtitle: Text("m2m@gmail.com"),
           ),
         ],
       ),
