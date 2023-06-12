@@ -12,7 +12,7 @@ class HomeInvestor extends StatelessWidget {
         title: Text('Hello, Investor!'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: Container(
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,11 +20,11 @@ class HomeInvestor extends StatelessWidget {
               SizedBox(height: 16),
               Text(
                 'Total Asetmu',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 15),
               ),
               Text(
                 'Rp 10,000,000',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 2),
               Container(
@@ -32,8 +32,16 @@ class HomeInvestor extends StatelessWidget {
                 padding: EdgeInsets.all(10.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 237, 237, 237),
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: 3, // Spread radius
+                      blurRadius: 5, // Blur radius
+                      offset: Offset(0, 3), // Offset in the x, y direction
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,75 +140,86 @@ class HomeInvestor extends StatelessWidget {
               Text('Kamu sedang mendanai 0 mitra'),
               SizedBox(height: 16),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        'Sisa Pokok',
-                        style: TextStyle(
-                          fontSize: 16,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Sisa Pokok',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Rp 0',
-                        style: TextStyle(
-                          fontSize: 14,
+                        Text(
+                          'Rp 0',
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Bagi hasil diterima',
-                        style: TextStyle(
-                          fontSize: 16,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Bagi hasil diterima',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Rp 0',
-                        style: TextStyle(
-                          fontSize: 14,
+                        Text(
+                          'Rp 0',
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              SizedBox(height: 16),
+              Divider(),
+              SizedBox(height: 16),
               Text(
                 'Tabel Kategori Mitra',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
-              DataTable(
-                columns: [
-                  DataColumn(
-                    label: Container(child: Text('Kategori'), width: 100),
+              Table(
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 205, 205, 205),
+                    ),
+                    children: [
+                      const Text('Kategori'),
+                      const Text('Mitra'),
+                      const Text('Sisa Pokok'),
+                    ],
                   ),
-                  DataColumn(
-                    label: Container(child: Text('Mitra'), width: 100),
+                  TableRow(
+                    children: [
+                      const Text('Mitra Lancar'),
+                      const Text('0'),
+                      const Text('Rp 0'),
+                    ],
                   ),
-                  DataColumn(
-                    label: Container(child: Text('Sisa Pokok'), width: 100),
+                  TableRow(
+                    children: [
+                      const Text('Mitra Terlambat'),
+                      const Text('0'),
+                      const Text('Rp 0'),
+                    ],
                   ),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('Mitra Lancar')),
-                    DataCell(Text('0')),
-                    DataCell(Text('Rp 0')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Mitra Terlambat')),
-                    DataCell(Text('0')),
-                    DataCell(Text('Rp 0')),
-                  ]),
                 ],
               ),
-              SizedBox(height: 32),
+              SizedBox(height: 16),
+              Divider(),
+              SizedBox(height: 16),
               Text(
                 'Akun UMKM Pendanaan Aktif',
                 style: TextStyle(fontSize: 18),
@@ -240,6 +259,50 @@ class HomeInvestor extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(height: 16),
+              Divider(),
+              SizedBox(height: 16),
+              Text(
+                'Riwayat Pendanaan',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 8),
+              Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    // Ganti dengan avatar akun
+                    backgroundImage: AssetImage('assets/logo.png'),
+                  ),
+                  title: Text('Nama Akun'),
+                  subtitle: Text('Pendanaan Selesai'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DetailRiwayatPage()),
+                    );
+                  },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    // Ganti dengan avatar akun
+                    backgroundImage: AssetImage('assets/logo.png'),
+                  ),
+                  title: Text('Nama Akun'),
+                  subtitle: Text('Pendanaan Selesai'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DetailRiwayatPage()),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -256,10 +319,10 @@ class DetailAkunPage extends StatelessWidget {
         title: Text('Detail Pendanaan'),
       ),
       body: Center(
-        child: Padding(
+        child: Container(
           padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(color: Colors.grey[200]),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Stack(
                 alignment: AlignmentDirectional.topCenter,
@@ -293,13 +356,31 @@ class DetailAkunPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
-                              children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                              children: [Text('PLAFOND'), Text('Rp5.000.000')],
                             ),
                             Column(
                               children: [Text('%BAGI HASIL'), Text('12%')],
                             ),
                             Column(
                               children: [Text('TENOR'), Text('50 Minggu')],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text('PENGHASILAN'),
+                                Text('Rp1.000.000')
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('SISA POKOK'),
+                                Text('Rp5.000.000')
+                              ],
                             ),
                           ],
                         ),
@@ -312,39 +393,229 @@ class DetailAkunPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-              Text(
-                'Informasi tambahan tentang akun ini...',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              SizedBox(height: 5),
               Container(
                 margin: EdgeInsets.only(top: 16),
                 padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/profile_pic.png'),
-                      radius: 20,
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Nama Akun',
-                        style: TextStyle(
-                          fontSize: 18,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Jadwal Pembayaran',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.chat),
+                    SizedBox(height: 8),
+                    DataTable(
+                      columns: [
+                        DataColumn(
+                          label: Container(child: Text('Cicilan'), width: 100),
+                        ),
+                        DataColumn(
+                          label:
+                              Container(child: Text('Jatuh Tempo'), width: 100),
+                        ),
+                        DataColumn(
+                          label: Container(child: Text('Jumlah'), width: 100),
+                        ),
+                      ],
+                      rows: [
+                        DataRow(cells: [
+                          DataCell(Text('1')),
+                          DataCell(Text('1 Januari 2024')),
+                          DataCell(Text('Rp 0')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('2')),
+                          DataCell(Text('1 Februari 2024')),
+                          DataCell(Text('Rp 0')),
+                        ]),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+enum RatingType { a, amin, b, bmin, c }
+
+class DetailRiwayatPage extends StatefulWidget {
+  const DetailRiwayatPage({super.key});
+
+  @override
+  State<DetailRiwayatPage> createState() => DetailRiwayatPageState();
+}
+
+class DetailRiwayatPageState extends State<DetailRiwayatPage> {
+  RatingType? valueRating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Riwayat Pendanaan'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(color: Colors.grey[200]),
+          child: Column(
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 50),
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Nama Akun',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Alamat',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [Text('PLAFOND'), Text('Rp5.000.000')],
+                            ),
+                            Column(
+                              children: [Text('%BAGI HASIL'), Text('12%')],
+                            ),
+                            Column(
+                              children: [Text('TENOR'), Text('50 Minggu')],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text('PENGHASILAN'),
+                                Text('Rp1.000.000')
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('HASIL INVESTASI'),
+                                Text('Rp5.600.000')
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/logo.png'),
+                    radius: 50,
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              Container(
+                margin: EdgeInsets.only(top: 16),
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Rating',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [],
+                    ),
+                    RadioListTile<RatingType>(
+                      title: const Text('A'),
+                      value: RatingType.a,
+                      groupValue: valueRating,
+                      onChanged: (RatingType? value) {
+                        setState(() {
+                          valueRating = value;
+                        });
+                      },
+                    ),
+                    RadioListTile<RatingType>(
+                      title: const Text('A-'),
+                      value: RatingType.amin,
+                      groupValue: valueRating,
+                      onChanged: (RatingType? value) {
+                        setState(() {
+                          valueRating = value; //jawaban user disimpan
+                        });
+                      },
+                    ),
+                    RadioListTile<RatingType>(
+                      title: const Text('B'),
+                      value: RatingType.b,
+                      groupValue: valueRating,
+                      onChanged: (RatingType? value) {
+                        setState(() {
+                          valueRating = value; //jawaban user disimpan
+                        });
+                      },
+                    ),
+                    RadioListTile<RatingType>(
+                      title: const Text('B-'),
+                      value: RatingType.bmin,
+                      groupValue: valueRating,
+                      onChanged: (RatingType? value) {
+                        setState(() {
+                          valueRating = value; //jawaban user disimpan
+                        });
+                      },
+                    ),
+                    RadioListTile<RatingType>(
+                      title: const Text('C'),
+                      value: RatingType.c,
+                      groupValue: valueRating,
+                      onChanged: (RatingType? value) {
+                        setState(() {
+                          valueRating = value; //jawaban user disimpan
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
