@@ -170,26 +170,22 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
 class ProfileBorrower extends StatelessWidget {
   String email = 'najma@gmail.com';
   String pass = '*****';
-  String fullName = 'Najma Qalbi'; // Replace with actual user full name
-  String dateOfBirth = '02/09/2003'; // Replace with actual user date of birth
-  String phoneNumber = '1234567890'; // Replace with actual user phone number
-  String ktpStatus = 'Uploaded'; // Replace with actual KTP status
-  String selfPictureStatus =
-      'Uploaded'; // Replace with actual self picture status
-
+  
   String namaUMKM = 'UMKM Sahabat Jaya'; // Replace with actual user full name
   String alamatUMKM = 'Gegerkalong, Bandung, Jawa Barat'; // Replace with actual user date of birth
   String jenisUsaha = 'Sembako'; // Replace with actual user full name
   String tahunBerdiri = '2012'; // Replace with actual user date of birth
   String deskripsiUMKM = 'Lorem ipsum dolor sit amet.'; // Replace with actual user full name
-  String suratIzinUsahaStatus = 'Uploaded'; // Replace with actual user date of birth
-  String laporanKeuanganStatus = 'Uploaded'; // Replace with actual user full name
-  String fotoUMKMStatus = 'Uploaded'; // Replace with actual user date of birth
+  String suratIzinUsaha = 'Uploaded'; // Replace with actual user date of birth
+  String laporanKeuangan = 'Uploaded'; // Replace with actual user full name
+  String fotoUMKM = 'Uploaded'; // Replace with actual user date of birth
 
+  String namaLengkap = 'Najma Qalbi'; // Replace with actual user full name
+  String tanggalLahir = '02/09/2003'; // Replace with actual user date of birth
   String jenisKelamin = 'Perempuan'; // Replace with actual KTP status
   String nik = '133712345670'; // Replace with actual KTP status
-  String fotoKTPStatus = 'Uploaded'; // Replace with actual KTP status
-  String fotoPemilikStatus = 'Uploaded'; // Replace with actual KTP status
+  String fotoKTP = 'Uploaded'; // Replace with actual KTP status
+  String fotoPemilik = 'Uploaded'; // Replace with actual KTP status
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +215,7 @@ class ProfileBorrower extends StatelessWidget {
           SizedBox(height: 10),
           Center(
             child: Text(
-              fullName,
+              namaLengkap,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -273,7 +269,7 @@ class ProfileBorrower extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditFullNamePage(fullName: fullName),
+                  builder: (context) => EditNamaUMKMPage(namaUMKM: namaUMKM),
                 ),
               );
             },
@@ -287,7 +283,7 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                      EditAlamatUMKMPage(alamatUMKM: alamatUMKM),
                 ),
               );
             },
@@ -301,7 +297,7 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                      EditJenisUsahaPage(jenisUsaha: jenisUsaha),
                 ),
               );
             },
@@ -315,7 +311,7 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                      EditTahunBerdiriPage(tahunBerdiri: tahunBerdiri),
                 ),
               );
             },
@@ -329,49 +325,49 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                      EditDeskripsiUMKMPage(deskripsiUMKM: deskripsiUMKM),
                 ),
               );
             },
           ),
           ListTile(
             title: Text('Surat Izin Usaha'),
-            subtitle: Text(suratIzinUsahaStatus),
+            subtitle: Text(suratIzinUsaha),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InvestorSelfPictureDetailPage(
-                      selfPictureStatus: selfPictureStatus),
+                  builder: (context) => 
+                      EditSuratIzinUsahaPage(suratIzinUsaha: suratIzinUsaha),
                 ),
               );
             },
           ),
           ListTile(
             title: Text('Laporan Keuangan'),
-            subtitle: Text(laporanKeuanganStatus),
+            subtitle: Text(laporanKeuangan),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InvestorSelfPictureDetailPage(
-                      selfPictureStatus: selfPictureStatus),
+                  builder: (context) => 
+                      EditLaporanKeuanganPage(laporanKeuangan: laporanKeuangan),
                 ),
               );
             },
           ),
           ListTile(
             title: Text('Foto UMKM'),
-            subtitle: Text(fotoUMKMStatus),
+            subtitle: Text(fotoUMKM),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InvestorSelfPictureDetailPage(
-                      selfPictureStatus: selfPictureStatus),
+                  builder: (context) => 
+                      EditFotoUMKMPage(fotoUMKM: fotoUMKM),
                 ),
               );
             },
@@ -384,27 +380,27 @@ class ProfileBorrower extends StatelessWidget {
           ),
           ListTile(
             title: Text('Nama Lengkap'),
-            subtitle: Text(fullName),
+            subtitle: Text(namaLengkap),
             onTap: () {
               // Navigate to the edit full name page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditFullNamePage(fullName: fullName),
+                  builder: (context) => EditNamaLengkapPage(namaLengkap: namaLengkap),
                 ),
               );
             },
           ),
           ListTile(
             title: Text('Tanggal Lahir'),
-            subtitle: Text(dateOfBirth),
+            subtitle: Text(tanggalLahir),
             onTap: () {
               // Navigate to the edit date of birth page
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                      EditTanggalLahirPage(tanggalLahir: tanggalLahir),
                 ),
               );
             },
@@ -418,7 +414,7 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      InvestorKTPDetailPage(ktpStatus: ktpStatus),
+                      EditJenisKelaminPage(jenisKelamin: jenisKelamin),
                 ),
               );
             },
@@ -432,35 +428,35 @@ class ProfileBorrower extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      InvestorKTPDetailPage(ktpStatus: ktpStatus),
+                      EditNIKPage(nik: nik),
                 ),
               );
             },
           ),
           ListTile(
             title: Text('Foto KTP'),
-            subtitle: Text(fotoKTPStatus),
+            subtitle: Text(fotoKTP),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InvestorSelfPictureDetailPage(
-                      selfPictureStatus: selfPictureStatus),
+                  builder: (context) =>
+                      EditFotoKTPPage(fotoKTP: fotoKTP),
                 ),
               );
             },
           ),
           ListTile(
             title: Text('Foto Pemilik'),
-            subtitle: Text(fotoPemilikStatus),
+            subtitle: Text(fotoPemilik),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InvestorSelfPictureDetailPage(
-                      selfPictureStatus: selfPictureStatus),
+                  builder: (context) =>
+                      EditFotoPemilikPage(fotoPemilik: fotoPemilik),
                 ),
               );
             },
@@ -485,27 +481,27 @@ class ProfileBorrower extends StatelessWidget {
   }
 }
 
-class EditFullNamePage extends StatefulWidget {
-  final String fullName;
+class EditNamaUMKMPage extends StatefulWidget {
+  final String namaUMKM;
 
-  EditFullNamePage({required this.fullName});
+  EditNamaUMKMPage({required this.namaUMKM});
 
   @override
-  _EditFullNamePageState createState() => _EditFullNamePageState();
+  _EditNamaUMKMPageState createState() => _EditNamaUMKMPageState();
 }
 
-class _EditFullNamePageState extends State<EditFullNamePage> {
-  late TextEditingController _fullNameController;
+class _EditNamaUMKMPageState extends State<EditNamaUMKMPage> {
+  late TextEditingController _namaUMKMController;
 
   @override
   void initState() {
-    _fullNameController = TextEditingController(text: widget.fullName);
+    _namaUMKMController = TextEditingController(text: widget.namaUMKM);
     super.initState();
   }
 
   @override
   void dispose() {
-    _fullNameController.dispose();
+    _namaUMKMController.dispose();
     super.dispose();
   }
 
@@ -513,7 +509,7 @@ class _EditFullNamePageState extends State<EditFullNamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Full Name'),
+        title: Text('Edit Nama UMKM'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -521,7 +517,7 @@ class _EditFullNamePageState extends State<EditFullNamePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Full Name',
+              'Nama UMKM',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -529,142 +525,7 @@ class _EditFullNamePageState extends State<EditFullNamePage> {
             ),
             SizedBox(height: 10),
             TextFormField(
-              controller: _fullNameController,
-              decoration: InputDecoration(
-                hintText: 'Enter your full name',
-                // Add additional styling as desired
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Save the updated full name
-                String updatedFullName = _fullNameController.text;
-                // Perform the necessary update operation
-                // ...
-
-                // Show a snackbar or navigate back to the profile page
-                // ...
-              },
-              child: Text('Save'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EditDateOfBirthPage extends StatefulWidget {
-  final String dateOfBirth;
-
-  EditDateOfBirthPage({required this.dateOfBirth});
-
-  @override
-  _EditDateOfBirthPageState createState() => _EditDateOfBirthPageState();
-}
-
-class _EditDateOfBirthPageState extends State<EditDateOfBirthPage> {
-  late TextEditingController _dateOfBirthController;
-
-  @override
-  void initState() {
-    _dateOfBirthController = TextEditingController(text: widget.dateOfBirth);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _dateOfBirthController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Date of Birth'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Date of Birth',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            TextFormField(
-              controller: _dateOfBirthController,
-              decoration: InputDecoration(
-                hintText: 'Enter your date of birth',
-                // Add additional styling as desired
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Save the updated date of birth
-                String updatedDateOfBirth = _dateOfBirthController.text;
-              },
-              child: Text('Save'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EditPhoneNumberPage extends StatefulWidget {
-  final String phoneNumber;
-
-  EditPhoneNumberPage({required this.phoneNumber});
-
-  @override
-  _EditPhoneNumberPageState createState() => _EditPhoneNumberPageState();
-}
-
-class _EditPhoneNumberPageState extends State<EditPhoneNumberPage> {
-  late TextEditingController _phoneNumberController;
-
-  @override
-  void initState() {
-    _phoneNumberController = TextEditingController(text: widget.phoneNumber);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _phoneNumberController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Phone Number'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Phone Number',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            TextFormField(
-              controller: _phoneNumberController,
+              controller: _namaUMKMController,
               decoration: InputDecoration(
                 hintText: 'Enter your phone number',
                 // Add additional styling as desired
@@ -674,7 +535,7 @@ class _EditPhoneNumberPageState extends State<EditPhoneNumberPage> {
             ElevatedButton(
               onPressed: () {
                 // Save the updated phone number
-                String updatedPhoneNumber = _phoneNumberController.text;
+                String updatedNamaUMKM = _namaUMKMController.text;
               },
               child: Text('Save'),
             ),
@@ -685,139 +546,61 @@ class _EditPhoneNumberPageState extends State<EditPhoneNumberPage> {
   }
 }
 
-class InvestorKTPDetailPage extends StatelessWidget {
-  final String ktpStatus;
+class EditAlamatUMKMPage extends StatefulWidget {
+  final String alamatUMKM;
 
-  InvestorKTPDetailPage({required this.ktpStatus});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('KTP Detail'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'KTP Status: $ktpStatus',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to the KTP edit page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditKTPPage(ktpStatus: ktpStatus),
-                  ),
-                );
-              },
-              child: Text('Edit KTP'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class InvestorSelfPictureDetailPage extends StatelessWidget {
-  final String selfPictureStatus;
-
-  InvestorSelfPictureDetailPage({required this.selfPictureStatus});
+  EditAlamatUMKMPage({required this.alamatUMKM});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Self Picture Detail'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Self Picture Status: $selfPictureStatus',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to the self picture edit page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditSelfPicturePage(
-                        selfPictureStatus: selfPictureStatus),
-                  ),
-                );
-              },
-              child: Text('Edit Self Picture'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  _EditAlamatUMKMPageState createState() => _EditAlamatUMKMPageState();
 }
 
-class EditKTPPage extends StatefulWidget {
-  final String ktpStatus;
-
-  EditKTPPage({required this.ktpStatus});
-
-  @override
-  _EditKTPPageState createState() => _EditKTPPageState();
-}
-
-class _EditKTPPageState extends State<EditKTPPage> {
-  bool isKTPUploaded = false;
+class _EditAlamatUMKMPageState extends State<EditAlamatUMKMPage> {
+  late TextEditingController _alamatUMKMController;
 
   @override
   void initState() {
-    isKTPUploaded = (widget.ktpStatus == 'Uploaded');
+    _alamatUMKMController = TextEditingController(text: widget.alamatUMKM);
     super.initState();
   }
 
   @override
+  void dispose() {
+    _alamatUMKMController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit KTP'),
+        title: Text('Edit Alamat UMKM'),
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CheckboxListTile(
-              title: Text('KTP Uploaded'),
-              value: isKTPUploaded,
-              onChanged: (bool? value) {
-                setState(() {
-                  isKTPUploaded = value!;
-                });
-              },
+            Text(
+              'Alamat UMKM',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _alamatUMKMController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Save the updated KTP status
-                String updatedKTPStatus =
-                    isKTPUploaded ? 'Uploaded' : 'Not Uploaded';
-                // Perform the necessary update operation
-                // ...
-
-                // Show a snackbar or navigate back to the profile page
-                // ...
+                // Save the updated phone number
+                String updatedAlamatUMKM = _alamatUMKMController.text;
               },
               child: Text('Save'),
             ),
@@ -828,54 +611,776 @@ class _EditKTPPageState extends State<EditKTPPage> {
   }
 }
 
-class EditSelfPicturePage extends StatefulWidget {
-  final String selfPictureStatus;
+class EditJenisUsahaPage extends StatefulWidget {
+  final String jenisUsaha;
 
-  EditSelfPicturePage({required this.selfPictureStatus});
+  EditJenisUsahaPage({required this.jenisUsaha});
 
   @override
-  _EditSelfPicturePageState createState() => _EditSelfPicturePageState();
+  _EditJenisUsahaPageState createState() => _EditJenisUsahaPageState();
 }
 
-class _EditSelfPicturePageState extends State<EditSelfPicturePage> {
-  bool isSelfPictureUploaded = false;
+class _EditJenisUsahaPageState extends State<EditJenisUsahaPage> {
+  late TextEditingController _jenisUsahaController;
 
   @override
   void initState() {
-    isSelfPictureUploaded = (widget.selfPictureStatus == 'Uploaded');
+    _jenisUsahaController = TextEditingController(text: widget.jenisUsaha);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _jenisUsahaController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Self Picture'),
+        title: Text('Edit Jenis Usaha'),
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CheckboxListTile(
-              title: Text('Self Picture Uploaded'),
-              value: isSelfPictureUploaded,
-              onChanged: (bool? value) {
-                setState(() {
-                  isSelfPictureUploaded = value!;
-                });
-              },
+            Text(
+              'Jenis Usaha',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _jenisUsahaController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Save the updated self picture status
-                String updatedSelfPictureStatus =
-                    isSelfPictureUploaded ? 'Uploaded' : 'Not Uploaded';
-                // Perform the necessary update operation
-                // ...
+                // Save the updated phone number
+                String updatedJenisUsaha = _jenisUsahaController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-                // Show a snackbar or navigate back to the profile page
-                // ...
+class EditTahunBerdiriPage extends StatefulWidget {
+  final String tahunBerdiri;
+
+  EditTahunBerdiriPage({required this.tahunBerdiri});
+
+  @override
+  _EditTahunBerdiriPageState createState() => _EditTahunBerdiriPageState();
+}
+
+class _EditTahunBerdiriPageState extends State<EditTahunBerdiriPage> {
+  late TextEditingController _tahunBerdiriController;
+
+  @override
+  void initState() {
+    _tahunBerdiriController = TextEditingController(text: widget.tahunBerdiri);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tahunBerdiriController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Tahun Berdiri'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Tahun Berdiri',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _tahunBerdiriController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedTahunBerdiri = _tahunBerdiriController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditDeskripsiUMKMPage extends StatefulWidget {
+  final String deskripsiUMKM;
+
+  EditDeskripsiUMKMPage({required this.deskripsiUMKM});
+
+  @override
+  _EditDeskripsiUMKMPageState createState() => _EditDeskripsiUMKMPageState();
+}
+
+class _EditDeskripsiUMKMPageState extends State<EditDeskripsiUMKMPage> {
+  late TextEditingController _deskripsiUMKMController;
+
+  @override
+  void initState() {
+    _deskripsiUMKMController = TextEditingController(text: widget.deskripsiUMKM);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _deskripsiUMKMController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Deskripsi UMKM'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Deskripsi UMKM',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _deskripsiUMKMController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedDeskripsiUMKM = _deskripsiUMKMController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditSuratIzinUsahaPage extends StatefulWidget {
+  final String suratIzinUsaha;
+
+  EditSuratIzinUsahaPage({required this.suratIzinUsaha});
+
+  @override
+  _EditSuratIzinUsahaPageState createState() => _EditSuratIzinUsahaPageState();
+}
+
+class _EditSuratIzinUsahaPageState extends State<EditSuratIzinUsahaPage> {
+  late TextEditingController _suratIzinUsahaController;
+
+  @override
+  void initState() {
+    _suratIzinUsahaController = TextEditingController(text: widget.suratIzinUsaha);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _suratIzinUsahaController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Surat Izin Usaha'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Surat Izin Usaha',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _suratIzinUsahaController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedSuratIzinUsaha = _suratIzinUsahaController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditLaporanKeuanganPage extends StatefulWidget {
+  final String laporanKeuangan;
+
+  EditLaporanKeuanganPage({required this.laporanKeuangan});
+
+  @override
+  _EditLaporanKeuanganPageState createState() => _EditLaporanKeuanganPageState();
+}
+
+class _EditLaporanKeuanganPageState extends State<EditLaporanKeuanganPage> {
+  late TextEditingController _laporanKeuanganController;
+
+  @override
+  void initState() {
+    _laporanKeuanganController = TextEditingController(text: widget.laporanKeuangan);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _laporanKeuanganController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Laporan Keuangan'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Laporan Keuangan',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _laporanKeuanganController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedLaporanKeuangan = _laporanKeuanganController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditFotoUMKMPage extends StatefulWidget {
+  final String fotoUMKM;
+
+  EditFotoUMKMPage({required this.fotoUMKM});
+
+  @override
+  _EditFotoUMKMPageState createState() => _EditFotoUMKMPageState();
+}
+
+class _EditFotoUMKMPageState extends State<EditFotoUMKMPage> {
+  late TextEditingController _fotoUMKMController;
+
+  @override
+  void initState() {
+    _fotoUMKMController = TextEditingController(text: widget.fotoUMKM);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _fotoUMKMController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Foto UMKM'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Foto UMKM',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _fotoUMKMController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedFotoUMKM = _fotoUMKMController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditNamaLengkapPage extends StatefulWidget {
+  final String namaLengkap;
+
+  EditNamaLengkapPage({required this.namaLengkap});
+
+  @override
+  _EditNamaLengkapPageState createState() => _EditNamaLengkapPageState();
+}
+
+class _EditNamaLengkapPageState extends State<EditNamaLengkapPage> {
+  late TextEditingController _namaLengkapController;
+
+  @override
+  void initState() {
+    _namaLengkapController = TextEditingController(text: widget.namaLengkap);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _namaLengkapController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Nama Lengkap'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nama Lengkap',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _namaLengkapController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedNamaLengkap = _namaLengkapController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditTanggalLahirPage extends StatefulWidget {
+  final String tanggalLahir;
+
+  EditTanggalLahirPage({required this.tanggalLahir});
+
+  @override
+  _EditTanggalLahirPageState createState() => _EditTanggalLahirPageState();
+}
+
+class _EditTanggalLahirPageState extends State<EditTanggalLahirPage> {
+  late TextEditingController _tanggalLahirController;
+
+  @override
+  void initState() {
+    _tanggalLahirController = TextEditingController(text: widget.tanggalLahir);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tanggalLahirController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Tanggal Lahir'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Tanggal Lahir',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _tanggalLahirController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedTanggalLahir = _tanggalLahirController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditJenisKelaminPage extends StatefulWidget {
+  final String jenisKelamin;
+
+  EditJenisKelaminPage({required this.jenisKelamin});
+
+  @override
+  _EditJenisKelaminPageState createState() => _EditJenisKelaminPageState();
+}
+
+class _EditJenisKelaminPageState extends State<EditJenisKelaminPage> {
+  late TextEditingController _jenisKelaminController;
+
+  @override
+  void initState() {
+    _jenisKelaminController = TextEditingController(text: widget.jenisKelamin);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _jenisKelaminController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Jenis Kelamin'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Jenis Kelamin',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _jenisKelaminController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedJenisKelamin = _jenisKelaminController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditNIKPage extends StatefulWidget {
+  final String nik;
+
+  EditNIKPage({required this.nik});
+
+  @override
+  _EditNIKPageState createState() => _EditNIKPageState();
+}
+
+class _EditNIKPageState extends State<EditNIKPage> {
+  late TextEditingController _nikController;
+
+  @override
+  void initState() {
+    _nikController = TextEditingController(text: widget.nik);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nikController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit NIK'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'NIK',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _nikController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedNIK = _nikController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditFotoKTPPage extends StatefulWidget {
+  final String fotoKTP;
+
+  EditFotoKTPPage({required this.fotoKTP});
+
+  @override
+  _EditFotoKTPPageState createState() => _EditFotoKTPPageState();
+}
+
+class _EditFotoKTPPageState extends State<EditFotoKTPPage> {
+  late TextEditingController _fotoKTPController;
+
+  @override
+  void initState() {
+    _fotoKTPController = TextEditingController(text: widget.fotoKTP);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _fotoKTPController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Foto KTP'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Foto KTP',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _fotoKTPController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedFotoKTP = _fotoKTPController.text;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditFotoPemilikPage extends StatefulWidget {
+  final String fotoPemilik;
+
+  EditFotoPemilikPage({required this.fotoPemilik});
+
+  @override
+  _EditFotoPemilikPageState createState() => _EditFotoPemilikPageState();
+}
+
+class _EditFotoPemilikPageState extends State<EditFotoPemilikPage> {
+  late TextEditingController _fotoPemilikController;
+
+  @override
+  void initState() {
+    _fotoPemilikController = TextEditingController(text: widget.fotoPemilik);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _fotoPemilikController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Foto Pemilik'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Foto Pemilik',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _fotoPemilikController,
+              decoration: InputDecoration(
+                hintText: 'Enter your phone number',
+                // Add additional styling as desired
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Save the updated phone number
+                String updatedFotoPemilik = _fotoPemilikController.text;
               },
               child: Text('Save'),
             ),
