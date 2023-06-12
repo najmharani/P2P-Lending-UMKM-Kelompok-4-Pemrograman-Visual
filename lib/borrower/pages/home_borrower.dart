@@ -25,16 +25,57 @@ class HomeBorrower extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 16),
-              Text(
-                'Total Omzet',
-                style: TextStyle(fontSize: 18),
+              Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 50),
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 211, 195, 195),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'UMKM Jaya',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Najma Qalbi Dwiharani',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                            ),
+                            Column(
+                              children: [Text('%BAGI HASIL'), Text('12%')],
+                            ),
+                            Column(
+                              children: [Text('TENOR'), Text('50 Minggu')],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/logo.png'),
+                    radius: 50,
+                  ),
+                ],
               ),
-              Text(
-                'Rp 10,000,000',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 2),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
                 padding: EdgeInsets.all(10.0),
@@ -131,14 +172,22 @@ class HomeBorrower extends StatelessWidget {
                   ],
                 ),
               ),
+              Text(
+                'Pengembalian ',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 'Tenggat Waktu',
@@ -149,31 +198,61 @@ class HomeBorrower extends StatelessWidget {
                               SizedBox(width: 10.0),
                               Text(
                                 '20 Juni 2023',
-                                style: TextStyle(fontSize: 22, height: 1.5),
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  height: 1.5,
+                                ),
                               ),
-                            ]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  Expanded(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(children: [
-                          Text(
-                            'H-20 Pengembalian',
-                            style: TextStyle(fontSize: 16, height: 1.5),
+                            ],
                           ),
-                        ]),
+                          Container(
+                            height: 80, // Adjust the height as needed
+                            child: VerticalDivider(
+                              width: 2,
+                              thickness: 2,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Jumlah Pengembalian',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Rp100.000',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                  )),
+                  // Expanded(
+                  //   child: Card(
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(16.0),
+                  //       child: Column(children: [
+                  //         Text(
+                  //           'H-20 Pengembalian',
+                  //           style: TextStyle(fontSize: 16, height: 1.5),
+                  //         ),
+                  //       ]),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
-              SizedBox(height: 25),
+              SizedBox(height: 10),
               Text(
-                'Angsuran Pengembalian',
+                'Angsuran Saat Ini',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
@@ -200,154 +279,6 @@ class HomeBorrower extends StatelessWidget {
                     DataCell(Text('Belum Dibayar')),
                   ]),
                 ],
-              ),
-              SizedBox(height: 32),
-              Text(
-                'Akun UMKM Pendanaan Aktif',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 8),
-              Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    // Ganti dengan avatar akun
-                    backgroundImage: AssetImage('assets/logo.png'),
-                  ),
-                  title: Text('Nama Akun'),
-                  subtitle: Text('Pendanaan Aktif'),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DetailAkunPage()),
-                    );
-                  },
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    // Ganti dengan avatar akun
-                    backgroundImage: AssetImage('assets/logo.png'),
-                  ),
-                  title: Text('Nama Akun'),
-                  subtitle: Text('Pendanaan Aktif'),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DetailAkunPage()),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DetailAkunPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Pendanaan'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.topCenter,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 50),
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Nama Akun',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Alamat',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [Text('PLAFOND'), Text('Rp 5.000.000')],
-                            ),
-                            Column(
-                              children: [Text('%BAGI HASIL'), Text('12%')],
-                            ),
-                            Column(
-                              children: [Text('TENOR'), Text('50 Minggu')],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage('assets/logo.png'),
-                    radius: 50,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Informasi tambahan tentang akun ini...',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 16),
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/profile_pic.png'),
-                      radius: 20,
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Nama Akun',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.chat),
-                  ],
-                ),
               ),
             ],
           ),

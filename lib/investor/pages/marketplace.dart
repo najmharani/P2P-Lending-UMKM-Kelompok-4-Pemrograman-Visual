@@ -217,7 +217,7 @@ class MarketplaceState extends State<Marketplace> {
             ),
             const SizedBox(height: 16.0),
             const Text(
-              "Track Record",
+              "Rating",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
