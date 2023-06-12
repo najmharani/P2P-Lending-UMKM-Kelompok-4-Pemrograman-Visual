@@ -37,6 +37,18 @@ class MarketplaceState extends State<Marketplace> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Marketplace'),
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.filter_alt),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -287,8 +299,20 @@ class MarketplaceState extends State<Marketplace> {
 
   Widget _buildProductCard(
       BuildContext context, String name, String description) {
-    return Card(
-      elevation: 2.0,
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5), // Shadow color
+            spreadRadius: 3, // Spread radius
+            blurRadius: 5, // Blur radius
+            offset: Offset(0, 3), // Offset in the x, y direction
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
