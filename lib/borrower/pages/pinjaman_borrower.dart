@@ -1,4 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
+
+class AjukanPeminjamanPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Anda Belum Mengajukan Pinjaman",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Color.fromARGB(188, 158, 158, 158)),
+          ),
+          SizedBox(height: 16),
+          FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FormPengajuanPinjaman(),
+                  ),
+                );
+              },
+              label: Text(
+                "+ Ajukan Pinjaman",
+                style:
+                    TextStyle(fontWeight: FontWeight.w300, color: Colors.white),
+              )), // Replace with your detail page content
+        ],
+      )),
+    ));
+  }
+}
 
 class PeminjamanPage extends StatelessWidget {
   @override
@@ -66,106 +104,110 @@ class PeminjamanPage extends StatelessWidget {
                     // ),
                   ],
                 ),
-                SizedBox(height: 5),
-                Text(
-                  'Detail Pinjaman',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 5),
-                Divider(
-                  thickness: 3,
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Status',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Dalam Proses',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Waktu Pengajuan',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      '2 Juni 2023',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Waktu Pendanaan',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      '5 Juni 2023',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Jatuh Tempo',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      '5 Juli 2023',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Penghasilan per Bulan',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Rp. 3.500.000',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Jumlah Angsuran',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Rp. 700.000',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
+                Container(
+                    padding: EdgeInsets.all(8),
+                    child: Column(children: [
+                      Text(
+                        'Detail Pinjaman',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 5),
+                      Divider(
+                        thickness: 3,
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Status',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Dalam Proses',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Waktu Pengajuan',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '2 Juni 2023',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Waktu Pendanaan',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '5 Juni 2023',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Jatuh Tempo',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '5 Juli 2023',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Penghasilan per Bulan',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Rp. 3.500.000',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Jumlah Angsuran',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Rp. 700.000',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ]))
               ],
             ),
           ),
@@ -473,6 +515,8 @@ class PinjamanBorrower extends StatefulWidget {
 class _PinjamanBorrowerState extends State<PinjamanBorrower>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  bool status = false;
 
   @override
   void initState() {

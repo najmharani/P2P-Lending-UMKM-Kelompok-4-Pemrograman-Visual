@@ -31,7 +31,7 @@ class FormPengajuanPinjaman extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // title: Text(title),
+        title: Text("Pengajuan Pinjaman"),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
