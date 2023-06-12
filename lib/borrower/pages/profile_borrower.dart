@@ -191,7 +191,9 @@ class ProfileBorrower extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Profile',style: TextStyle(
+                  color: Colors.white,
+                ),),
         actions: [
           IconButton(
             icon: Icon(Icons.logout_rounded),
