@@ -178,7 +178,18 @@ class ProfileBorrower extends StatelessWidget {
       'Uploaded'; // Replace with actual self picture status
 
   String namaUMKM = 'UMKM Sahabat Jaya'; // Replace with actual user full name
-  String alamatUMKM = '02/09/2003'; // Replace with actual user date of birth
+  String alamatUMKM = 'Gegerkalong, Bandung, Jawa Barat'; // Replace with actual user date of birth
+  String jenisUsaha = 'Sembako'; // Replace with actual user full name
+  String tahunBerdiri = '2012'; // Replace with actual user date of birth
+  String deskripsiUMKM = 'Lorem ipsum dolor sit amet.'; // Replace with actual user full name
+  String suratIzinUsahaStatus = 'Uploaded'; // Replace with actual user date of birth
+  String laporanKeuanganStatus = 'Uploaded'; // Replace with actual user full name
+  String fotoUMKMStatus = 'Uploaded'; // Replace with actual user date of birth
+
+  String jenisKelamin = 'Perempuan'; // Replace with actual KTP status
+  String nik = '133712345670'; // Replace with actual KTP status
+  String fotoKTPStatus = 'Uploaded'; // Replace with actual KTP status
+  String fotoPemilikStatus = 'Uploaded'; // Replace with actual KTP status
 
   @override
   Widget build(BuildContext context) {
@@ -256,7 +267,7 @@ class ProfileBorrower extends StatelessWidget {
           ),
           ListTile(
             title: Text('Nama UMKM'),
-            subtitle: Text(fullName),
+            subtitle: Text(namaUMKM),
             onTap: () {
               // Navigate to the edit full name page
               Navigator.push(
@@ -268,8 +279,8 @@ class ProfileBorrower extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Alamat'),
-            subtitle: Text(dateOfBirth),
+            title: Text('Alamat UMKM'),
+            subtitle: Text(alamatUMKM),
             onTap: () {
               // Navigate to the edit date of birth page
               Navigator.push(
@@ -282,36 +293,78 @@ class ProfileBorrower extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('No Hp'),
-            subtitle: Text(phoneNumber),
+            title: Text('Jenis Usaha'),
+            subtitle: Text(jenisUsaha),
             onTap: () {
-              // Navigate to the edit phone number page
+              // Navigate to the edit date of birth page
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditPhoneNumberPage(phoneNumber: phoneNumber),
+                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
                 ),
               );
             },
           ),
           ListTile(
-            title: Text('KTP'),
-            subtitle: Text(ktpStatus),
+            title: Text('Tahun Berdiri'),
+            subtitle: Text(tahunBerdiri),
             onTap: () {
-              // Navigate to the KTP detail page
+              // Navigate to the edit date of birth page
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      InvestorKTPDetailPage(ktpStatus: ktpStatus),
+                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
                 ),
               );
             },
           ),
           ListTile(
-            title: Text('Self Picture'),
-            subtitle: Text(selfPictureStatus),
+            title: Text('Deskripsi UMKM'),
+            subtitle: Text(deskripsiUMKM),
+            onTap: () {
+              // Navigate to the edit date of birth page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Surat Izin Usaha'),
+            subtitle: Text(suratIzinUsahaStatus),
+            onTap: () {
+              // Navigate to the self picture detail page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InvestorSelfPictureDetailPage(
+                      selfPictureStatus: selfPictureStatus),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Laporan Keuangan'),
+            subtitle: Text(laporanKeuanganStatus),
+            onTap: () {
+              // Navigate to the self picture detail page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InvestorSelfPictureDetailPage(
+                      selfPictureStatus: selfPictureStatus),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Foto UMKM'),
+            subtitle: Text(fotoUMKMStatus),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
@@ -326,7 +379,7 @@ class ProfileBorrower extends StatelessWidget {
           Divider(height: 10),
           SizedBox(height: 10),
           Text(
-            "Profil Pribadi",
+            "Profil Pemilik UMKM",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           ListTile(
@@ -357,22 +410,8 @@ class ProfileBorrower extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('No Hp'),
-            subtitle: Text(phoneNumber),
-            onTap: () {
-              // Navigate to the edit phone number page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditPhoneNumberPage(phoneNumber: phoneNumber),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('KTP'),
-            subtitle: Text(ktpStatus),
+            title: Text('Jenis Kelamin'),
+            subtitle: Text(jenisKelamin),
             onTap: () {
               // Navigate to the KTP detail page
               Navigator.push(
@@ -385,8 +424,36 @@ class ProfileBorrower extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Self Picture'),
-            subtitle: Text(selfPictureStatus),
+            title: Text('NIK'),
+            subtitle: Text(nik),
+            onTap: () {
+              // Navigate to the KTP detail page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      InvestorKTPDetailPage(ktpStatus: ktpStatus),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Foto KTP'),
+            subtitle: Text(fotoKTPStatus),
+            onTap: () {
+              // Navigate to the self picture detail page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InvestorSelfPictureDetailPage(
+                      selfPictureStatus: selfPictureStatus),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Foto Pemilik'),
+            subtitle: Text(fotoPemilikStatus),
             onTap: () {
               // Navigate to the self picture detail page
               Navigator.push(
