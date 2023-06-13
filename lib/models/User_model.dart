@@ -28,7 +28,7 @@ class User {
 }
 
 class UserCubit extends Cubit<User> {
-  final String url_login = "http://localhost:8000/login";
+  final String url_login = "https://localhost:8000/login";
 
   UserCubit()
       : super(User(
@@ -73,18 +73,15 @@ class UserCubit extends Cubit<User> {
   Future<void> getUser() async {
     final prefs = await SharedPreferences.getInstance();
 
-    String dataUser = prefs.getString('data_user').toString();
-    Map<String, dynamic> decodedToken = json.decode(dataUser);
-
     emit(User(
-      idUser: decodedToken["idUser"],
-      email: decodedToken["email"],
-      password: decodedToken["password"],
-      noTelp: decodedToken["noTelp"],
-      fotoProfil: decodedToken["fotoProfil"],
-      saldo: decodedToken["saldo"],
-      tipeUser: decodedToken["tipeUser"],
-      idTipeUser: decodedToken["idTipeUser"],
+      idUser: prefs.getInt('idUser')!,
+      email: prefs.getString('email')!,
+      password: prefs.getString('password')!,
+      noTelp: prefs.getString('noTelp')!,
+      fotoProfil: prefs.getString('fotoProfil')!,
+      saldo: prefs.getInt('saldo')!,
+      tipeUser: prefs.getString('tipeUser')!,
+      idTipeUser: prefs.getInt('idTipeUser')!,
     ));
   }
 
@@ -92,7 +89,7 @@ class UserCubit extends Cubit<User> {
     final response = await http.post(
       Uri.parse(url_login),
       body: jsonEncode({
-        'idUser': 0,
+        'ID_USER': 0,
         'email': email,
         'password': password,
         'no_telp': '',
@@ -109,7 +106,14 @@ class UserCubit extends Cubit<User> {
       final token = responseData['data'];
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('data_user', token);
+      await prefs.setInt('idUser', token['idUser']);
+      await prefs.setString('email', token['email']);
+      await prefs.setString('password', token['password']);
+      await prefs.setString('fotoProfil', token['fotoProfil']);
+      await prefs.setString('noTelp', token['noTelp']);
+      await prefs.setInt('saldo', token['saldo']);
+      await prefs.setString('tipeUser', token['tipeUser']);
+      await prefs.setInt('idTipeUser', token['idTipeUser']);
 
       Map<String, dynamic> decodedToken = token;
 

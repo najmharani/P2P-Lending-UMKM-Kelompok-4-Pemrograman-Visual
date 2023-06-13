@@ -218,7 +218,7 @@ def get_user(id: int):
         return {"data": recs}
 
 
-@app.post("/login")
+@app.post("/login/")
 def login_auth(user: User):
     try:
         DB_NAME = "m2m.db"

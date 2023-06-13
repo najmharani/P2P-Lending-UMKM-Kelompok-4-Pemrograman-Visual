@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -246,10 +248,83 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   final UserType userType;
-
   const RegisterPage({required this.userType});
+
+  @override
+  State<RegisterPage> createState() =>
+      _RegisterPageState(userType: this.userType);
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final UserType userType;
+  final emailController = TextEditingController();
+  final telpController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  _RegisterPageState({required this.userType});
+
+  Future<void> insertUser(
+      String email, String password, String noTelp, String tipeUser) async {
+    final url = 'https://localhost:8000/tambah_User/';
+
+    final Map<String, dynamic> userData = {
+      'email': email,
+      'password': password,
+      'no_telp': noTelp,
+      'foto_profil': '',
+      'saldo': 0,
+      'tipe_user': tipeUser,
+      'id_tipe_user': 5,
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(userData),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      // User inserted successfully
+      // register();
+      print('User berhasil ditambahkan');
+    } else {
+      // Error occurred while inserting user
+      print('Error saat menambahkan user');
+    }
+  }
+
+  // void register() {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(10),
+  //           topRight: Radius.circular(10),
+  //         ),
+  //       ),
+  //       backgroundColor: Color.fromARGB(255, 0, 97, 175),
+  //       content: Text(
+  //         "Berhasil Membuat Akun",
+  //         style: TextStyle(
+  //           fontFamily: "Poppins",
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  //   Navigator.of(context).pop(
+  //     MaterialPageRoute(
+  //       builder: (context) {
+  //         if (userType == UserType.investor) {
+  //           return LoginPage(userType: UserType.investor);
+  //         } else {
+  //           return LoginPage(userType: UserType.borrower);
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +355,7 @@ class RegisterPage extends StatelessWidget {
               height: 100.0,
             ),
             Text(
-              'itulah',
+              'Modal to Mitra',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -288,14 +363,24 @@ class RegisterPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
               ),
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: telpController,
+              decoration: InputDecoration(
+                labelText: 'No Telp',
               ),
               obscureText: true,
             ),
@@ -315,19 +400,10 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                if (userType == UserType.borrower) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RegisterBorrowerNextPage()),
-                  );
-                } else if (userType == UserType.investor) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RegisterInvestorNextPage()),
-                  );
-                }
+                setState(() {
+                  insertUser(emailController.text, passwordController.text,
+                      telpController.text, "Investor");
+                });
               },
             ),
           ],
