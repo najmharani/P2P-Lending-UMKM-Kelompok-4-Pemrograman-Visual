@@ -112,25 +112,25 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({required this.userType});
 
-  void _login(BuildContext context) {
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
+  // void _login(BuildContext context) {
+  //   String email = emailController.text.trim();
+  //   String password = passwordController.text.trim();
 
-    context
-        .read<UserCubit>()
-        .saveUser(emailController.text, passwordController.text)
-        .then((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) {
-            return InvestorApp();
-          },
-        ),
-      );
-    }).catchError((error) {
-      print('Login failed: $error');
-    });
-  }
+  //   context
+  //       .read<UserCubit>()
+  //       .saveUser(emailController.text, passwordController.text)
+  //       .then((_) {
+  //     Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (context) {
+  //           return InvestorApp();
+  //         },
+  //       ),
+  //     );
+  //   }).catchError((error) {
+  //     print('Login failed: $error');
+  //   });
+  // }
 
   // void loginCheck(BuildContext context, User model) {
   //   if (model.idUser != 0) {
@@ -202,7 +202,20 @@ class LoginPage extends StatelessWidget {
                 ElevatedButton(
                   child: Text('Login'),
                   onPressed: () {
-                    _login(context);
+                    context
+                        .read<UserCubit>()
+                        .saveUser(emailController.text, passwordController.text)
+                        .then((_) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return InvestorApp();
+                          },
+                        ),
+                      );
+                    }).catchError((error) {
+                      print('Login failed: $error');
+                    });
                   },
                 ),
                 SizedBox(height: 8.0),
