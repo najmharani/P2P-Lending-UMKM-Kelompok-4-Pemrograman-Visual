@@ -90,7 +90,7 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({required this.userType});
 
-  void _login() {
+  void _login(BuildContext context) {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
@@ -175,7 +175,7 @@ class LoginPage extends StatelessWidget {
                 ElevatedButton(
                   child: Text('Login'),
                   onPressed: () {
-                    _login();
+                    _login(context);
                   },
                 ),
                 SizedBox(height: 8.0),
