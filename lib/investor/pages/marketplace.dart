@@ -425,105 +425,160 @@ class ProductDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Product Detail'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Stack(
-                  alignment: AlignmentDirectional.topCenter,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 50),
-                      width: double.infinity,
-                      padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Nama Akun',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Stack(
+                    alignment: AlignmentDirectional.topCenter,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 50),
+                        width: double.infinity,
+                        padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Nama Akun',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Alamat',
-                            style: TextStyle(
-                              fontSize: 18,
+                            SizedBox(height: 8),
+                            Text(
+                              'Alamat',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Text('PLAFOND'),
-                                  Text('Rp 5.000.000')
-                                ],
-                              ),
-                              Column(
-                                children: [Text('%BAGI HASIL'), Text('12%')],
-                              ),
-                              Column(
-                                children: [Text('TENOR'), Text('50 Minggu')],
-                              ),
-                            ],
-                          ),
-                        ],
+                            SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text('PLAFOND'),
+                                    Text('Rp 5.000.000')
+                                  ],
+                                ),
+                                Column(
+                                  children: [Text('%BAGI HASIL'), Text('12%')],
+                                ),
+                                Column(
+                                  children: [Text('TENOR'), Text('50 Minggu')],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
+                      CircleAvatar(
+                        backgroundImage: AssetImage('assets/logo.png'),
+                        radius: 50,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Detail UMKM',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  ),
+                  Divider(
+                    thickness: 3,
+                  ),
+                  Text(
+                    '      ABC Store adalah toko retail yang didirikan oleh Pak Asep Budi Cendrawan. Bisnis ini berfokus pada penjualan berbagai produk kepada pelanggan di daerah sekitar dengan  menyediakan produk berkualitas tinggi dan memberikan pelayanan yang baik kepada pelanggan. didirikannya ABC Store, Pemilik berharap dapat memenuhi kebutuhan konsumen sekaligus mendukung pertumbuhan ekonomi lokal.',
+                    style: TextStyle(
+                      fontSize: 16,
                     ),
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/logo.png'),
-                      radius: 50,
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Pendapatan',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Rp.1.000.000',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Tahun Berdiri',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        '2021',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Jenis Usaha',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Toko Retail',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.grey),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Rp. 0',
+                    style: TextStyle(
+                      fontSize: 18.0,
                     ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Informasi tambahan tentang akun ini...',
-                  style: TextStyle(
-                    fontSize: 16,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(color: Colors.grey),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Rp. 0',
-                  style: TextStyle(
-                    fontSize: 18.0,
+                  SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Logika yang ingin Anda lakukan ketika tombol "Danai" ditekan
+                      },
+                      child: Text('Danai'),
+                    ),
                   ),
-                ),
-                SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Logika yang ingin Anda lakukan ketika tombol "Danai" ditekan
-                    },
-                    child: Text('Danai'),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

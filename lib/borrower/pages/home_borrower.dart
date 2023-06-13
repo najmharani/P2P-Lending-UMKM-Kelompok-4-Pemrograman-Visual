@@ -9,7 +9,9 @@ class HomeBorrower extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello, Borrower!'),
+        title: Text('Hello, Borrower!',style: TextStyle(
+                  color: Colors.white,
+                ),),
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
@@ -33,7 +35,7 @@ class HomeBorrower extends StatelessWidget {
                     width: double.infinity,
                     padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 211, 195, 195),
+                      color: primary.shade300,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     child: Column(

@@ -298,7 +298,7 @@ class HomeInvestor extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DetailRiwayatPage()),
+                          builder: (context) => DetailRatingPage()),
                     );
                   },
                 ),
@@ -563,9 +563,6 @@ class DetailRiwayatPageState extends State<DetailRiwayatPage> {
                       ],
                     ),
                     SizedBox(height: 8),
-                    Row(
-                      children: [],
-                    ),
                     RadioListTile<RatingType>(
                       title: const Text('A'),
                       value: RatingType.a,
@@ -619,8 +616,126 @@ class DetailRiwayatPageState extends State<DetailRiwayatPage> {
                   ],
                 ),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Simpan'),
+              )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailRatingPage extends StatelessWidget {
+  RatingType? valueRating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Riwayat Pendanaan'),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(color: Colors.grey[200]),
+        child: Column(
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.topCenter,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  width: double.infinity,
+                  padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Nama Akun',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Alamat',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [Text('PLAFOND'), Text('Rp5.000.000')],
+                          ),
+                          Column(
+                            children: [Text('%BAGI HASIL'), Text('12%')],
+                          ),
+                          Column(
+                            children: [Text('TENOR'), Text('50 Minggu')],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              Text('PENGHASILAN'),
+                              Text('Rp1.000.000')
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text('HASIL INVESTASI'),
+                              Text('Rp5.600.000')
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/logo.png'),
+                  radius: 50,
+                ),
+              ],
+            ),
+            SizedBox(height: 5),
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              padding: EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Rating yang anda berikan : A',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

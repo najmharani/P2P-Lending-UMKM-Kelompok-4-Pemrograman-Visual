@@ -39,7 +39,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Akun'),
+        title: Text(
+          'Akun',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Center(
         child: Column(
@@ -50,9 +55,21 @@ class HomePage extends StatelessWidget {
               width: 100.0,
               height: 100.0,
             ),
+            Text(
+              'itulah',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              child: Text('Login as Borrower'),
+              child: Text(
+                'Login as Borrower',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -64,7 +81,12 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 8.0),
             ElevatedButton(
-              child: Text('Login as Investor'),
+              child: Text(
+                'Login as Investor',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -149,7 +171,12 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
         ),
         body: BlocBuilder<UserCubit, User>(builder: (context, model) {
           return Container(
@@ -222,16 +249,28 @@ class RegisterPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Username',
+            Image.asset(
+              'assets/images/logo.png', // Path ke logo Anda
+              width: 100.0,
+              height: 100.0,
+            ),
+            Text(
+              'itulah',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 16.0),
@@ -256,7 +295,12 @@ class RegisterPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              child: Text('Register'),
+              child: Text(
+                'Register',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
                 if (userType == UserType.borrower) {
                   Navigator.push(

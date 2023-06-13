@@ -24,7 +24,9 @@ class RegisterInvestorNextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
+        title: Text('Registration',style: TextStyle(
+                  color: Colors.white,
+                ),),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -59,7 +61,12 @@ class RegisterInvestorNextPage extends StatelessWidget {
                 fixedSize:
                     MaterialStateProperty.all(Size(double.infinity, 40.0)),
               ),
-              child: Text('Register'),
+              child: Text(
+                'Register',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -103,7 +110,12 @@ class RegisterInvestorNextPage extends StatelessWidget {
         SizedBox(height: 8.0),
         ElevatedButton.icon(
           icon: Icon(icon),
-          label: Text('Upload'),
+          label: Text(
+            'Upload',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: () {
             // Implementasi logika upload di sini
           },
