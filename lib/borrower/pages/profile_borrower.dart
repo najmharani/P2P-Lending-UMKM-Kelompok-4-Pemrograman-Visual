@@ -178,12 +178,16 @@ class ProfileBorrower extends StatelessWidget {
       'Uploaded'; // Replace with actual self picture status
 
   String namaUMKM = 'UMKM Sahabat Jaya'; // Replace with actual user full name
-  String alamatUMKM = 'Gegerkalong, Bandung, Jawa Barat'; // Replace with actual user date of birth
+  String alamatUMKM =
+      'Gegerkalong, Bandung, Jawa Barat'; // Replace with actual user date of birth
   String jenisUsaha = 'Sembako'; // Replace with actual user full name
   String tahunBerdiri = '2012'; // Replace with actual user date of birth
-  String deskripsiUMKM = 'Lorem ipsum dolor sit amet.'; // Replace with actual user full name
-  String suratIzinUsahaStatus = 'Uploaded'; // Replace with actual user date of birth
-  String laporanKeuanganStatus = 'Uploaded'; // Replace with actual user full name
+  String deskripsiUMKM =
+      'Lorem ipsum dolor sit amet.'; // Replace with actual user full name
+  String suratIzinUsahaStatus =
+      'Uploaded'; // Replace with actual user date of birth
+  String laporanKeuanganStatus =
+      'Uploaded'; // Replace with actual user full name
   String fotoUMKMStatus = 'Uploaded'; // Replace with actual user date of birth
 
   String jenisKelamin = 'Perempuan'; // Replace with actual KTP status

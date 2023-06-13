@@ -516,7 +516,11 @@ class _PinjamanBorrowerState extends State<PinjamanBorrower>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  bool status = false;
+  // int status = 1;
+  // StatelessWidget peminjaman = 
+  // if (status == 0) {
+  //   peminjaman = AjukanPeminjamanPage();
+  // }
 
   @override
   void initState() {

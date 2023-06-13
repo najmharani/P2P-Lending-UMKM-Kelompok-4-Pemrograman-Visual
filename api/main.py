@@ -2,6 +2,7 @@ import sqlite3
 from typing import Union
 from fastapi import FastAPI, Request, Response
 from pydantic import BaseModel
+from http_exceptions import HTTPException
 
 app = FastAPI()
 
@@ -217,6 +218,62 @@ def get_user(id: int):
         return {"data": recs}
 
 
+@app.post("/login")
+def login_auth(user: User):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("select * from user"):
+            recs.append(row)
+
+        user_valid = None
+        for rec in recs:
+            if rec[1] == user.email:
+                user_valid = rec
+                break
+
+        if user_valid is None:
+            raise HTTPException(status_code=400, detail="Email tidak terdaftar")
+
+        if user_valid[2] != user.password:
+            raise HTTPException(status_code=400, detail="Password salah")
+
+        user = {
+            "idUser": user_valid[0],
+            "email": user_valid[1],
+            "password": user_valid[2],
+            "noTelp": user_valid[3],
+            "fotoProfil": user_valid[4],
+            "saldo": user_valid[5],
+            "tipeUser": user_valid[6],
+            "idTipeUser": user_valid[7],
+        }
+
+    # except:
+    #     return {"status": "terjadi error"}
+    # finally:
+    #     con.close()
+    #     return {"data": recs}
+    # user = {
+    #     "idUser": row[0],
+    #     "email": row[1],
+    #     "password": row[2],
+    #     "noTelp": row[3],
+    #     "fotoProfil": row[4],
+    #     "saldo": row[5],
+    #     "tipeUser": row[6],
+    #     "idTipeUser": row[7],
+    # }
+
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": user}
+
+
 @app.get("/login_auth/email={email}&password={password}")
 def login_auth(email: str, password: str):
     try:
@@ -250,7 +307,7 @@ def login_auth(email: str, password: str):
 # patch hanya sebagian saja yang diupdate
 # asumsikan kalau isinya "" dan 0 artinya tidak berubah
 @app.patch("/update_user/{id}", response_model=User)
-def update_user(response: Response, ID_USER: int, m: User):
+def update_user(response: Response, id: int, m: User):
     # update keseluruhan
     try:
         DB_NAME = "upi.db"
@@ -268,11 +325,11 @@ def update_user(response: Response, ID_USER: int, m: User):
             sqlstr = sqlstr + " foto_profil = '{}' ".format(m.foto_profil)
         if m.saldo != 0:
             sqlstr = sqlstr + " saldo = {} ".format(m.saldo)
-        sqlstr = sqlstr + "where ID_USER='{}'".format(ID_USER)
+        sqlstr = sqlstr + "where ID_USER='{}'".format(id)
         print(sqlstr)  # debug
         cur.execute(sqlstr)
         con.commit()
-        response.headers["location"] = "/user/{}".format(m.ID_USER)
+        response.headers["location"] = "/get_user/{}".format(m.ID_USER)
     except:
         return {"status": "terjadi error"}
     finally:
