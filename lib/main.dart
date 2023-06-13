@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:p2plending_umkm/models/User_model.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
 import 'package:p2plending_umkm/landing_page/landing_page.dart';
 import 'package:p2plending_umkm/colors.dart';
 

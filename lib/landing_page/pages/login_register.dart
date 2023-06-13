@@ -1,40 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/navigation_investor.dart';
-import 'package:p2plending_umkm/models/User_model.dart';
+import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
 import 'package:p2plending_umkm/landing_page/pages/form_investor.dart';
 import 'package:p2plending_umkm/landing_page/pages/form_umkm.dart';
 import 'package:p2plending_umkm/main.dart';
-
-// void main() {
-//   runApp(LoginRegisterPage());
-// }
-
-// class LoginRegisterPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Home',
-//       theme: ThemeData(
-//         primarySwatch: primary,
-//         fontFamily: 'lexend',
-//       ),
-//       home: HomePage(),
-//       routes: {
-//         '/login-borrower': (context) => LoginPage(userType: UserType.borrower),
-//         '/login-investor': (context) => LoginPage(userType: UserType.investor),
-//         '/register-borrower': (context) =>
-//             RegisterPage(userType: UserType.borrower),
-//         '/register-investor': (context) =>
-//             RegisterPage(userType: UserType.investor),
-//       },
-//     );
-//   }
-// }
 
 class HomePage extends StatelessWidget {
   @override
@@ -114,48 +88,6 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({required this.userType});
 
-  // void _login(BuildContext context) {
-  //   String email = emailController.text.trim();
-  //   String password = passwordController.text.trim();
-
-  //   context
-  //       .read<UserCubit>()
-  //       .saveUser(emailController.text, passwordController.text)
-  //       .then((_) {
-  //     Navigator.of(context).push(
-  //       MaterialPageRoute(
-  //         builder: (context) {
-  //           return InvestorApp();
-  //         },
-  //       ),
-  //     );
-  //   }).catchError((error) {
-  //     print('Login failed: $error');
-  //   });
-  // }
-
-  // void loginCheck(BuildContext context, User model) {
-  //   if (model.idUser != 0) {
-  //     if (model.tipeUser == "Investor") {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => InvestorApp()),
-  //       );
-  //     } else if (model.tipeUser == "Borrower") {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => BorrowerApp()),
-  //       );
-  //     }
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text('Please enter both email and password'),
-  //       ),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     String title;
@@ -208,13 +140,19 @@ class LoginPage extends StatelessWidget {
                         .read<UserCubit>()
                         .saveUser(emailController.text, passwordController.text)
                         .then((_) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return InvestorApp();
-                          },
-                        ),
-                      );
+                      if (userType == UserType.investor) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InvestorApp()),
+                        );
+                      } else if (userType == UserType.borrower) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BorrowerApp()),
+                        );
+                      }
                     }).catchError((error) {
                       print('Login failed: $error');
                     });
@@ -263,6 +201,17 @@ class _RegisterPageState extends State<RegisterPage> {
   final telpController = TextEditingController();
   final passwordController = TextEditingController();
 
+  String getUserType() {
+    late String type;
+    if (userType == UserType.borrower) {
+      type = "Borrower";
+    } else if (userType == UserType.investor) {
+      type = "Investor";
+    }
+
+    return type;
+  }
+
   _RegisterPageState({required this.userType});
 
   Future<void> insertUser(
@@ -287,7 +236,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (response.statusCode == 201) {
       // User inserted successfully
-      // register();
+      register();
       print('User berhasil ditambahkan');
     } else {
       // Error occurred while inserting user
@@ -295,36 +244,36 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // void register() {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.only(
-  //           topLeft: Radius.circular(10),
-  //           topRight: Radius.circular(10),
-  //         ),
-  //       ),
-  //       backgroundColor: Color.fromARGB(255, 0, 97, 175),
-  //       content: Text(
-  //         "Berhasil Membuat Akun",
-  //         style: TextStyle(
-  //           fontFamily: "Poppins",
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  //   Navigator.of(context).pop(
-  //     MaterialPageRoute(
-  //       builder: (context) {
-  //         if (userType == UserType.investor) {
-  //           return LoginPage(userType: UserType.investor);
-  //         } else {
-  //           return LoginPage(userType: UserType.borrower);
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+  void register() {
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.only(
+    //         topLeft: Radius.circular(10),
+    //         topRight: Radius.circular(10),
+    //       ),
+    //     ),
+    //     backgroundColor: Color.fromARGB(255, 0, 97, 175),
+    //     content: Text(
+    //       "Berhasil Membuat Akun",
+    //       style: TextStyle(
+    //         fontFamily: "lexend",
+    //       ),
+    //     ),
+    //   ),
+    // );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          if (userType == UserType.investor) {
+            return RegisterInvestorNextPage();
+          } else {
+            return RegisterBorrowerNextPage();
+          }
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -378,18 +327,17 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 16.0),
             TextField(
-              controller: telpController,
               decoration: InputDecoration(
-                labelText: 'No Telp',
+                labelText: 'Re-enter Password',
               ),
               obscureText: true,
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: telpController,
               decoration: InputDecoration(
-                labelText: 'Re-enter Password',
+                labelText: 'No Telp',
               ),
-              obscureText: true,
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
@@ -415,7 +363,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // }
                 setState(() {
                   insertUser(emailController.text, passwordController.text,
-                      telpController.text, "Investor");
+                      telpController.text, getUserType());
                 });
               },
             ),

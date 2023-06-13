@@ -10,7 +10,7 @@ class Investor {
   String nik;
   String fotoKtp;
   String fotoPemilik;
-  int omzet;
+  int aset;
 
   Investor({
     required this.idInvestor,
@@ -20,7 +20,7 @@ class Investor {
     required this.nik,
     required this.fotoKtp,
     required this.fotoPemilik,
-    required this.omzet,
+    required this.aset,
   });
 }
 
@@ -34,7 +34,7 @@ class UmkmCubit extends Cubit<Investor> {
           nik: "",
           fotoKtp: "",
           fotoPemilik: "",
-          omzet: 0,
+          aset: 0,
         ));
 
   //map dari json ke atribut
@@ -47,7 +47,7 @@ class UmkmCubit extends Cubit<Investor> {
       nik: json["nik"],
       fotoKtp: json["fotoKtp"],
       fotoPemilik: json["fotoPemilik"],
-      omzet: json["omzet"],
+      aset: json["aset"],
     ));
   }
 

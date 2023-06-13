@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/investor/navigation_investor.dart';
+import 'package:p2plending_umkm/models/Investor.model.dart';
 
 void main() {
   runApp(RegisterApp());
@@ -24,9 +25,12 @@ class RegisterInvestorNextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration',style: TextStyle(
-                  color: Colors.white,
-                ),),
+        title: Text(
+          'Registration',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),

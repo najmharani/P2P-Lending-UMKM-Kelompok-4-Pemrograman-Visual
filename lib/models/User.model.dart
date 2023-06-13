@@ -101,7 +101,7 @@ class UserCubit extends Cubit<User> {
       headers: {'Content-Type': 'application/json'},
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       final token = responseData['data'];
 
