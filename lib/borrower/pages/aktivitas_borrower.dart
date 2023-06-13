@@ -54,7 +54,9 @@ class _AktivitasInvestorState extends State<AktivitasBorrower> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Aktivitas'),
+        title: Text('Aktivitas',style: TextStyle(
+                  color: Colors.white,
+                ),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -72,7 +72,12 @@ class RegisterBorrowerNextPage extends StatelessWidget {
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(200.0, 40.0)),
               ),
-              child: Text('Register'),
+              child: Text(
+                'Register',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -101,7 +106,12 @@ class RegisterBorrowerNextPage extends StatelessWidget {
         SizedBox(height: 8.0),
         ElevatedButton.icon(
           icon: Icon(icon),
-          label: Text('Upload'),
+          label: Text(
+            'Upload',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 40.0),

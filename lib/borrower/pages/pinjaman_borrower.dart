@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
+import 'package:p2plending_umkm/colors.dart';
 
 class AjukanPeminjamanPage extends StatelessWidget {
   @override
@@ -58,7 +59,7 @@ class PeminjamanPage extends StatelessWidget {
                       width: double.infinity,
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 211, 195, 195),
+                        color: primary.shade300,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Column(
@@ -337,7 +338,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 211, 195, 195),
+                        color: primary.shade300,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Column(
