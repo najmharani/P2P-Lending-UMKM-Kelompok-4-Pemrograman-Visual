@@ -55,20 +55,18 @@ class UserCubit extends Cubit<User> {
     ));
   }
 
-  // void fetchData(String email, String password) async {
-  //   this.email = email;
-  //   this.password = password;
-  //   String url =
-  //       "http://127.0.0.1:8000/login_auth/email=$email&password=$password";
+  void fetchData(String email, String password) async {
+    String url =
+        "http://127.0.0.1:8000/login_auth/email=$email&password=$password";
 
-  //   print(url);
-  //   final response = await http.get(Uri.parse(url));
-  //   if (response.statusCode == 200) {
-  //     setFromJson(jsonDecode(response.body));
-  //   } else {
-  //     throw Exception('Gagal load');
-  //   }
-  // }
+    print(url);
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      setFromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Gagal load');
+    }
+  }
 
   Future<void> getUser() async {
     final prefs = await SharedPreferences.getInstance();
