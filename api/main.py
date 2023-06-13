@@ -3,8 +3,17 @@ from typing import Union
 from fastapi import FastAPI, Request, Response
 from pydantic import BaseModel
 from http_exceptions import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/init/")

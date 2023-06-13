@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
               height: 100.0,
             ),
             Text(
-              'itulah',
+              'Modal to Mitra',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -267,7 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> insertUser(
       String email, String password, String noTelp, String tipeUser) async {
-    final url = 'https://localhost:8000/tambah_User/';
+    final url = 'http://127.0.0.1:8000 /tambah_User/';
 
     final Map<String, dynamic> userData = {
       'email': email,
@@ -400,6 +400,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               onPressed: () {
+                // if (userType == UserType.borrower) {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => RegisterBorrowerNextPage()),
+                //   );
+                // } else if (userType == UserType.investor) {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => RegisterInvestorNextPage()),
+                //   );
+                // }
                 setState(() {
                   insertUser(emailController.text, passwordController.text,
                       telpController.text, "Investor");

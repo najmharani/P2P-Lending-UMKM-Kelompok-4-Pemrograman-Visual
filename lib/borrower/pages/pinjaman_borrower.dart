@@ -518,7 +518,7 @@ class _PinjamanBorrowerState extends State<PinjamanBorrower>
   late TabController _tabController;
 
   // int status = 1;
-  // StatelessWidget peminjaman = 
+  // StatelessWidget peminjaman =
   // if (status == 0) {
   //   peminjaman = AjukanPeminjamanPage();
   // }
@@ -551,7 +551,7 @@ class _PinjamanBorrowerState extends State<PinjamanBorrower>
       body: TabBarView(
         controller: _tabController,
         children: [
-          PeminjamanPage(),
+          AjukanPeminjamanPage(),
           HistoryPeminjamanPage(),
         ],
       ),

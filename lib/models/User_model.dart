@@ -28,7 +28,7 @@ class User {
 }
 
 class UserCubit extends Cubit<User> {
-  final String url_login = "https://localhost:8000/login";
+  final String url_login = "http://127.0.0.1:8000/login";
 
   UserCubit()
       : super(User(
@@ -101,7 +101,7 @@ class UserCubit extends Cubit<User> {
       headers: {'Content-Type': 'application/json'},
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final responseData = jsonDecode(response.body);
       final token = responseData['data'];
 
