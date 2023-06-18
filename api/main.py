@@ -66,7 +66,7 @@ def init_db():
             nik TEXT NOT NULL,
             foto_ktp TEXT NOT NULL,
             foto_pemilik TEXT NOT NULL,
-            aset TEXT NOT NULL
+            aset INTEGER
         )"""
         # create_table6 = """CREATE TABLE pilihan_toUp(
         #    ID_PILIHAN INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -620,7 +620,7 @@ class Investor(BaseModel):
     nik: str
     foto_ktp: str
     foto_investor: str
-    aset: str
+    aset: int | None = None
 
 @app.post("/tambah_investor/", response_model=Investor, status_code=201)
 def tambah_investor(m: Investor, response: Response, request: Request):
