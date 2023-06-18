@@ -66,7 +66,7 @@ def init_db():
             nik TEXT NOT NULL,
             foto_ktp TEXT NOT NULL,
             foto_pemilik TEXT NOT NULL,
-            aset TEXT NOT NULL
+            aset INTEGER
         )"""
         # create_table6 = """CREATE TABLE pilihan_toUp(
         #    ID_PILIHAN INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -647,7 +647,7 @@ class Investor(BaseModel):
     nik: str
     foto_ktp: str
     foto_investor: str
-    aset: str
+    aset: int | None = None
 
 
 # Status code 201 standard return creation
@@ -660,7 +660,7 @@ def tambah_investor(m: Investor, response: Response, request: Request):
         cur = con.cursor()
         # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
         cur.execute(
-            """insert into profil_invstor
+            """insert into profil_investor
         (nama_lengkap, tgl_lahir, jenis_kelamin, nik, foto_ktp, foto_pemilik, aset) values (
         "{}","{}","{}","{}","{}","{}","{}")""".format(
                 m.nama_lengkap,
