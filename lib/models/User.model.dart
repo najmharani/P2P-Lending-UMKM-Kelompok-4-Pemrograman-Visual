@@ -147,4 +147,51 @@ class UserCubit extends Cubit<User> {
       ),
     );
   }
+
+  Future<void> updateUser(String email, String password) async {
+    final response = await http.post(
+      Uri.parse(url_login),
+      body: jsonEncode({
+        'ID_USER': 0,
+        'email': email,
+        'password': password,
+        'no_telp': '',
+        'foto_profil': '',
+        'tipe_user': '',
+        'saldo': 0,
+        'id_tipe_user': 0,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      final token = responseData['data'];
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('idUser', token['idUser']);
+      await prefs.setString('email', token['email']);
+      await prefs.setString('password', token['password']);
+      await prefs.setString('fotoProfil', token['fotoProfil']);
+      await prefs.setString('noTelp', token['noTelp']);
+      await prefs.setInt('saldo', token['saldo']);
+      await prefs.setString('tipeUser', token['tipeUser']);
+      await prefs.setInt('idTipeUser', token['idTipeUser']);
+
+      Map<String, dynamic> decodedToken = token;
+
+      emit(User(
+        idUser: decodedToken["idUser"],
+        email: decodedToken["email"],
+        password: decodedToken["password"],
+        noTelp: decodedToken["noTelp"],
+        fotoProfil: decodedToken["fotoProfil"],
+        saldo: decodedToken["saldo"],
+        tipeUser: decodedToken["tipeUser"],
+        idTipeUser: decodedToken["idTipeUser"],
+      ));
+    } else {
+      print('Login failed with status code ${response.statusCode}');
+    }
+  }
 }
