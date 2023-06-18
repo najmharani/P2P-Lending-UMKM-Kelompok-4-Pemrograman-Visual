@@ -484,13 +484,13 @@ def get_all_transaksi():
         return {"data": recs}
     
 @app.get("/get_all_transaksi/{id_user}")
-def get_all_transaksi(id: int):
+def get_all_transaksi(id_user: int):
     try:
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute("select * from transaksi WHERE id_user={}".format(id)):
+        for row in cur.execute("select * from transaksi WHERE id_user={}".format(id_user)):
             recs.append(row)
     except:
         return {"status": "terjadi error"}
@@ -498,7 +498,7 @@ def get_all_transaksi(id: int):
         con.close()
         return {"data": recs}
     
-@app.get("/get_transaksi_byDate/")
+@app.get("/get_transaksi_byDate/") #gatau kenapa jadi gabisa nampilin outputnya
 def get_transaksi_byDate(tgl_waktu: str):
     try:
         DB_NAME = "m2m.db"
@@ -732,9 +732,9 @@ def update_investor(response: Response, id_investor: int, m: Investor):
             else:    
                 sqlstr = sqlstr + " foto_pemilik = null ,"
         
-        if m.aset!="":
+        if m.aset!=0:
             if m.aset!=None:
-                sqlstr = sqlstr + " aset = '{}' ,".format(m.aset)
+                sqlstr = sqlstr + " aset = {} ,".format(m.aset)
             else:    
                 sqlstr = sqlstr + " aset = null ,"
 
