@@ -696,3 +696,100 @@ def get_all_investor():
     finally:
         con.close()
         return {"data": recs}
+
+#============ BORROWER ============#
+
+class PemilikUmkm(BaseModel):
+    ID_PEMILIK: int | None = None
+    nama_lengkap: str
+    tgl_lahir: str
+    jenis_kelamin: str
+    nik: str
+    foto_ktp: str
+    foto_borrower: str
+    
+@app.post("/tambah_borrower/", response_model=PemilikUmkm, status_code=201)
+def tambah_borrower(m: PemilikUmkm, response: Response, request: Request):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
+        cur.execute(
+            """insert into pemilik_umkm
+        (nama_lengkap, tg_lahir, jenis_kelamin, nik, foto_ktp, foto_pemilik) values (
+        "{}","{}","{}","{}","{}","{}")""".format(
+                m.nama_lengkap,
+                m.tgl_lahir,
+                m.jenis_kelamin,
+                m.nik,
+                m.foto_ktp,
+                m.foto_borrower
+            )
+        )
+        con.commit()
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+    # tambah location
+    response.headers["location"] = "/pemilik_umkm/{}".format(m.ID_PEMILIK)
+    return m
+
+@app.get("/get_all_borrower/")
+def get_all_borrower():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("select * from pemilik_umkm"):
+            recs.append(row)
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": recs}
+    
+@app.get("/get_all_borrower/{id_borrower}")
+def get_all_borrower(id_pemilik: int):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("select * from pemilik_umkm WHERE ID_PEMILIK={}".format(id_pemilik)):
+            recs.append(row)
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": recs}
+
+@app.patch("/update_borrower/{id}",response_model=PemilikUmkm)
+def update_borrower(response: Response,ID_PEMILIK: int, m: PemilikUmkm):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        sqlstr = "UPDATE pemilik_umkm set " #asumsi minimal ada satu update
+        if m.nama_lengkap!="":
+            sqlstr = sqlstr + " nama_lengkap = '{}' ".format(m.nama_lengkap)
+        if m.jenis_kelamin!="":
+            sqlstr = sqlstr + " jenis_kelamin = '{}' ".format(m.jenis_kelamin)
+        if m.nik!="":
+            sqlstr = sqlstr + " nik = '{}' ".format(m.nik)
+        if m.foto_ktp!="":
+            sqlstr = sqlstr + " foto_ktp = '{}' ".format(m.foto_ktp)
+        if m.foto_borrower!="":
+            sqlstr = sqlstr + " foto_pemilik = '{}' ".format(m.foto_borrower)
+        sqlstr = sqlstr + "where ID_PEMILIK='{}'".format(m.ID_PEMILIK)
+        print(sqlstr) # debug
+        cur.execute(sqlstr)
+        con.commit()
+        response.headers["location"] = "/pemilik_umkm/{}".format(m.ID_PEMILIK)
+    except:
+        return ({"status":"terjadi error"})
+    finally:
+        con.close()
+    return m
