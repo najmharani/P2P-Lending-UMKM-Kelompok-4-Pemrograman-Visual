@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:p2plending_umkm/colors.dart';
-import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:p2plending_umkm/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:p2plending_umkm/models/Umkm.model.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
 
