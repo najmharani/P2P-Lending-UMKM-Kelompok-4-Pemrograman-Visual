@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/topup.dart';
@@ -24,10 +25,13 @@ class HomeInvestor extends StatelessWidget {
                 'Total Asetmu',
                 style: TextStyle(fontSize: 15),
               ),
-              Text(
-                'Rp 10,000,000',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+              BlocBuilder<InvestorCubit, Investor>(builder: (context, model) {
+                context.read<InvestorCubit>().fetchData();
+                return Text(
+                  '${model.aset.toString()}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                );
+              }),
               SizedBox(height: 2),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),

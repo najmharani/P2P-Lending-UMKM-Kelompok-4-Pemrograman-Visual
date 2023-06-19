@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/landing_page/land.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Investor.model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/main.dart';
 
 class EditEmailPage extends StatefulWidget {
   final String Email;
@@ -183,12 +188,20 @@ class ProfileInvestor extends StatelessWidget {
       appBar: AppBar(
         title: Text('Profile'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout_rounded),
-            onPressed: () {
-              // Aksi saat tombol notifikasi ditekan
-            },
-          ),
+          BlocBuilder<UserCubit, User>(builder: (context, model) {
+            return IconButton(
+              icon: Icon(Icons.logout_rounded),
+              onPressed: () {
+                context.read<UserCubit>().deleteUser().then((_) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => P2PLendingUMKMApp()),
+                  );
+                });
+              },
+            );
+          })
         ],
       ),
       body: ListView(
@@ -203,15 +216,17 @@ class ProfileInvestor extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          Center(
-            child: Text(
-              fullName,
+          Center(child:
+              BlocBuilder<InvestorCubit, Investor>(builder: (context, model) {
+            context.read<InvestorCubit>().fetchData();
+            return Text(
+              model.namaLengkap,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ),
-          ),
+            );
+          })),
           SizedBox(height: 20),
           Divider(height: 10),
           SizedBox(height: 10),
@@ -219,65 +234,38 @@ class ProfileInvestor extends StatelessWidget {
             "Informasi Akun",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          ListTile(
-            title: Text('Email'),
-            subtitle: Text(email),
-            onTap: () {
-              // Navigate to the edit full name page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditEmailPage(Email: email),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Password'),
-            subtitle: Text(pass),
-            onTap: () {
-              // Navigate to the edit date of birth page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PasswordChangePage(),
-                ),
-              );
-            },
-          ),
-          Divider(height: 10),
-          SizedBox(height: 10),
-          Text(
-            "Profil Pribadi",
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          ListTile(
-            title: Text('Nama Lengkap'),
-            subtitle: Text(fullName),
-            onTap: () {
-              // Navigate to the edit full name page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditFullNamePage(fullName: fullName),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Tanggal Lahir'),
-            subtitle: Text(dateOfBirth),
-            onTap: () {
-              // Navigate to the edit date of birth page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditDateOfBirthPage(dateOfBirth: dateOfBirth),
-                ),
-              );
-            },
-          ),
+          BlocBuilder<UserCubit, User>(builder: (context, model) {
+            context.read<UserCubit>().getUser();
+            return ListTile(
+              title: Text('Email'),
+              subtitle: Text(model.email),
+              onTap: () {
+                // Navigate to the edit full name page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditEmailPage(Email: model.email),
+                  ),
+                );
+              },
+            );
+          }),
+          BlocBuilder<UserCubit, User>(builder: (context, model) {
+            context.read<UserCubit>().getUser();
+            return ListTile(
+              title: Text('Password'),
+              subtitle: Text(model.password),
+              onTap: () {
+                // Navigate to the edit date of birth page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PasswordChangePage(),
+                  ),
+                );
+              },
+            );
+          }),
           ListTile(
             title: Text('No Hp'),
             subtitle: Text(phoneNumber),
@@ -292,6 +280,36 @@ class ProfileInvestor extends StatelessWidget {
               );
             },
           ),
+          Divider(height: 10),
+          SizedBox(height: 10),
+          Text(
+            "Profil Pribadi",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Container(child:
+              BlocBuilder<InvestorCubit, Investor>(builder: (context, model) {
+            context.read<InvestorCubit>().fetchData();
+            return Column(children: [
+              ListTile(
+                title: Text('Nama Lengkap'),
+                subtitle: Text(model.namaLengkap),
+              ),
+              ListTile(
+                title: Text('Tanggal Lahir'),
+                subtitle: Text(model.tanggalLahir),
+                onTap: () {
+                  // Navigate to the edit date of birth page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditDateOfBirthPage(dateOfBirth: model.tanggalLahir),
+                    ),
+                  );
+                },
+              ),
+            ]);
+          })),
           ListTile(
             title: Text('KTP'),
             subtitle: Text(ktpStatus),

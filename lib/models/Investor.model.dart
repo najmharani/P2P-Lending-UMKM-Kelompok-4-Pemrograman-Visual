@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -47,14 +48,17 @@ class InvestorCubit extends Cubit<Investor> {
       nik: json["nik"],
       fotoKtp: json["fotoKtp"],
       fotoPemilik: json["fotoPemilik"],
-      aset: json["aset"],
+      aset: int.parse(json["aset"]),
     ));
   }
 
   void fetchData() async {
-    String url = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idInvestor = prefs.getInt('idTipeUser')!;
+    String url = "http://127.0.0.1:8000/get_investor/${idInvestor}";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
+      print('Sebelum -- : ${idInvestor}');
       setFromJson(jsonDecode(response.body));
     } else {
       throw Exception('Gagal load');

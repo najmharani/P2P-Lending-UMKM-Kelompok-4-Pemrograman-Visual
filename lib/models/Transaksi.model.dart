@@ -20,8 +20,8 @@ class Transaksi {
   });
 }
 
-class UmkmCubit extends Cubit<Transaksi> {
-  UmkmCubit()
+class TransaksiCubit extends Cubit<Transaksi> {
+  TransaksiCubit()
       : super(Transaksi(
           idTransaksi: 0,
           idUser: 0,

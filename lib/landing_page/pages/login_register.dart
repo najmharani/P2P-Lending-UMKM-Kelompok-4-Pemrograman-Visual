@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:p2plending_umkm/investor/navigation_investor.dart';
 import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
@@ -200,6 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final telpController = TextEditingController();
   final passwordController = TextEditingController();
+  late int idUser;
 
   String getUserType() {
     late String type;
@@ -225,7 +227,7 @@ class _RegisterPageState extends State<RegisterPage> {
       'foto_profil': '',
       'saldo': 0,
       'tipe_user': tipeUser,
-      'id_tipe_user': 5,
+      'id_tipe_user': 0,
     };
 
     final response = await http.post(
@@ -236,6 +238,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (response.statusCode == 201) {
       // User inserted successfully
+      idUser = jsonDecode(response.body);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('idUser', idUser);
       register();
       print('User berhasil ditambahkan');
     } else {

@@ -42,6 +42,33 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
   final nikController = TextEditingController();
   late int idTipe;
 
+  Future<void> updateUserIdTipe(int idUser, int idTipe) async {
+    final Map<String, dynamic> userData = {
+      'email': "",
+      'password': "",
+      'no_telp': "",
+      'foto_profil': "",
+      'saldo': 0,
+      'tipe_user': "",
+      'id_tipe_user': idTipe,
+    };
+
+    print('id tipe: $idTipe');
+
+    final response = await http.patch(
+      Uri.parse("http://127.0.0.1:8000/update_user/$idUser"),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(userData),
+    );
+
+    if (response.statusCode == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('idTipeUser', idTipe);
+    } else {
+      print('Gagal patch ${response.statusCode}');
+    }
+  }
+
   Future<void> insertInvestor(
       String namaLengkap,
       String tglLahir,
@@ -72,6 +99,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
       idTipe = jsonDecode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setInt('idTipeUser', idTipe);
+      updateUserIdTipe(prefs.getInt('idUser')!, idTipe);
       print('$idTipe');
       investorRegister();
       print('Investor berhasil ditambahkan');

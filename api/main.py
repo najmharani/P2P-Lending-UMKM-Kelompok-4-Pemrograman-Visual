@@ -165,7 +165,7 @@ class User(BaseModel):
 
 # Status code 201 standard return creation
 # Return objek yang baru di-create (response_mode tipenya User)
-@app.post("/tambah_User/", response_model=User, status_code=201)
+@app.post("/tambah_User/", response_model=int, status_code=201)
 def tambah_User(m: User, response: Response, request: Request):
     try:
         DB_NAME = "m2m.db"
@@ -185,15 +185,15 @@ def tambah_User(m: User, response: Response, request: Request):
                 m.id_tipe_user,
             )
         )
+        idUser = cur.lastrowid
         con.commit()
-
     except:
         return {"status": "terjadi error"}
     finally:
         con.close()
     # tambah location
-    response.headers["location"] = "/user/{}".format(m.ID_USER)
-    return m
+    response.headers["location"] = "/get_user/{}".format(idUser)
+    return idUser
 
 
 @app.get("/get_all_user/")
@@ -448,6 +448,24 @@ def get_peminjaman(id: int):
         recs = []
         for row in cur.execute(
             "select * from peminjaman WHERE ID_PEMINJAMAN={}".format(id)
+        ):
+            recs.append(row)
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": recs}
+
+
+@app.get("/get_peminjaman_belum_didanai/")
+def get_peminjaman_belum_didanai():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute(
+            "select * from peminjaman where status_pengajuan != 'true'"
         ):
             recs.append(row)
     except:
@@ -879,8 +897,8 @@ def get_all_investor():
         return {"data": recs}
 
 
-@app.get("/get_all_investor/{id_investor}")
-def get_all_investor(id_investor: int):
+@app.get("/get_investor/{id_investor}")
+def get_investor(id_investor: int):
     try:
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
@@ -890,11 +908,23 @@ def get_all_investor(id_investor: int):
             "select * from profil_investor WHERE ID_INVESTOR={}".format(id_investor)
         ):
             recs.append(row)
+
+        user = {
+            "idInvestor": recs[0][0],
+            "namaLengkap": recs[0][1],
+            "tanggalLahir": recs[0][2],
+            "jenisKelamin": recs[0][3],
+            "nik": recs[0][4],
+            "fotoKtp": recs[0][5],
+            "fotoPemilik": recs[0][6],
+            "aset": recs[0][7],
+        }
+
     except:
         return {"status": "terjadi error"}
     finally:
         con.close()
-        return {"data": recs}
+        return user
 
 
 @app.patch("/update_investor/{id_investor}", response_model=Investor)

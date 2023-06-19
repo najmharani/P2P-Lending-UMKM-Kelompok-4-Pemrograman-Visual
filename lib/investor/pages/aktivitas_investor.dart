@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:intl/intl.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/topup.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/bank_account.dart';
@@ -76,15 +78,18 @@ class _AktivitasInvestorState extends State<AktivitasInvestor> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'Rp. 100.000',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    BlocBuilder<UserCubit, User>(builder: (context, model) {
+                      context.read<UserCubit>().getUser;
+                      return Text(
+                        'Rp.${model.saldo.toString()}',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      );
+                    }),
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

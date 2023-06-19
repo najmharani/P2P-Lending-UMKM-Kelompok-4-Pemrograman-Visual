@@ -55,11 +55,8 @@ class UserCubit extends Cubit<User> {
     ));
   }
 
-  void fetchData(String email, String password) async {
-    String url =
-        "http://127.0.0.1:8000/login_auth/email=$email&password=$password";
-
-    print(url);
+  void fetchData(int userId) async {
+    String url = "http://127.0.0.1:8000/get_user/${userId}";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       setFromJson(jsonDecode(response.body));
@@ -132,8 +129,19 @@ class UserCubit extends Cubit<User> {
 
   Future<void> deleteUser() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('data_user');
 
+    print('Sebelum : ${prefs.getInt('idUser')}');
+
+    await prefs.remove('idUser');
+    await prefs.remove('email');
+    await prefs.remove('password');
+    await prefs.remove('noTelp');
+    await prefs.remove('fotoProfil');
+    await prefs.remove('saldo');
+    await prefs.remove('tipeUser');
+    await prefs.remove('idTipeUser');
+
+    print('Setelah: ${prefs.getInt('idUser')}');
     emit(
       User(
         idUser: 0,
@@ -146,47 +154,5 @@ class UserCubit extends Cubit<User> {
         idTipeUser: 0,
       ),
     );
-  }
-
-  Future<int> updateUserIdTipe(int idUser, int idTipe) async {
-    final response = await http.patch(
-      Uri.parse("http://127.0.0.1:8000/update_user/" + idUser.toString()),
-      body: jsonEncode({
-        'id_tipe_user': idTipe,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      final token = responseData['data'];
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('idUser', token['idUser']);
-      await prefs.setString('email', token['email']);
-      await prefs.setString('password', token['password']);
-      await prefs.setString('fotoProfil', token['fotoProfil']);
-      await prefs.setString('noTelp', token['noTelp']);
-      await prefs.setInt('saldo', token['saldo']);
-      await prefs.setString('tipeUser', token['tipeUser']);
-      await prefs.setInt('idTipeUser', token['idTipeUser']);
-
-      Map<String, dynamic> decodedToken = token;
-
-      emit(User(
-        idUser: decodedToken["idUser"],
-        email: decodedToken["email"],
-        password: decodedToken["password"],
-        noTelp: decodedToken["noTelp"],
-        fotoProfil: decodedToken["fotoProfil"],
-        saldo: decodedToken["saldo"],
-        tipeUser: decodedToken["tipeUser"],
-        idTipeUser: decodedToken["idTipeUser"],
-      ));
-    } else {
-      print('Login failed with status code ${response.statusCode}');
-    }
-
-    return response.statusCode;
   }
 }
