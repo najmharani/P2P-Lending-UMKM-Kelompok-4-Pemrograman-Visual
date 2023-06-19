@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:p2plending_umkm/main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/navigation_investor.dart';
 import 'package:p2plending_umkm/models/Investor.model.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
 
 void main() {
   runApp(RegisterApp());
@@ -20,7 +26,92 @@ class RegisterApp extends StatelessWidget {
   }
 }
 
-class RegisterInvestorNextPage extends StatelessWidget {
+class RegisterInvestorNextPage extends StatefulWidget {
+  const RegisterInvestorNextPage();
+
+  @override
+  State<RegisterInvestorNextPage> createState() =>
+      _RegisterInvestorNextPageState();
+}
+
+class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
+  final namaController = TextEditingController();
+  final tglLahirController = TextEditingController();
+  final genderontroller = TextEditingController();
+  final nikController = TextEditingController();
+  late int idTipe;
+
+  Future<void> insertInvestor(
+      String namaLengkap,
+      String tglLahir,
+      String jenisKelamin,
+      String nik,
+      String fotoKtp,
+      String fotoInvestor) async {
+    final url = 'http://127.0.0.1:8000 /tambah_investor/';
+
+    final Map<String, dynamic> userData = {
+      "nama_lengkap": namaLengkap,
+      "tgl_lahir": tglLahir,
+      "jenis_kelamin": jenisKelamin,
+      "nik": nik,
+      "foto_ktp": fotoKtp,
+      "foto_investor": fotoInvestor,
+      "aset": 0
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(userData),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      // User inserted successfully
+      final responseData = jsonDecode(response.body);
+      idTipe = responseData['data'][['ID_INVESTOR']];
+
+      investorRegister();
+      print('Investor berhasil ditambahkan');
+    } else {
+      // Error occurred while inserting Investor
+      print('Error saat menambahkan investor');
+    }
+  }
+
+  void investorRegister() {
+    BlocListener<UserCubit, User>(listener: (context, model) {
+      context.read<UserCubit>().getUser();
+      if (context.read<UserCubit>().updateUserIdTipe(model.idUser, idTipe) ==
+          200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            backgroundColor: Color.fromARGB(255, 0, 97, 175),
+            content: Text(
+              "Berhasil Membuat Akun Investor",
+              style: TextStyle(
+                fontFamily: "lexend",
+              ),
+            ),
+          ),
+        );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return InvestorApp();
+            },
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +128,14 @@ class RegisterInvestorNextPage extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             TextField(
+              controller: namaController,
               decoration: InputDecoration(
                 labelText: 'Nama Lengkap',
               ),
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: tglLahirController,
               decoration: InputDecoration(
                 labelText: 'Tanggal Lahir',
               ),
@@ -51,6 +144,7 @@ class RegisterInvestorNextPage extends StatelessWidget {
             buildGenderDropdown(),
             SizedBox(height: 16.0),
             TextField(
+              controller: nikController,
               decoration: InputDecoration(
                 labelText: 'Nomor NIK',
               ),
@@ -72,10 +166,10 @@ class RegisterInvestorNextPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InvestorApp()),
-                );
+                setState(() {
+                  insertInvestor(namaController.text, tglLahirController.text,
+                      genderontroller.text, nikController.text, "", "");
+                });
               },
             ),
           ],
@@ -89,14 +183,14 @@ class RegisterInvestorNextPage extends StatelessWidget {
       decoration: InputDecoration(
         labelText: 'Jenis Kelamin',
       ),
-      items: <String>['Laki-laki', 'Perempuan', 'Lainnya'].map((String value) {
+      items: <String>['Laki-Laki', 'Perempuan'].map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
         );
       }).toList(),
       onChanged: (String? newValue) {
-        // Implementasi logika saat memilih jenis kelamin di sini
+        genderontroller.text = newValue!;
       },
     );
   }

@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/topup.dart';
 
@@ -56,13 +58,16 @@ class HomeInvestor extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          'Rp 0',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        BlocBuilder<UserCubit, User>(builder: (context, model) {
+                          context.read<UserCubit>().getUser;
+                          return Text(
+                            '${model.saldo.toString()}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        })
                       ],
                     ),
                     Row(

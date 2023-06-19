@@ -245,23 +245,23 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void register() {
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.only(
-    //         topLeft: Radius.circular(10),
-    //         topRight: Radius.circular(10),
-    //       ),
-    //     ),
-    //     backgroundColor: Color.fromARGB(255, 0, 97, 175),
-    //     content: Text(
-    //       "Berhasil Membuat Akun",
-    //       style: TextStyle(
-    //         fontFamily: "lexend",
-    //       ),
-    //     ),
-    //   ),
-    // );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 0, 97, 175),
+        content: Text(
+          "Berhasil Membuat Akun User",
+          style: TextStyle(
+            fontFamily: "lexend",
+          ),
+        ),
+      ),
+    );
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
