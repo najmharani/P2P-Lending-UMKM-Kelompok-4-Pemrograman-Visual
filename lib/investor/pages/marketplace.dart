@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/models/Peminjaman.model.dart';
+import 'dart:developer' as developer;
 
 enum FilterOptions {
   JenisUMKM,
@@ -50,8 +53,7 @@ class MarketplaceState extends State<Marketplace> {
           ),
         ],
       ),
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
+      body: Column(
         children: [
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -90,11 +92,47 @@ class MarketplaceState extends State<Marketplace> {
               ],
             ),
           ),
-          _buildProductCard(context, 'Product 1', 'Deskripsi produk 1'),
-          SizedBox(height: 16.0),
-          _buildProductCard(context, 'Product 2', 'Deskripsi produk 2'),
-          SizedBox(height: 16.0),
-          _buildProductCard(context, 'Product 3', 'Deskripsi produk 3'),
+          Expanded(
+            child: BlocBuilder<ListPeminjamanCubit, ListPeminjaman>(
+              buildWhen: (previousState, state) {
+                developer.log(
+                    "${previousState.listPeminjaman} -> ${state.listPeminjaman}",
+                    name: 'listlog');
+                return true;
+              },
+              builder: (context, model) {
+                context.read<ListPeminjamanCubit>().fetchData();
+                if (model.listPeminjaman.isNotEmpty) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: model.listPeminjaman.length,
+                    itemBuilder: (context, index) {
+                      return _buildProductCard(
+                        context,
+                        model.listPeminjaman[index].jumlahPinjaman.toString(),
+                        model.listPeminjaman[index].bagiHasil.toString(),
+                        model.listPeminjaman[index].tenor,
+                      );
+                    },
+                    // children: [
+                    //   _buildProductCard(
+                    //       context, 'Product 1', 'Deskripsi produk 1'),
+                    //   SizedBox(height: 16.0),
+                    //   _buildProductCard(
+                    //       context, 'Product 2', 'Deskripsi produk 2'),
+                    //   SizedBox(height: 16.0),
+                    //   _buildProductCard(
+                    //       context, 'Product 3', 'Deskripsi produk 3'),
+                    // ],
+                  );
+                } else {
+                  return const Center(
+                    child: Text("Daftar peminjaman kosong"),
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
       endDrawer: Drawer(
@@ -298,8 +336,9 @@ class MarketplaceState extends State<Marketplace> {
   }
 
   Widget _buildProductCard(
-      BuildContext context, String name, String description) {
+      BuildContext context, String plafond, String bagiHasil, String tenor) {
     return Container(
+      margin: EdgeInsets.only(bottom: 16),
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -332,14 +371,14 @@ class MarketplaceState extends State<Marketplace> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          name,
+                          "Nama UMKM",
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          description,
+                          "Deskripsi UMKM",
                           style: TextStyle(fontSize: 16.0),
                         ),
                         Row(
@@ -378,13 +417,13 @@ class MarketplaceState extends State<Marketplace> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                children: [Text('PLAFOND'), Text("Rp" + plafond)],
               ),
               Column(
-                children: [Text('%BAGI HASIL'), Text('12%')],
+                children: [Text('%BAGI HASIL'), Text(bagiHasil + "%")],
               ),
               Column(
-                children: [Text('TENOR'), Text('50 Minggu')],
+                children: [Text('TENOR'), Text(tenor)],
               ),
             ],
           ),
@@ -397,7 +436,10 @@ class MarketplaceState extends State<Marketplace> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
-                        name: name, description: description),
+                      plafond: plafond,
+                      bagiHasil: bagiHasil,
+                      tenor: tenor,
+                    ),
                   ),
                 );
               },
@@ -411,12 +453,14 @@ class MarketplaceState extends State<Marketplace> {
 }
 
 class ProductDetailsScreen extends StatelessWidget {
-  final String name;
-  final String description;
+  final String plafond;
+  final String bagiHasil;
+  final String tenor;
 
   const ProductDetailsScreen({
-    required this.name,
-    required this.description,
+    required this.plafond,
+    required this.bagiHasil,
+    required this.tenor,
   });
 
   @override
@@ -469,14 +513,17 @@ class ProductDetailsScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text('PLAFOND'),
-                                    Text('Rp 5.000.000')
+                                    Text("Rp" + plafond)
                                   ],
                                 ),
                                 Column(
-                                  children: [Text('%BAGI HASIL'), Text('12%')],
+                                  children: [
+                                    Text('%BAGI HASIL'),
+                                    Text(bagiHasil + "%")
+                                  ],
                                 ),
                                 Column(
-                                  children: [Text('TENOR'), Text('50 Minggu')],
+                                  children: [Text('TENOR'), Text(tenor)],
                                 ),
                               ],
                             ),

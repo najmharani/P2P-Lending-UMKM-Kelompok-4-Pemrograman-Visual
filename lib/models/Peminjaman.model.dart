@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 class Peminjaman {
   int idPeminjaman;
@@ -36,8 +37,8 @@ class Peminjaman {
   });
 }
 
-class UmkmCubit extends Cubit<Peminjaman> {
-  UmkmCubit()
+class PeminjamanCubit extends Cubit<Peminjaman> {
+  PeminjamanCubit()
       : super(Peminjaman(
           idPeminjaman: 0,
           idBorrower: 0,
@@ -78,6 +79,54 @@ class UmkmCubit extends Cubit<Peminjaman> {
   void fetchData() async {
     String url = "";
     final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      setFromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Gagal load');
+    }
+  }
+}
+
+class ListPeminjaman {
+  List<Peminjaman> listPeminjaman = <Peminjaman>[];
+  ListPeminjaman({required this.listPeminjaman});
+}
+
+class ListPeminjamanCubit extends Cubit<ListPeminjaman> {
+  String url = "http://localhost:8000/get_peminjaman_belum_didanai";
+
+  ListPeminjamanCubit() : super(ListPeminjaman(listPeminjaman: []));
+
+  void setFromJson(Map<String, dynamic> json) {
+    List<Peminjaman> listPeminjaman = <Peminjaman>[];
+    var data = json["data"];
+    developer.log(data.toString());
+    for (var val in data) {
+      listPeminjaman.add(
+        Peminjaman(
+          idPeminjaman: val[0],
+          jumlahPinjaman: val[1],
+          statusPinjaman: val[2],
+          statusPengajuan: val[3],
+          waktuPengajuan: val[4],
+          waktuPendanaan: val[5],
+          jatuhTempo: val[6],
+          bagiHasil: val[7],
+          tenor: val[8],
+          penghasilanPerBulan: val[9],
+          jumlahAngsuran: val[10],
+          sisaTenor: val[11],
+          nilaiRating: val[12],
+          idBorrower: val[13],
+        ),
+      );
+    }
+    emit(ListPeminjaman(listPeminjaman: listPeminjaman));
+  }
+
+  void fetchData() async {
+    final response = await http.get(Uri.parse(url));
+
     if (response.statusCode == 200) {
       setFromJson(jsonDecode(response.body));
     } else {

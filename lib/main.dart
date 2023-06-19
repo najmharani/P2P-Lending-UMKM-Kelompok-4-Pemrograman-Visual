@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Peminjaman.model.dart';
 import 'package:p2plending_umkm/landing_page/landing_page.dart';
 import 'package:p2plending_umkm/colors.dart';
 
@@ -30,6 +31,12 @@ class P2PLendingUMKMApp extends StatelessWidget {
         providers: [
           BlocProvider<UserCubit>(
             create: (BuildContext context) => UserCubit(),
+          ),
+          BlocProvider<PeminjamanCubit>(
+            create: (BuildContext context) => PeminjamanCubit(),
+          ),
+          BlocProvider<ListPeminjamanCubit>(
+            create: (BuildContext context) => ListPeminjamanCubit(),
           ),
         ],
         child: MaterialApp(
