@@ -1,3 +1,4 @@
 {
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cmake.sourceDirectory": "D:/sem 4/provis/tubes/P2P-Lending-UMKM-Kelompok-4-Pemrograman-Visual/linux"
 }
