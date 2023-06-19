@@ -38,7 +38,7 @@ class RegisterInvestorNextPage extends StatefulWidget {
 class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
   final namaController = TextEditingController();
   final tglLahirController = TextEditingController();
-  final genderontroller = TextEditingController();
+  final genderController = TextEditingController();
   final nikController = TextEditingController();
   late int idTipe;
 
@@ -75,7 +75,8 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
       String jenisKelamin,
       String nik,
       String fotoKtp,
-      String fotoInvestor) async {
+      String fotoInvestor/*,
+      String password*/) async {
     final url = 'http://127.0.0.1:8000 /tambah_investor/';
 
     final Map<String, dynamic> userData = {
@@ -192,7 +193,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
               onPressed: () {
                 setState(() {
                   insertInvestor(namaController.text, tglLahirController.text,
-                      genderontroller.text, nikController.text, "", "");
+                      genderController.text, nikController.text, "", "");
                 });
               },
             ),
@@ -214,7 +215,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
         );
       }).toList(),
       onChanged: (String? newValue) {
-        genderontroller.text = newValue!;
+        genderController.text = newValue!;
       },
     );
   }
