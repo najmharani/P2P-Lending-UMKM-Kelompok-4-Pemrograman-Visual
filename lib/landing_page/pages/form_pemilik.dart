@@ -1,49 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:p2plending_umkm/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
-import 'package:p2plending_umkm/landing_page/pages/form_pemilik.dart';
-import 'package:p2plending_umkm/models/Umkm.model.dart';
+import 'package:p2plending_umkm/investor/navigation_investor.dart';
+import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
 
 void main() {
-  runApp(FormApp());
+  runApp(PemilikUMKMForm());
 }
 
-class FormApp extends StatelessWidget {
+class PemilikUMKMForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Form',
+      title: 'Register',
       theme: ThemeData(
         primarySwatch: primary,
-        fontFamily: 'lexend',
       ),
-      home: RegisterBorrowerNextPage(),
+      home: RegisterPemilikNextPage(),
     );
   }
 }
 
-class RegisterBorrowerNextPage extends StatefulWidget {
-  const RegisterBorrowerNextPage();
+class RegisterPemilikNextPage extends StatefulWidget {
+  const RegisterPemilikNextPage();
 
   @override
-  State<RegisterBorrowerNextPage> createState() =>
-      _RegisterBorrowerNextPageState();
+  State<RegisterPemilikNextPage> createState() =>
+      _RegisterPemilikNextPageState();
 }
 
-class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
-  final namaUmkmController = TextEditingController();
-  final alamatUmkmController = TextEditingController();
-  final jenisUsahaController = TextEditingController();
-  final tahunBerdiriController = TextEditingController();
+class _RegisterPemilikNextPageState extends State<RegisterPemilikNextPage> {
+  final namaController = TextEditingController();
+  final tglLahirController = TextEditingController();
+  final genderController = TextEditingController();
+  final nikController = TextEditingController();
   late int idTipe;
 
-  Future<void> updateUserIdTipe(int idUser, int idTipe) async {
+  Future<void> updatUmkmIdPemilik(int idTipeUser, int idPemilik) async {
     final Map<String, dynamic> userData = {
       'email': "",
       'password': "",
@@ -54,42 +53,38 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
       'id_tipe_user': idTipe,
     };
 
-    print('id tipe: $idTipe');
+    print('id tipe: $idTipeUser');
 
     final response = await http.patch(
-      Uri.parse("http://127.0.0.1:8000/update_user/$idUser"),
+      Uri.parse("http://127.0.0.1:8000/update_borrower/$idTipeUser"),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(userData),
     );
 
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('idTipeUser', idTipe);
+      await prefs.setInt('idPemilik', idPemilik);
     } else {
       print('Gagal patch ${response.statusCode}');
     }
   }
 
-  Future<void> insertBorrower(
-      String namaUmkm,
-      String alamatUmkmDetail,
-      String jenisUsaha,
-      String tahunBerdiri,
-      String npwp,
-      String suratIzinUsaha,
-      String laporanKeuangan,
-      String fotoUmkm) async {
-    final url = 'http://127.0.0.1:8000 /tambah_borrower/';
+  Future<void> insertPemilik(
+      String namaLengkap,
+      String tglLahir,
+      String jenisKelamin,
+      String nik,
+      String fotoKtp,
+      String fotoPemilik) async {
+    final url = 'http://127.0.0.1:8000 /tambah_pemilik/';
 
     final Map<String, dynamic> userData = {
-      "nama_umkm": namaUmkm,
-      "alamat_umkm": alamatUmkmDetail,
-      "jenis_usaha": jenisUsaha,
-      "tahun_berdiri": tahunBerdiri,
-      "npwp": npwp,
-      "izin_usaha": suratIzinUsaha,
-      "laporan_keuangan": laporanKeuangan,
-      "foto_umkm": fotoUmkm,
+      "nama_lengkap": namaLengkap,
+      "tgl_lahir": tglLahir,
+      "jenis_kelamin": jenisKelamin,
+      "nik": nik,
+      "foto_ktp": fotoKtp,
+      "foto_investor": fotoPemilik,
       "aset": 0
     };
 
@@ -104,17 +99,17 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
       idTipe = jsonDecode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setInt('idTipeUser', idTipe);
-      updateUserIdTipe(prefs.getInt('idUser')!, idTipe);
+      updatUmkmIdPemilik(prefs.getInt('idUser')!, idTipe);
       print('$idTipe');
-      borrowerRegister();
-      print('Borrower berhasil ditambahkan');
+      pemilikRegister();
+      print('Pemilik berhasil ditambahkan');
     } else {
-      // Error occurred while inserting Borrower
-      print('Error saat menambahkan borrower');
+      // Error occurred while inserting pemilik
+      print('Error saat menambahkan pemilik');
     }
   }
 
-  void borrowerRegister() {
+  void pemilikRegister() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         shape: RoundedRectangleBorder(
@@ -125,7 +120,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
         ),
         backgroundColor: Color.fromARGB(255, 0, 97, 175),
         content: Text(
-          "Berhasil Membuat Akun Borrower",
+          "Berhasil Membuat Akun Pemilik",
           style: TextStyle(
             fontFamily: "lexend",
           ),
@@ -135,7 +130,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return PemilikUMKMForm();
+          return BorrowerApp();
         },
       ),
     );
@@ -145,51 +140,48 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Form UMKM'),
+        title: Text(
+          'Registration',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: ListView(
           children: <Widget>[
             TextField(
-              controller: namaUmkmController,
+              controller: namaController,
               decoration: InputDecoration(
-                labelText: 'Nama UMKM',
+                labelText: 'Nama Lengkap',
               ),
             ),
             SizedBox(height: 16.0),
             TextField(
-              controller: alamatUmkmController,
+              controller: tglLahirController,
               decoration: InputDecoration(
-                labelText: 'Alamat UMKM',
+                labelText: 'Tanggal Lahir',
               ),
             ),
+            SizedBox(height: 16.0),
+            buildGenderDropdown(),
             SizedBox(height: 16.0),
             TextField(
-              controller: jenisUsahaController,
+              controller: nikController,
               decoration: InputDecoration(
-                labelText: 'Jenis UMKM',
+                labelText: 'Nomor NIK',
               ),
             ),
             SizedBox(height: 16.0),
-            TextField(
-              controller: tahunBerdiriController,
-              decoration: InputDecoration(
-                labelText: 'Tahun Berdiri',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            buildUploadButton('NPWP', Icons.attach_file),
+            buildUploadButton('Foto KTP', Icons.attach_file),
             SizedBox(height: 8.0),
-            buildUploadButton('Izin Usaha', Icons.attach_file),
-            SizedBox(height: 8.0),
-            buildUploadButton('Laporan Keuangan', Icons.attach_file),
-            SizedBox(height: 8.0),
-            buildUploadButton('Foto UMKM', Icons.attach_file),
+            buildUploadButton('Foto Pemilik', Icons.attach_file),
             SizedBox(height: 16.0),
             ElevatedButton(
               style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(Size(200.0, 40.0)),
+                fixedSize:
+                    MaterialStateProperty.all(Size(double.infinity, 40.0)),
               ),
               child: Text(
                 'Register',
@@ -199,21 +191,31 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
               ),
               onPressed: () {
                 setState(() {
-                  insertBorrower(
-                      namaUmkmController.text,
-                      alamatUmkmController.text,
-                      jenisUsahaController.text,
-                      tahunBerdiriController.text,
-                      "",
-                      "",
-                      "",
-                      "");
+                  insertPemilik(namaController.text, tglLahirController.text,
+                      genderController.text, nikController.text, "", "");
                 });
               },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildGenderDropdown() {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        labelText: 'Jenis Kelamin',
+      ),
+      items: <String>['Laki-Laki', 'Perempuan'].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (String? newValue) {
+        genderController.text = newValue!;
+      },
     );
   }
 
@@ -236,7 +238,9 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
               color: Colors.white,
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            // Implementasi logika upload di sini
+          },
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 40.0),
           ),
