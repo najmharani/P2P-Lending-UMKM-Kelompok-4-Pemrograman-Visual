@@ -230,9 +230,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
               color: Colors.white,
             ),
           ),
-          onPressed: () {
-
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 40.0),
           ),
