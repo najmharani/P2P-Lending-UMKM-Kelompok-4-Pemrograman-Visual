@@ -466,6 +466,15 @@ class Transaksi(BaseModel):
     jenis_transaksi: str
     detail_transaksi: str
     id_user: int | None = None
+    
+class TransaksiM2m(BaseModel):
+    ID_TRANSAKSI: int = None
+    jumlah_transaksi: int | None = None
+    tanggal_waktu_transaksi: str
+    jenis_transaksi: str
+    detail_transaksi: str
+    id_user: int | None = None
+    id_user_tujuan : int | None = None
 
 
 # Status code 201 standard return creation
@@ -497,6 +506,139 @@ def tambah_transaksi(m: Transaksi, response: Response, request: Request):
     response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
     return m
 
+@app.post("/TopUp_transaksi/", response_model=Transaksi, status_code=201)
+def TopUp_transaksi(m: Transaksi, response: Response, request: Request):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
+        cur.execute(
+            """insert into transaksi
+        (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user) values (
+        {},"{}","{}","{}",{})""".format(
+                m.jumlah_transaksi,
+                m.tanggal_waktu_transaksi,
+                m.jenis_transaksi,
+                m.detail_transaksi,
+                m.id_user
+            )
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE user set saldo = saldo + {} where id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+        )
+        con.commit()
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+    # tambah location
+    # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
+    return m
+
+@app.post("/Witdhdraw_transaksi/", response_model=Transaksi, status_code=201)
+def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
+        cur.execute(
+            """insert into transaksi
+        (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user) values (
+        {},"{}","{}","{}",{})""".format(
+                m.jumlah_transaksi,
+                m.tanggal_waktu_transaksi,
+                m.jenis_transaksi,
+                m.detail_transaksi,
+                m.id_user
+            )
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE user set saldo = saldo - {} where id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+        )
+        con.commit()
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+    # tambah location
+    # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
+    return 
+
+@app.post("/pendanaan_transaksi/", response_model=TransaksiM2m, status_code=201)
+def pendanaan_transaksi(m: TransaksiM2m, response: Response, request: Request):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
+        cur.execute(
+            """insert into transaksi
+        (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user, id_user_tujuan) values (
+        {},"{}","{}","{}",{}, {})""".format(
+                m.jumlah_transaksi,
+                m.tanggal_waktu_transaksi,
+                m.jenis_transaksi,
+                m.detail_transaksi,
+                m.id_user,
+                m.id_user_tujuan
+            )
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE user set saldo = saldo + {} where tipe_user='Borrower' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user_tujuan)
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE user set saldo = saldo - {} where tipe_user='Investor' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+        )
+        con.commit()
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+    # tambah location
+    # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
+    return m
+
+@app.post("/pengembalian_transaksi/", response_model=TransaksiM2m, status_code=201)
+def pengembalian_transaksi(m: TransaksiM2m, response: Response, request: Request):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
+        cur.execute(
+            """insert into transaksi
+        (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user, id_user_tujuan) values (
+        {},"{}","{}","{}",{}, {})""".format(
+                m.jumlah_transaksi,
+                m.tanggal_waktu_transaksi,
+                m.jenis_transaksi,
+                m.detail_transaksi,
+                m.id_user,
+                m.id_user_tujuan
+            )
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE user set saldo = saldo - {} where tipe_user='Borrower' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user_tujuan)
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE user set saldo = saldo + {} where tipe_user='Investor' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+        )
+        con.commit()
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+    # tambah location
+    # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
+    return m
 
 @app.get("/get_all_transaksi/")
 def get_all_transaksi():
