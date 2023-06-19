@@ -1076,7 +1076,7 @@ def tambah_pemilik(m: PemilikUmkm, response: Response, request: Request):
     finally:
         con.close()
     # tambah location
-    response.headers["location"] = "/pemilik_umkm/{}".format(m.id_pemilik)
+    response.headers["location"] = "/pemilik_umkm/{}".format(m.ID_PEMILIK)
     return id_pemilik
 
 
@@ -1204,32 +1204,44 @@ def update_pemilik(response: Response, id_pemilik: int, m: PemilikUmkm):
 
 
 class Umkm(BaseModel):
-    ID_PEMILIK: int = None
-    nama_lengkap: str
-    tgl_lahir: str
-    jenis_kelamin: str
-    nik: str
-    foto_ktp: str
-    foto_borrower: str
+    ID_BORROWER: int = None
+    nama_umkm: str
+    alamat_umkm_provinsi: str
+    alamat_umkm_detail: str
+    jenis_usaha: str
+    tahun_berdiri: str
+    surat_izin_usaha: str
+    npwp: str
+    laporan_keuangan:str
+    foto_umkm: str
+    rating: str
+    omzet: int
+    deskripsi_umkm: str
+    id_pemilik_umkm:int
 
-
-@app.post("/tambah_pemilik/", response_model=int, status_code=201)
-def tambah_pemilik(m: PemilikUmkm, response: Response, request: Request):
+@app.post("/tambah_umkm/", response_model=int, status_code=201)
+def tambah_umkm(m: Umkm, response: Response, request: Request):
     try:
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
         cur.execute(
-            """insert into pemilik_umkm
-        (nama_lengkap, tg_lahir, jenis_kelamin, nik, foto_ktp, foto_pemilik) values (
-        "{}","{}","{}","{}","{}","{}")""".format(
-                m.nama_lengkap,
-                m.tgl_lahir,
-                m.jenis_kelamin,
-                m.nik,
-                m.foto_ktp,
-                m.foto_borrower,
+            """insert into umkm
+        (nama_umkm, alamat_umkm_provinsi, alamat_umkm_detail, jenis_usaha, tahun_berdiri, surat_izin_usaha, npwp, laporan_keuangan, foto_umkm, rating, omzet,  deskripsi_umkm, id_pemilik_umkm) values (
+        "{}","{}","{}","{}","{}","{}", "{}", "{}", "{}", "{}", {}, "{}", {})""".format(
+                m.nama_umkm,
+                m.alamat_umkm_provinsi,
+                m.alamat_umkm_detail,
+                m.jenis_usaha,
+                m.tahun_berdiri,
+                m.npwp,
+                m.laporan_keuangan,
+                m.foto_umkm,
+                m.rating,
+                m.omzet,
+                m.deskripsi_umkm,
+                m.id_pemilik_umkm
             )
         )
 
@@ -1241,18 +1253,18 @@ def tambah_pemilik(m: PemilikUmkm, response: Response, request: Request):
     finally:
         con.close()
     # tambah location
-    response.headers["location"] = "/pemilik_umkm/{}".format(m.id_pemilik)
+    response.headers["location"] = "/umkm/{}".format(m.ID_BORROWER)
     return id_pemilik
 
 
-@app.get("/get_all_pemilik/")
-def get_all_pemilik():
+@app.get("/get_all_umkm/")
+def get_all_umkm():
     try:
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute("select * from pemilik_umkm"):
+        for row in cur.execute("select * from umkm"):
             recs.append(row)
     except:
         return {"status": "terjadi error"}
@@ -1261,44 +1273,51 @@ def get_all_pemilik():
         return {"data": recs}
 
 
-@app.get("/get_pemilik/{id_pemilik}")
-def get_pemilik(id_pemilik: int):
+@app.get("/get_umkm/{id_umkm}")
+def get_umkm(id_umkm: int):
     try:
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
         for row in cur.execute(
-            "select * from pemilik_umkm WHERE ID_PEMILIK={}".format(id_pemilik)
+            "select * from umkm WHERE ID_BORROWER={}".format(id_umkm)
         ):
             recs.append(row)
 
-        pemilik = {
-            "idPemilik": recs[0][0],
-            "namaLengkap": recs[0][1],
-            "tanggalLahir": recs[0][2],
-            "jenisKelamin": recs[0][3],
-            "nik": recs[0][4],
-            "fotoKtp": recs[0][5],
-            "fotoPemilik": recs[0][6],
+        umkm = {
+            "ID_BORROWER": recs[0][0],
+            "nama_umkm": recs[0][1],
+            "alamat_umkm_provinsi": recs[0][2],
+            "alamat_umkm_detail": recs[0][3],
+            "jenis_usaha": recs[0][4],
+            "tahun_berdiri": recs[0][5],
+            "surat_izin_usaha": recs[0][6],
+            "npwp": recs[0][7],
+            "laporan_keuangan": recs[0][8],
+            "foto_umkm": recs[0][9],
+            "rating": recs[0][10],
+            "omzet": recs[0][11],
+            "deskripsi_umkm": recs[0][12],
+            "id_pemilik_umkm": recs[0][13],
         }
 
     except:
         return {"status": "terjadi error"}
     finally:
         con.close()
-        return pemilik
+        return umkm
 
 
-@app.patch("/update_pemilik/{id_pemilik}", response_model=PemilikUmkm)
-def update_pemilik(response: Response, id_pemilik: int, m: PemilikUmkm):
+@app.patch("/update_umkm/{id_umkm}", response_model=Umkm)
+def update_umkm(response: Response, id_umkm: int, m: Umkm):
     try:
         print(str(m))
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         cur.execute(
-            "select * from pemilik_umkm where ID_PEMILIK = ?", (id_pemilik,)
+            "select * from umkm where ID_BORROWER = ?", (id_umkm,)
         )  # tambah koma untuk menandakan tupple
         existing_item = cur.fetchone()
     except Exception as e:
@@ -1307,52 +1326,94 @@ def update_pemilik(response: Response, id_pemilik: int, m: PemilikUmkm):
         )  # misal database down
 
     if existing_item:  # data ada, lakukan update
-        sqlstr = "update pemilik_umkm set "  # asumsi minimal ada satu field update
+        sqlstr = "update umkm set "  # asumsi minimal ada satu field update
         # todo: bisa direfaktor dan dirapikan
-        if m.nama_lengkap != "":
-            if m.nama_lengkap != None:
-                sqlstr = sqlstr + " nama_lengkap = '{}' ,".format(m.nama_lengkap)
+        if m.nama_umkm != "":
+            if m.nama_umkm != None:
+                sqlstr = sqlstr + " nama_umkm = '{}' ,".format(m.nama_umkm)
             else:
-                sqlstr = sqlstr + " nama_lengkap = null ,"
+                sqlstr = sqlstr + " nama_umkm = null ,"
 
-        if m.tgl_lahir != "":
-            if m.tgl_lahir != None:
-                sqlstr = sqlstr + " tg_lahir = '{}' ,".format(m.tgl_lahir)
+        if m.alamat_umkm_provinsi != "":
+            if m.alamat_umkm_provinsi != None:
+                sqlstr = sqlstr + " alamat_umkm_provinsi = '{}' ,".format(m.alamat_umkm_provinsi)
             else:
-                sqlstr = sqlstr + " tg_lahir = null ,"
+                sqlstr = sqlstr + " alamat_umkm_provinsi = null ,"
 
-        if m.jenis_kelamin != "":
-            if m.jenis_kelamin != None:
-                sqlstr = sqlstr + " jenis_kelamin = '{}' ,".format(m.jenis_kelamin)
+        if m.alamat_umkm_detail != "":
+            if m.alamat_umkm_detail != None:
+                sqlstr = sqlstr + " alamat_umkm_detail = '{}' ,".format(m.alamat_umkm_detail)
             else:
-                sqlstr = sqlstr + " jenis_kelamin = null ,"
+                sqlstr = sqlstr + " alamat_umkm_detail = null ,"
 
-        if m.nik != "":
-            if m.nik != None:
-                sqlstr = sqlstr + " nik = '{}' ,".format(m.nik)
+        if m.jenis_usaha != "":
+            if m.jenis_usaha != None:
+                sqlstr = sqlstr + " jenis_usaha = '{}' ,".format(m.jenis_usaha)
             else:
-                sqlstr = sqlstr + " nik = null, "
+                sqlstr = sqlstr + " jenis_usaha = null, "
 
-        if m.foto_ktp != "":
-            if m.foto_ktp != None:
-                sqlstr = sqlstr + " foto_ktp = '{}' ,".format(m.foto_ktp)
+        if m.tahun_berdiri != "":
+            if m.tahun_berdiri != None:
+                sqlstr = sqlstr + " tahun_berdiri = '{}' ,".format(m.tahun_berdiri)
             else:
-                sqlstr = sqlstr + " foto_ktp = null, "
+                sqlstr = sqlstr + " tahun_berdiri = null, "
 
-        if m.foto_borrower != "":
-            if m.foto_borrower != None:
-                sqlstr = sqlstr + " foto_pemilik = '{}' ,".format(m.foto_borrower)
+        if m.surat_izin_usaha != "":
+            if m.surat_izin_usaha != None:
+                sqlstr = sqlstr + " surat_izin_usaha = '{}' ,".format(m.surat_izin_usaha)
             else:
-                sqlstr = sqlstr + " foto_pemilik = null, "
+                sqlstr = sqlstr + " surat_izin_usaha = null, "
+            
+        if m.npwp != "":
+            if m.npwp != None:
+                sqlstr = sqlstr + " npwp = '{}' ,".format(m.npwp)
+            else:
+                sqlstr = sqlstr + " npwp = null, "
+                
+        if m.laporan_keuangan != "":
+            if m.laporan_keuangan != None:
+                sqlstr = sqlstr + " laporan_keuangan = '{}' ,".format(m.laporan_keuangan)
+            else:
+                sqlstr = sqlstr + " laporan_keuangan = null, "
+                
+        if m.foto_umkm != "":
+            if m.foto_umkm != None:
+                sqlstr = sqlstr + " foto_umkm = '{}' ,".format(m.foto_umkm)
+            else:
+                sqlstr = sqlstr + " foto_umkm = null, "
+                
+        if m.rating != "":
+            if m.rating != None:
+                sqlstr = sqlstr + " rating = '{}' ,".format(m.rating)
+            else:
+                sqlstr = sqlstr + " rating = null, "
+                
+        if m.omzet != 0:
+            if m.omzet != None:
+                sqlstr = sqlstr + " omzet = '{}' ,".format(m.omzet)
+            else:
+                sqlstr = sqlstr + " omzet = null, "
+                
+        if m.deskripsi_umkm != "":
+            if m.deskripsi_umkm != None:
+                sqlstr = sqlstr + " deskripsi_umkm = '{}' ,".format(m.deskripsi_umkm)
+            else:
+                sqlstr = sqlstr + " deskripsi_umkm = null, "
+                
+        if m.id_pemilik_umkm != 0:
+            if m.id_pemilik_umkm != None:
+                sqlstr = sqlstr + " id_pemilik_umkm = '{}' ,".format(m.id_pemilik_umkm)
+            else:
+                sqlstr = sqlstr + " id_pemilik_umkm = null, "
 
-        sqlstr = sqlstr[:-1] + " where ID_PEMILIK='{}' ".format(
-            id_pemilik
+        sqlstr = sqlstr[:-1] + " where ID_BORROWER='{}' ".format(
+            id_umkm
         )  # buang koma yang trakhir
         print(sqlstr)
         try:
             cur.execute(sqlstr)
             con.commit()
-            response.headers["location"] = "/pemilik_umkm/{}".format(id_pemilik)
+            response.headers["location"] = "/umkm/{}".format(id_umkm)
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="Terjadi exception: {}".format(str(e))
