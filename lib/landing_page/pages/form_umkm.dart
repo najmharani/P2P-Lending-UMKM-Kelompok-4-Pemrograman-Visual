@@ -75,8 +75,9 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
       String jenisUsaha,
       String laporanKeuangan,
       String deskripsiUmkm,
-      String fotoUmkm/*,
-      String password*/) async {
+      String fotoUmkm /*,
+      String password*/
+      ) async {
     final url = 'http://127.0.0.1:8000 /tambah_borrower/';
 
     final Map<String, dynamic> userData = {
@@ -223,9 +224,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
               color: Colors.white,
             ),
           ),
-          onPressed: () {
-
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 40.0),
           ),

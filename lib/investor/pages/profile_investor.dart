@@ -292,16 +292,6 @@ class ProfileInvestor extends StatelessWidget {
               ListTile(
                 title: Text('Tanggal Lahir'),
                 subtitle: Text(model.tanggalLahir),
-                onTap: () {
-                  // Navigate to the edit date of birth page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          EditDateOfBirthPage(dateOfBirth: model.tanggalLahir),
-                    ),
-                  );
-                },
               ),
             ]);
           })),
