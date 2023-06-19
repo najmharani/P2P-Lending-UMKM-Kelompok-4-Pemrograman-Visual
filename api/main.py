@@ -473,6 +473,26 @@ def get_peminjaman_belum_didanai():
     finally:
         con.close()
         return {"data": recs}
+    
+@app.get("/detail_pinjaman/")
+def detail_pinjaman():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
 
 
 # =========== TRANSAKSI ==========#
