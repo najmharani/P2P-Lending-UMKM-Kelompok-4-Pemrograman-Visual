@@ -1090,7 +1090,7 @@ def get_all_borrower():
         return {"data": recs}
 
 
-@app.get("/get_all_borrower/{id_borrower}")
+@app.get("/get_borrower/{id_borrower}")
 def get_all_borrower(id_pemilik: int):
     try:
         DB_NAME = "m2m.db"
@@ -1101,6 +1101,7 @@ def get_all_borrower(id_pemilik: int):
             "select * from pemilik_umkm WHERE ID_PEMILIK={}".format(id_pemilik)
         ):
             recs.append(row)
+
     except:
         return {"status": "terjadi error"}
     finally:
