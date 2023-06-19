@@ -39,7 +39,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
   final namaUmkmController = TextEditingController();
   final alamatUmkmController = TextEditingController();
   final jenisUsahaController = TextEditingController();
-  final deskripsiUmkmController = TextEditingController();
+  final tahunBerdiriController = TextEditingController();
   late int idTipe;
 
   Future<void> updateUserIdTipe(int idUser, int idTipe) async {
@@ -73,18 +73,21 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
       String namaUmkm,
       String alamatUmkmDetail,
       String jenisUsaha,
+      String tahunBerdiri,
+      String npwp,
+      String suratIzinUsaha,
       String laporanKeuangan,
-      String deskripsiUmkm,
-      String fotoUmkm/*,
-      String password*/) async {
+      String fotoUmkm) async {
     final url = 'http://127.0.0.1:8000 /tambah_borrower/';
 
     final Map<String, dynamic> userData = {
       "nama_umkm": namaUmkm,
       "alamat_umkm": alamatUmkmDetail,
       "jenis_usaha": jenisUsaha,
+      "tahun_berdiri": tahunBerdiri,
+      "npwp": npwp,
+      "izin_usaha": suratIzinUsaha,
       "laporan_keuangan": laporanKeuangan,
-      "deskripsi_umkm": deskripsiUmkm,
       "foto_umkm": fotoUmkm,
       "aset": 0
     };
@@ -169,12 +172,16 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
             ),
             SizedBox(height: 16.0),
             TextField(
-              controller: deskripsiUmkmController,
+              controller: tahunBerdiriController,
               decoration: InputDecoration(
-                labelText: 'Deskripsi UMKM',
+                labelText: 'Tahun Berdiri',
               ),
             ),
             SizedBox(height: 16.0),
+            buildUploadButton('NPWP', Icons.attach_file),
+            SizedBox(height: 8.0),
+            buildUploadButton('Izin Usaha', Icons.attach_file),
+            SizedBox(height: 8.0),
             buildUploadButton('Laporan Keuangan', Icons.attach_file),
             SizedBox(height: 8.0),
             buildUploadButton('Foto UMKM', Icons.attach_file),
