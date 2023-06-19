@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
 import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:p2plending_umkm/models/Peminjaman.model.dart';
+import 'package:p2plending_umkm/models/Transaksi.model.dart';
 import 'package:p2plending_umkm/landing_page/landing_page.dart';
 import 'package:p2plending_umkm/colors.dart';
 
@@ -26,6 +27,9 @@ class P2PLendingUMKMApp extends StatelessWidget {
           ),
           BlocProvider<InvestorCubit>(
             create: (BuildContext context) => InvestorCubit(),
+          ),
+          BlocProvider<TransaksiCubit>(
+            create: (BuildContext context) => TransaksiCubit(),
           ),
         ],
         child: MaterialApp(

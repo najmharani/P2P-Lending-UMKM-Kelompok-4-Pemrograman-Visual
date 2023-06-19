@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -31,7 +32,6 @@ class TransaksiCubit extends Cubit<Transaksi> {
           detailTransaksi: "",
         ));
 
-  //map dari json ke atribut
   void setFromJson(Map<String, dynamic> json) {
     emit(Transaksi(
       idTransaksi: json["idTransaksi"],
@@ -50,6 +50,30 @@ class TransaksiCubit extends Cubit<Transaksi> {
       setFromJson(jsonDecode(response.body));
     } else {
       throw Exception('Gagal load');
+    }
+  }
+
+  Future<void> withdraw(int jumlahTransaksi, String bank) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idUser = prefs.getInt('idUser')!;
+    //String datetime = DateTime.now().toString();
+    final response = await http.post(
+      Uri.parse("http://127.0.0.1:8000/witdhdraw_transaksi/"),
+      body: jsonEncode({
+        "ID_TRANSAKSI": 0,
+        "jumlah_transaksi": jumlahTransaksi,
+        "tanggal_waktu_transaksi": "datetime",
+        "jenis_transaksi": "Penarikan",
+        "detail_transaksi": "Penarikan ke ${bank}",
+        "id_user": idUser
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      print('Berhasil');
+    } else {
+      print('Login failed with status code ${response.statusCode}');
     }
   }
 }

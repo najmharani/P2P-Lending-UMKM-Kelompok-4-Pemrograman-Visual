@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
 import 'package:p2plending_umkm/models/Investor.model.dart';
@@ -62,8 +63,11 @@ class HomeInvestor extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
-                        BlocBuilder<UserCubit, User>(builder: (context, model) {
-                          context.read<UserCubit>().getUser;
+                        BlocBuilder<UserCubit, User>(builder: (
+                          context,
+                          model,
+                        ) {
+                          context.read<UserCubit>().getUser();
                           return Text(
                             '${model.saldo.toString()}',
                             style: TextStyle(

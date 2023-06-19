@@ -353,19 +353,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               onPressed: () {
-                // if (userType == UserType.borrower) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => RegisterBorrowerNextPage()),
-                //   );
-                // } else if (userType == UserType.investor) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => RegisterInvestorNextPage()),
-                //   );
-                // }
                 setState(() {
                   insertUser(emailController.text, passwordController.text,
                       telpController.text, getUserType());

@@ -79,7 +79,7 @@ class _AktivitasInvestorState extends State<AktivitasInvestor> {
                     ),
                     SizedBox(height: 10),
                     BlocBuilder<UserCubit, User>(builder: (context, model) {
-                      context.read<UserCubit>().getUser;
+                      context.read<UserCubit>().fetchData();
                       return Text(
                         'Rp.${model.saldo.toString()}',
                         style: TextStyle(

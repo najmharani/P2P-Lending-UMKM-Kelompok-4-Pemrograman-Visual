@@ -42,7 +42,7 @@ class UserCubit extends Cubit<User> {
           idTipeUser: 0,
         ));
 
-  void setFromJson(Map<String, dynamic> json) {
+  void setFromJson(Map<String, dynamic> json) async {
     emit(User(
       idUser: json["idUser"],
       email: json["email"],
@@ -55,8 +55,10 @@ class UserCubit extends Cubit<User> {
     ));
   }
 
-  void fetchData(int userId) async {
-    String url = "http://127.0.0.1:8000/get_user/${userId}";
+  void fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idUser = prefs.getInt('idUser')!;
+    String url = "http://127.0.0.1:8000/get_user/${idUser}";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       setFromJson(jsonDecode(response.body));
@@ -130,8 +132,6 @@ class UserCubit extends Cubit<User> {
   Future<void> deleteUser() async {
     final prefs = await SharedPreferences.getInstance();
 
-    print('Sebelum : ${prefs.getInt('idUser')}');
-
     await prefs.remove('idUser');
     await prefs.remove('email');
     await prefs.remove('password');
@@ -141,7 +141,6 @@ class UserCubit extends Cubit<User> {
     await prefs.remove('tipeUser');
     await prefs.remove('idTipeUser');
 
-    print('Setelah: ${prefs.getInt('idUser')}');
     emit(
       User(
         idUser: 0,

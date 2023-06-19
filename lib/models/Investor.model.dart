@@ -58,7 +58,6 @@ class InvestorCubit extends Cubit<Investor> {
     String url = "http://127.0.0.1:8000/get_investor/${idInvestor}";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-      print('Sebelum -- : ${idInvestor}');
       setFromJson(jsonDecode(response.body));
     } else {
       throw Exception('Gagal load');

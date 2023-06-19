@@ -173,11 +173,6 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
 }
 
 class ProfileInvestor extends StatelessWidget {
-  String email = 'najma@gmail.com';
-  String pass = '*****';
-  String fullName = 'Najma Qalbi'; // Replace with actual user full name
-  String dateOfBirth = '02/09/2003'; // Replace with actual user date of birth
-  String phoneNumber = '1234567890'; // Replace with actual user phone number
   String ktpStatus = 'Uploaded'; // Replace with actual KTP status
   String selfPictureStatus =
       'Uploaded'; // Replace with actual self picture status
@@ -234,52 +229,52 @@ class ProfileInvestor extends StatelessWidget {
             "Informasi Akun",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          BlocBuilder<UserCubit, User>(builder: (context, model) {
+          Container(
+              child: BlocBuilder<UserCubit, User>(builder: (context, model) {
             context.read<UserCubit>().getUser();
-            return ListTile(
-              title: Text('Email'),
-              subtitle: Text(model.email),
-              onTap: () {
-                // Navigate to the edit full name page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditEmailPage(Email: model.email),
-                  ),
-                );
-              },
-            );
-          }),
-          BlocBuilder<UserCubit, User>(builder: (context, model) {
-            context.read<UserCubit>().getUser();
-            return ListTile(
-              title: Text('Password'),
-              subtitle: Text(model.password),
-              onTap: () {
-                // Navigate to the edit date of birth page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PasswordChangePage(),
-                  ),
-                );
-              },
-            );
-          }),
-          ListTile(
-            title: Text('No Hp'),
-            subtitle: Text(phoneNumber),
-            onTap: () {
-              // Navigate to the edit phone number page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditPhoneNumberPage(phoneNumber: phoneNumber),
-                ),
-              );
-            },
-          ),
+            return Column(children: [
+              ListTile(
+                title: Text('Email'),
+                subtitle: Text(model.email),
+                onTap: () {
+                  // Navigate to the edit full name page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditEmailPage(Email: model.email),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('Password'),
+                subtitle: Text(model.password),
+                onTap: () {
+                  // Navigate to the edit date of birth page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PasswordChangePage(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('No Hp'),
+                subtitle: Text(model.noTelp),
+                onTap: () {
+                  // Navigate to the edit phone number page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditPhoneNumberPage(phoneNumber: model.noTelp),
+                    ),
+                  );
+                },
+              ),
+            ]);
+          })),
           Divider(height: 10),
           SizedBox(height: 10),
           Text(

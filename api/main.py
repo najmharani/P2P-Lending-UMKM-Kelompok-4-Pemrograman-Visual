@@ -561,8 +561,8 @@ def TopUp_transaksi(m: Transaksi, response: Response, request: Request):
     return m
 
 
-@app.post("/Witdhdraw_transaksi/", response_model=Transaksi, status_code=201)
-def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
+@app.post("/witdhdraw_transaksi/", response_model=int, status_code=201)
+def witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
     try:
         DB_NAME = "m2m.db"
         con = sqlite3.connect(DB_NAME)
@@ -580,11 +580,15 @@ def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
             )
         )
         con.commit()
+
+        idTransaksi = cur.lastrowid
+
         cur.execute(
             """UPDATE user set saldo = saldo - {} where id_user ={}""".format(
                 m.jumlah_transaksi, m.id_user
             )
         )
+
         con.commit()
     except:
         return {"status": "terjadi error"}
@@ -592,7 +596,7 @@ def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
         con.close()
     # tambah location
     # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
-    return
+    return idTransaksi
 
 
 @app.post("/pendanaan_transaksi/", response_model=TransaksiM2m, status_code=201)
