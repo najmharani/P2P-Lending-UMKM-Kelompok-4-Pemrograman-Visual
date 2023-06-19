@@ -148,18 +148,11 @@ class UserCubit extends Cubit<User> {
     );
   }
 
-  Future<void> updateUser(String email, String password) async {
-    final response = await http.post(
-      Uri.parse(url_login),
+  Future<int> updateUserIdTipe(int idUser, int idTipe) async {
+    final response = await http.patch(
+      Uri.parse("http://127.0.0.1:8000/update_user/" + idUser.toString()),
       body: jsonEncode({
-        'ID_USER': 0,
-        'email': email,
-        'password': password,
-        'no_telp': '',
-        'foto_profil': '',
-        'tipe_user': '',
-        'saldo': 0,
-        'id_tipe_user': 0,
+        'id_tipe_user': idTipe,
       }),
       headers: {'Content-Type': 'application/json'},
     );
@@ -193,5 +186,7 @@ class UserCubit extends Cubit<User> {
     } else {
       print('Login failed with status code ${response.statusCode}');
     }
+
+    return response.statusCode;
   }
 }

@@ -7,6 +7,7 @@ import 'package:p2plending_umkm/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/navigation_investor.dart';
 import 'package:p2plending_umkm/models/Investor.model.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
 
 void main() {
   runApp(RegisterApp());
@@ -38,6 +39,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
   final tglLahirController = TextEditingController();
   final genderontroller = TextEditingController();
   final nikController = TextEditingController();
+  late int idTipe;
 
   Future<void> insertInvestor(
       String namaLengkap,
@@ -66,6 +68,8 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
 
     if (response.statusCode == 201) {
       // User inserted successfully
+      final responseData = jsonDecode(response.body);
+      idTipe = responseData['data'][['ID_INVESTOR']];
 
       investorRegister();
       print('Investor berhasil ditambahkan');
@@ -76,30 +80,36 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
   }
 
   void investorRegister() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+    BlocListener<UserCubit, User>(listener: (context, model) {
+      context.read<UserCubit>().getUser();
+      if (context.read<UserCubit>().updateUserIdTipe(model.idUser, idTipe) ==
+          200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            backgroundColor: Color.fromARGB(255, 0, 97, 175),
+            content: Text(
+              "Berhasil Membuat Akun Investor",
+              style: TextStyle(
+                fontFamily: "lexend",
+              ),
+            ),
           ),
-        ),
-        backgroundColor: Color.fromARGB(255, 0, 97, 175),
-        content: Text(
-          "Berhasil Membuat Akun Investor",
-          style: TextStyle(
-            fontFamily: "lexend",
+        );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return InvestorApp();
+            },
           ),
-        ),
-      ),
-    );
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return InvestorApp();
-        },
-      ),
-    );
+        );
+      }
+    });
   }
 
   @override

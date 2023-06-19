@@ -24,8 +24,8 @@ class Investor {
   });
 }
 
-class UmkmCubit extends Cubit<Investor> {
-  UmkmCubit()
+class InvestorCubit extends Cubit<Investor> {
+  InvestorCubit()
       : super(Investor(
           idInvestor: 0,
           namaLengkap: "",
