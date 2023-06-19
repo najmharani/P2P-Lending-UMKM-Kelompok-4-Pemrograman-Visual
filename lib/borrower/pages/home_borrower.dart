@@ -1,6 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Umkm.model.dart';
+import 'package:p2plending_umkm/models/PemilikUmkm.model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/topup.dart';
 
@@ -9,11 +13,15 @@ class HomeBorrower extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello, Borrower!',style: TextStyle(
-                  color: Colors.white,
-                ),),
+        title: Text(
+          'Hello, Borrower!',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
+            color: Colors.white,
             icon: Icon(Icons.notifications),
             onPressed: () {
               // Aksi saat tombol notifikasi ditekan
@@ -99,14 +107,20 @@ class HomeBorrower extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
+                        BlocBuilder<UserCubit, User>(builder: (
+                          context,
+                          model,
+                        ) {
+                          context.read<UserCubit>().fetchData();
+                          return Text(
+                            '${model.saldo.toString()}',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }),
                         SizedBox(height: 10),
-                        Text(
-                          'Rp300.000',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                       ],
                     ),
                     Row(
