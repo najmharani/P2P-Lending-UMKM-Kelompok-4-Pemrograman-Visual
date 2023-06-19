@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Transaksi.model.dart';
+import 'package:p2plending_umkm/main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/investor/navigation_investor.dart';
 
 class WithdrawalPage extends StatefulWidget {
   @override
@@ -8,14 +13,13 @@ class WithdrawalPage extends StatefulWidget {
 }
 
 class _WithdrawalPageState extends State<WithdrawalPage> {
-  double userBalance = 500000.0; // Replace with the user's actual balance
   String? selectedBankAccount;
   TextEditingController withdrawalAmountController = TextEditingController();
 
   List<String> bankAccounts = [
-    'Bank Account 1',
-    'Bank Account 2',
-    'Bank Account 3',
+    'Bank BNI',
+    'Bank BRI',
+    'Bank BCA',
     // Add more bank accounts as needed
   ];
 
@@ -37,7 +41,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Current Balance',
+              'Jumlah Saldo',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
@@ -45,14 +49,18 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              'Rp ${userBalance.toStringAsFixed(0)}', // Format balance as needed
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Center(
+                child: BlocBuilder<UserCubit, User>(builder: (context, model) {
+              context.read<UserCubit>().fetchData();
+              return Text(
+                'Rp.${model.saldo.toString()}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            })),
             Divider(),
             SizedBox(height: 20),
             Text(
@@ -102,53 +110,80 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                double withdrawalAmount =
-                    double.parse(withdrawalAmountController.text);
-
-                // Check if the withdrawal amount exceeds the user's balance
-                if (withdrawalAmount > userBalance) {
-                  // Display a warning or show an error message
-                  return;
-                }
-
-                String bankAccount = selectedBankAccount ?? '';
-
-                // Show a confirmation dialog for the withdrawal
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Confirm Withdrawal'),
-                      content: Text(
-                        'Withdraw Rp ${withdrawalAmount.toStringAsFixed(0)} from $bankAccount?',
+            BlocBuilder<UserCubit, User>(builder: (context, model) {
+              context.read<UserCubit>().fetchData();
+              return ElevatedButton(
+                onPressed: () {
+                  int withdrawalAmount =
+                      int.parse(withdrawalAmountController.text);
+                  if (withdrawalAmount > model.saldo) {
+                    // Display a warning or show an error message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                        ),
+                        backgroundColor: Colors.red,
+                        content: Text(
+                          "Jumlah saldo kurang",
+                          style: TextStyle(
+                            fontFamily: "lexend",
+                          ),
+                        ),
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            // Perform the withdrawal operation
-                            // ...
-
-                            // Close the dialog
-                            Navigator.pop(context);
-                          },
-                          child: Text('Confirm'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // Close the dialog without performing the withdrawal
-                            Navigator.pop(context);
-                          },
-                          child: Text('Cancel'),
-                        ),
-                      ],
                     );
-                  },
-                );
-              },
-              child: Text('Withdraw'),
-            ),
+                  } else {
+                    String bankAccount = selectedBankAccount ?? '';
+
+                    // Show a confirmation dialog for the withdrawal
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Confirm Withdrawal'),
+                          content: Text(
+                            'Withdraw Rp ${withdrawalAmount.toStringAsFixed(0)} from $bankAccount?',
+                          ),
+                          actions: [
+                            BlocBuilder<TransaksiCubit, Transaksi>(
+                                builder: (context, model) {
+                              return TextButton(
+                                onPressed: () {
+                                  context
+                                      .read<TransaksiCubit>()
+                                      .withdraw(withdrawalAmount, bankAccount)
+                                      .then((_) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => InvestorApp()),
+                                    );
+                                  }).catchError((error) {
+                                    print('Withdraw failed: $error');
+                                  });
+                                },
+                                child: Text('Confirm'),
+                              );
+                            }),
+                            TextButton(
+                              onPressed: () {
+                                // Close the dialog without performing the withdrawal
+                                Navigator.pop(context);
+                              },
+                              child: Text('Cancel'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                child: Text('Withdraw'),
+              );
+            })
           ],
         ),
       ),
