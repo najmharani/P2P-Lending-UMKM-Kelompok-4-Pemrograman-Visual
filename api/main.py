@@ -186,6 +186,7 @@ def tambah_User(m: User, response: Response, request: Request):
             )
         )
         con.commit()
+
     except:
         return {"status": "terjadi error"}
     finally:
@@ -466,7 +467,8 @@ class Transaksi(BaseModel):
     jenis_transaksi: str
     detail_transaksi: str
     id_user: int | None = None
-    
+
+
 class TransaksiM2m(BaseModel):
     ID_TRANSAKSI: int = None
     jumlah_transaksi: int | None = None
@@ -474,7 +476,7 @@ class TransaksiM2m(BaseModel):
     jenis_transaksi: str
     detail_transaksi: str
     id_user: int | None = None
-    id_user_tujuan : int | None = None
+    id_user_tujuan: int | None = None
 
 
 # Status code 201 standard return creation
@@ -506,6 +508,7 @@ def tambah_transaksi(m: Transaksi, response: Response, request: Request):
     response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
     return m
 
+
 @app.post("/TopUp_transaksi/", response_model=Transaksi, status_code=201)
 def TopUp_transaksi(m: Transaksi, response: Response, request: Request):
     try:
@@ -521,12 +524,14 @@ def TopUp_transaksi(m: Transaksi, response: Response, request: Request):
                 m.tanggal_waktu_transaksi,
                 m.jenis_transaksi,
                 m.detail_transaksi,
-                m.id_user
+                m.id_user,
             )
         )
         con.commit()
         cur.execute(
-            """UPDATE user set saldo = saldo + {} where id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+            """UPDATE user set saldo = saldo + {} where id_user ={}""".format(
+                m.jumlah_transaksi, m.id_user
+            )
         )
         con.commit()
     except:
@@ -536,6 +541,7 @@ def TopUp_transaksi(m: Transaksi, response: Response, request: Request):
     # tambah location
     # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
     return m
+
 
 @app.post("/Witdhdraw_transaksi/", response_model=Transaksi, status_code=201)
 def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
@@ -552,12 +558,14 @@ def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
                 m.tanggal_waktu_transaksi,
                 m.jenis_transaksi,
                 m.detail_transaksi,
-                m.id_user
+                m.id_user,
             )
         )
         con.commit()
         cur.execute(
-            """UPDATE user set saldo = saldo - {} where id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+            """UPDATE user set saldo = saldo - {} where id_user ={}""".format(
+                m.jumlah_transaksi, m.id_user
+            )
         )
         con.commit()
     except:
@@ -566,7 +574,8 @@ def Witdhdraw_transaksi(m: Transaksi, response: Response, request: Request):
         con.close()
     # tambah location
     # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
-    return 
+    return
+
 
 @app.post("/pendanaan_transaksi/", response_model=TransaksiM2m, status_code=201)
 def pendanaan_transaksi(m: TransaksiM2m, response: Response, request: Request):
@@ -584,16 +593,20 @@ def pendanaan_transaksi(m: TransaksiM2m, response: Response, request: Request):
                 m.jenis_transaksi,
                 m.detail_transaksi,
                 m.id_user,
-                m.id_user_tujuan
+                m.id_user_tujuan,
             )
         )
         con.commit()
         cur.execute(
-            """UPDATE user set saldo = saldo + {} where tipe_user='Borrower' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user_tujuan)
+            """UPDATE user set saldo = saldo + {} where tipe_user='Borrower' AND id_user ={}""".format(
+                m.jumlah_transaksi, m.id_user_tujuan
+            )
         )
         con.commit()
         cur.execute(
-            """UPDATE user set saldo = saldo - {} where tipe_user='Investor' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+            """UPDATE user set saldo = saldo - {} where tipe_user='Investor' AND id_user ={}""".format(
+                m.jumlah_transaksi, m.id_user
+            )
         )
         con.commit()
     except:
@@ -603,6 +616,7 @@ def pendanaan_transaksi(m: TransaksiM2m, response: Response, request: Request):
     # tambah location
     # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
     return m
+
 
 @app.post("/pengembalian_transaksi/", response_model=TransaksiM2m, status_code=201)
 def pengembalian_transaksi(m: TransaksiM2m, response: Response, request: Request):
@@ -620,16 +634,20 @@ def pengembalian_transaksi(m: TransaksiM2m, response: Response, request: Request
                 m.jenis_transaksi,
                 m.detail_transaksi,
                 m.id_user,
-                m.id_user_tujuan
+                m.id_user_tujuan,
             )
         )
         con.commit()
         cur.execute(
-            """UPDATE user set saldo = saldo - {} where tipe_user='Borrower' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user_tujuan)
+            """UPDATE user set saldo = saldo - {} where tipe_user='Borrower' AND id_user ={}""".format(
+                m.jumlah_transaksi, m.id_user_tujuan
+            )
         )
         con.commit()
         cur.execute(
-            """UPDATE user set saldo = saldo + {} where tipe_user='Investor' AND id_user ={}""".format(m.jumlah_transaksi, m.id_user)
+            """UPDATE user set saldo = saldo + {} where tipe_user='Investor' AND id_user ={}""".format(
+                m.jumlah_transaksi, m.id_user
+            )
         )
         con.commit()
     except:
@@ -639,6 +657,7 @@ def pengembalian_transaksi(m: TransaksiM2m, response: Response, request: Request
     # tambah location
     # response.headers["location"] = "/transaksi/{}".format(m.ID_TRANSAKSI)
     return m
+
 
 @app.get("/get_all_transaksi/")
 def get_all_transaksi():
@@ -813,7 +832,7 @@ class Investor(BaseModel):
     aset: int | None = None
 
 
-@app.post("/tambah_investor/", response_model=Investor, status_code=201)
+@app.post("/tambah_investor/", response_model=int, status_code=201)
 def tambah_investor(m: Investor, response: Response, request: Request):
     try:
         DB_NAME = "m2m.db"
@@ -833,14 +852,15 @@ def tambah_investor(m: Investor, response: Response, request: Request):
                 m.aset,
             )
         )
+        idInvestor = cur.lastrowid
         con.commit()
     except:
         return {"status": "terjadi error"}
     finally:
         con.close()
     # tambah location
-    response.headers["location"] = "/profil_investor/{}".format(m.ID_INVESTOR)
-    return m
+    response.headers["location"] = "/profil_investor/{}".format(idInvestor)
+    return idInvestor
 
 
 @app.get("/get_all_investor/")
