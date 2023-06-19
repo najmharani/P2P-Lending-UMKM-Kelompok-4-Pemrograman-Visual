@@ -74,8 +74,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
       String jenisKelamin,
       String nik,
       String fotoKtp,
-      String fotoInvestor/*,
-      String password*/) async {
+      String fotoInvestor) async {
     final url = 'http://127.0.0.1:8000 /tambah_investor/';
 
     final Map<String, dynamic> userData = {
