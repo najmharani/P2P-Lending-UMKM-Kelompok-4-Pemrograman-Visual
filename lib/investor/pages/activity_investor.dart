@@ -3,7 +3,6 @@ import 'package:p2plending_umkm/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
-import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:p2plending_umkm/models/Transaksi.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/pages/fitur_topup/withdraw.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:intl/intl.dart';
-import 'package:p2plending_umkm/models/umkm.model.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/topup.dart';
@@ -34,7 +34,7 @@ class AktivitasBorrower extends StatefulWidget {
 }
 
 class _AktivitasBorrowerState extends State<AktivitasBorrower> {
-  late String borrowerId;
+  late int borrowerId;
   String selectedMonth = 'All';
   late List<Transaction> transactionHistory;
   late List<Transaction> filteredTransactions;
@@ -123,8 +123,8 @@ class _AktivitasBorrowerState extends State<AktivitasBorrower> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 10),
-                    BlocBuilder<UserCubit, Borrower>(builder: (context, model) {
-                      borrowerId = model.id;
+                    BlocBuilder<UserCubit, User>(builder: (context, model) {
+                      borrowerId = model.idUser;
                       return Text(
                         'Rp.${model.saldo.toString()}',
                         style: TextStyle(
