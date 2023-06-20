@@ -703,6 +703,127 @@ def status_selesai_peminjaman(id_umkm: int):
         return {"data": recs}
 
 
+@app.patch("/update_peminjaman/{id_peminjaman}", response_model=Peminjaman)
+def update_peminjaman(response: Response, id_peminjaman: int, m: Peminjaman):
+    try:
+        print(str(m))
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        cur.execute(
+            "select * from peminjaman where ID_PEMINJAMAN = ?", (id_peminjaman,)
+        )  # tambah koma untuk menandakan tupple
+        existing_item = cur.fetchone()
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail="Terjadi exception: {}".format(str(e))
+        )  # misal database down
+
+    if existing_item:  # data ada, lakukan update
+        sqlstr = "update peminjaman set "  # asumsi minimal ada satu field update
+        # todo: bisa direfaktor dan dirapikan
+        if m.jumlah_pinjaman != 0:
+            if m.jumlah_pinjaman != None:
+                sqlstr = sqlstr + " jumlah_pinjaman = {} ,".format(m.jumlah_pinjaman)
+            else:
+                sqlstr = sqlstr + " jumlah_pinjaman = null ,"
+
+        if m.status_pinjaman != "":
+            if m.status_pinjaman != None:
+                sqlstr = sqlstr + " status_pinjaman = '{}' ,".format(m.status_pinjaman)
+            else:
+                sqlstr = sqlstr + " status_pinjaman = null ,"
+
+        if m.status_pengajuan != "":
+            if m.status_pengajuan != None:
+                sqlstr = sqlstr + " status_pengajuan = '{}' ,".format(
+                    m.status_pengajuan
+                )
+            else:
+                sqlstr = sqlstr + " status_pengajuan = null ,"
+
+        if m.waktu_pengajuan != "":
+            if m.waktu_pengajuan != None:
+                sqlstr = sqlstr + " waktu_pengajuan = '{}' ,".format(m.waktu_pengajuan)
+            else:
+                sqlstr = sqlstr + " waktu_pengajuan = null ,"
+
+        if m.waktu_pendanaan != "":
+            if m.waktu_pendanaan != None:
+                sqlstr = sqlstr + " waktu_pendanaan = '{}' ,".format(m.waktu_pendanaan)
+            else:
+                sqlstr = sqlstr + " waktu_pendanaan = null ,"
+
+        if m.jatuh_tempo != "":
+            if m.jatuh_tempo != None:
+                sqlstr = sqlstr + " jatuh_tempo = '{}' ,".format(m.jatuh_tempo)
+            else:
+                sqlstr = sqlstr + " jatuh_tempo = null ,"
+
+        if m.bagi_hasil != 0:
+            if m.bagi_hasil != None:
+                sqlstr = sqlstr + " bagi_hasil = {} ,".format(m.bagi_hasil)
+            else:
+                sqlstr = sqlstr + " bagi_hasil = null ,"
+
+        if m.tenor != "":
+            if m.tenor != None:
+                sqlstr = sqlstr + " tenor = '{}' ,".format(m.tenor)
+            else:
+                sqlstr = sqlstr + " tenor = null ,"
+
+        if m.penghasilan_perbulan != 0:
+            if m.penghasilan_perbulan != None:
+                sqlstr = sqlstr + " penghasilan_perbulan = {} ,".format(
+                    m.penghasilan_perbulan
+                )
+            else:
+                sqlstr = sqlstr + " penghasilan_perbulan = null ,"
+
+        if m.jumlah_angsuran != 0:
+            if m.jumlah_angsuran != None:
+                sqlstr = sqlstr + " jumlah_angsuran = {} ,".format(m.jumlah_angsuran)
+            else:
+                sqlstr = sqlstr + " jumlah_angsuran = null ,"
+
+        if m.sisa_tenor != 0:
+            if m.sisa_tenor != None:
+                sqlstr = sqlstr + " sisa_tenor = {} ,".format(m.sisa_tenor)
+            else:
+                sqlstr = sqlstr + " sisa_tenor = null ,"
+
+        if m.nilai_rating != "":
+            if m.nilai_rating != None:
+                sqlstr = sqlstr + " nilai_rating = '{}' ,".format(m.nilai_rating)
+            else:
+                sqlstr = sqlstr + " nilai_rating = null ,"
+
+        if m.id_borrower != 0:
+            if m.id_borrower != None:
+                sqlstr = sqlstr + " id_borrower = {} ,".format(m.id_borrower)
+            else:
+                sqlstr = sqlstr + " id_borrower = null ,"
+
+        sqlstr = sqlstr[:-1] + " where ID_PEMINJAMAN='{}' ".format(
+            id_peminjaman
+        )  # buang koma yang trakhir
+        print(sqlstr)
+        try:
+            cur.execute(sqlstr)
+            con.commit()
+            response.headers["location"] = "/peminjaman/{}".format(id_peminjaman)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="Terjadi exception: {}".format(str(e))
+            )
+
+    else:  # data tidak ada 404, item not found
+        raise HTTPException(status_code=404, detail="Item Not Found")
+
+    con.close()
+    return m
+
+
 # =========== TRANSAKSI ==========#
 
 
