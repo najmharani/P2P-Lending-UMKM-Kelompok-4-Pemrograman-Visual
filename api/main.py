@@ -397,8 +397,8 @@ def tambah_peminjaman(m: Peminjaman, response: Response, request: Request):
         # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
         cur.execute(
             """insert into peminjaman
-        (jumlah_pinjaman, status_pinjaman, status_pengajuan, waktu_pengajuan, waktu_pendanaan, jatuh_tempo, bagi_hasil, tenor, penghasilan_perbulan, jumlah_angsuran, sisa_tenor, nilai_rating) values (
-        {},"{}","{}","{}","{}","{}",{},"{}",{},{},{},"{}")""".format(
+        (jumlah_pinjaman, status_pinjaman, status_pengajuan, waktu_pengajuan, waktu_pendanaan, jatuh_tempo, bagi_hasil, tenor, penghasilan_perbulan, jumlah_angsuran, sisa_tenor, nilai_rating, id_borrower) values (
+        {},"{}","{}","{}","{}","{}",{},"{}",{},{},{},"{}",{})""".format(
                 m.jumlah_pinjaman,
                 m.status_pinjaman,
                 m.status_pengajuan,
@@ -411,6 +411,7 @@ def tambah_peminjaman(m: Peminjaman, response: Response, request: Request):
                 m.jumlah_angsuran,
                 m.sisa_tenor,
                 m.nilai_rating,
+                m.id_borrower,
             )
         )
         con.commit()
@@ -456,7 +457,6 @@ def get_peminjaman(id: int):
         con.close()
         return {"data": recs}
 
-
 @app.get("/get_peminjaman_belum_didanai/")
 def get_peminjaman_belum_didanai():
     try:
@@ -465,7 +465,7 @@ def get_peminjaman_belum_didanai():
         cur = con.cursor()
         recs = []
         for row in cur.execute(
-            "select * from peminjaman where status_pengajuan != 'true'"
+            "select * from peminjaman where status_pengajuan = 'pengajuan'"
         ):
             recs.append(row)
     except:
@@ -473,8 +473,7 @@ def get_peminjaman_belum_didanai():
     finally:
         con.close()
         return {"data": recs}
-
-
+    
 @app.get("/detail_pinjaman/")
 def detail_pinjaman():
     try:
@@ -482,20 +481,146 @@ def detail_pinjaman():
         con = sqlite3.connect(DB_NAME)
         cur = con.cursor()
         recs = []
-        for row in cur.execute(
-            """
+        for row in cur.execute("""
            SELECT * 
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-        """
-        ):
+        """):
             recs.append(row)
     except:
-        return {"status": "terjadi error"}
+        return ({"status": "terjadi error"})
     finally:
         con.close()
     return {"data": recs}
+
+@app.get("/detail_pinjaman_belum_didanai/")
+def detail_pinjaman_belum_didanai():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+            WHERE peminjaman.status_pengajuan = 'pengajuan'
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
+
+@app.get("/detail_pinjaman_aktif/")
+def detail_pinjaman_aktif():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+            WHERE peminjaman.status_pengajuan = 'aktif'
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
+
+@app.get("/detail_pinjaman_selesai/")
+def detail_pinjaman_selesai():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+            WHERE peminjaman.status_pengajuan = 'selesai'
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
+
+
+@app.get("/detail_pinjaman_belum_didanai/")
+def detail_pinjaman_belum_didanai():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+            WHERE peminjaman.status_pengajuan = 'pengajuan'
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
+
+@app.get("/detail_pinjaman_aktif/")
+def detail_pinjaman_aktif():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+            WHERE peminjaman.status_pengajuan = 'aktif'
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
+
+@app.get("/detail_pinjaman_selesai/")
+def detail_pinjaman_selesai():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("""
+           SELECT * 
+            FROM peminjaman
+            JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
+			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
+            WHERE peminjaman.status_pengajuan = 'selesai'
+        """):
+            recs.append(row)
+    except:
+        return ({"status": "terjadi error"})
+    finally:
+        con.close()
+    return {"data": recs}
+
 
 
 # =========== TRANSAKSI ==========#
@@ -1288,20 +1413,20 @@ def get_umkm(id_umkm: int):
             recs.append(row)
 
         umkm = {
-            "ID_BORROWER": recs[0][0],
-            "nama_umkm": recs[0][1],
-            "alamat_umkm_provinsi": recs[0][2],
-            "alamat_umkm_detail": recs[0][3],
-            "jenis_usaha": recs[0][4],
-            "tahun_berdiri": recs[0][5],
-            "surat_izin_usaha": recs[0][6],
+            "idBorrower": recs[0][0],
+            "namaUmkm": recs[0][1],
+            "alamatUmkmProvinsi": recs[0][2],
+            "alamatUmkmDetail": recs[0][3],
+            "jenisUsaha": recs[0][4],
+            "tahunBerdiri": recs[0][5],
+            "suratIzinUsaha": recs[0][6],
             "npwp": recs[0][7],
-            "laporan_keuangan": recs[0][8],
-            "foto_umkm": recs[0][9],
+            "laporanKeuangan": recs[0][8],
+            "fotoUmkm": recs[0][9],
             "rating": recs[0][10],
             "omzet": recs[0][11],
-            "deskripsi_umkm": recs[0][12],
-            "id_pemilik_umkm": recs[0][13],
+            "deskripsiUmkm": recs[0][12],
+            "idPemilikUmkm": recs[0][13],
         }
 
     except:

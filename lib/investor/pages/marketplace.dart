@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/models/Detail.model.dart';
 import 'package:p2plending_umkm/models/Peminjaman.model.dart';
+import 'package:p2plending_umkm/models/Detail.model.dart';
 import 'dart:developer' as developer;
 
 enum FilterOptions {
@@ -93,25 +95,35 @@ class MarketplaceState extends State<Marketplace> {
             ),
           ),
           Expanded(
-            child: BlocBuilder<ListPeminjamanCubit, ListPeminjaman>(
+            child: BlocBuilder<ListDetailCubit, ListDetail>(
               buildWhen: (previousState, state) {
                 developer.log(
-                    "${previousState.listPeminjaman} -> ${state.listPeminjaman}",
+                    "${previousState.listDetail} -> ${state.listDetail}",
                     name: 'listlog');
                 return true;
               },
               builder: (context, model) {
-                context.read<ListPeminjamanCubit>().fetchData();
-                if (model.listPeminjaman.isNotEmpty) {
+                context.read<ListDetailCubit>().fetchData();
+                if (model.listDetail.isNotEmpty) {
                   return ListView.builder(
                     padding: const EdgeInsets.all(16.0),
-                    itemCount: model.listPeminjaman.length,
+                    itemCount: model.listDetail.length,
                     itemBuilder: (context, index) {
                       return _buildProductCard(
                         context,
-                        model.listPeminjaman[index].jumlahPinjaman.toString(),
-                        model.listPeminjaman[index].bagiHasil.toString(),
-                        model.listPeminjaman[index].tenor,
+                        model.listDetail[index].namaUmkm,
+                        model.listDetail[index].jenisUsaha,
+                        model.listDetail[index].alamatUmkmProvinsi,
+                        model.listDetail[index].nilaiRating,
+                        model.listDetail[index].jumlahPinjaman.toString(),
+                        model.listDetail[index].bagiHasil.toString(),
+                        model.listDetail[index].tenor,
+                        model.listDetail[index].penghasilanPerBulan.toString(),
+                        model.listDetail[index].deskripsiUmkm,
+                        model.listDetail[index].tahunBerdiri,
+                        model.listDetail[index].jumlahPinjaman.toString(),
+                        model.listDetail[index].namaLengkap,
+                        model.listDetail[index].rating,
                       );
                     },
                     // children: [
@@ -336,7 +348,21 @@ class MarketplaceState extends State<Marketplace> {
   }
 
   Widget _buildProductCard(
-      BuildContext context, String plafond, String bagiHasil, String tenor) {
+    BuildContext context,
+    String namaUmkm,
+    String jenisUsaha,
+    String alamatProvinsi,
+    String nilaiRating,
+    String plafond,
+    String bagiHasil,
+    String tenor,
+    String penghasilanPerBulan,
+    String deskripsiUmkm,
+    String tahunBerdiri,
+    String jumlahPinjaman,
+    String namaLengkap,
+    String rating,
+  ) {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       padding: EdgeInsets.all(10.0),
@@ -371,14 +397,14 @@ class MarketplaceState extends State<Marketplace> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Nama UMKM",
+                          namaUmkm,
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Deskripsi UMKM",
+                          jenisUsaha,
                           style: TextStyle(fontSize: 16.0),
                         ),
                         Row(
@@ -389,7 +415,7 @@ class MarketplaceState extends State<Marketplace> {
                               size: 14.0,
                             ),
                             Text(
-                              'alamat',
+                              alamatProvinsi,
                               style: TextStyle(fontSize: 14.0),
                             ),
                           ],
@@ -400,7 +426,7 @@ class MarketplaceState extends State<Marketplace> {
                       radius: 20,
                       backgroundColor: primary,
                       child: Text(
-                        'A',
+                        nilaiRating,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -436,9 +462,18 @@ class MarketplaceState extends State<Marketplace> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
+                      namaUmkm: namaUmkm,
+                      jenisUsaha: jenisUsaha,
+                      alamatProvinsi: alamatProvinsi,
                       plafond: plafond,
                       bagiHasil: bagiHasil,
                       tenor: tenor,
+                      penghasilanPerBulan: penghasilanPerBulan,
+                      deskripsiUmkm: deskripsiUmkm,
+                      tahunBerdiri: tahunBerdiri,
+                      jumlahPinjaman: jumlahPinjaman,
+                      namaLengkap: namaLengkap,
+                      rating: rating,
                     ),
                   ),
                 );
@@ -453,14 +488,32 @@ class MarketplaceState extends State<Marketplace> {
 }
 
 class ProductDetailsScreen extends StatelessWidget {
+  final String namaUmkm;
+  final String jenisUsaha;
+  final String alamatProvinsi;
   final String plafond;
   final String bagiHasil;
   final String tenor;
+  final String penghasilanPerBulan;
+  final String deskripsiUmkm;
+  final String tahunBerdiri;
+  final String jumlahPinjaman;
+  final String namaLengkap;
+  final String rating;
 
   const ProductDetailsScreen({
+    required this.namaUmkm,
+    required this.jenisUsaha,
+    required this.alamatProvinsi,
     required this.plafond,
     required this.bagiHasil,
     required this.tenor,
+    required this.penghasilanPerBulan,
+    required this.deskripsiUmkm,
+    required this.tahunBerdiri,
+    required this.jumlahPinjaman,
+    required this.namaLengkap,
+    required this.rating,
   });
 
   @override
@@ -493,7 +546,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              'Nama Akun',
+                              namaUmkm,
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -501,7 +554,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Alamat',
+                              alamatProvinsi,
                               style: TextStyle(
                                 fontSize: 18,
                               ),
@@ -545,7 +598,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     thickness: 3,
                   ),
                   Text(
-                    '      ABC Store adalah toko retail yang didirikan oleh Pak Asep Budi Cendrawan. Bisnis ini berfokus pada penjualan berbagai produk kepada pelanggan di daerah sekitar dengan  menyediakan produk berkualitas tinggi dan memberikan pelayanan yang baik kepada pelanggan. didirikannya ABC Store, Pemilik berharap dapat memenuhi kebutuhan konsumen sekaligus mendukung pertumbuhan ekonomi lokal.',
+                    deskripsiUmkm,
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -561,12 +614,12 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Rp.1.000.000',
+                        penghasilanPerBulan,
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -576,12 +629,12 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        '2021',
+                        tahunBerdiri,
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -591,7 +644,37 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Toko Retail',
+                        jenisUsaha,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Pemilik UMKM',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        namaLengkap,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Rating UMKM',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        rating,
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
@@ -606,7 +689,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rp. 0',
+                    "Rp" + jumlahPinjaman,
                     style: TextStyle(
                       fontSize: 18.0,
                     ),

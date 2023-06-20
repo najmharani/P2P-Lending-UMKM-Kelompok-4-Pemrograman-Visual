@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -76,7 +77,9 @@ class UmkmCubit extends Cubit<Umkm> {
   }
 
   void fetchData() async {
-    String url = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idTipeUser = prefs.getInt('idTipeUser')!;
+    String url = "http://127.0.0.1:8000/get_umkm/${idTipeUser}";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       setFromJson(jsonDecode(response.body));

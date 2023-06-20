@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -19,36 +20,38 @@ class BorrowerApp extends StatelessWidget {
   }
 }
 
-class FormPengajuanPinjaman extends StatelessWidget {
-  // final UserType userType;
+class FormPengajuanPinjaman extends StatefulWidget {
+  const FormPengajuanPinjaman();
 
-  // const RegisterPage({required this.userType});
+  @override
+  State<FormPengajuanPinjaman> createState() => _FormPengajuanPinjamanState();
+}
 
-  Future<void> insertPeminjaman(
-      int jumlahPinjaman,
-      int bagiHasil,
-      String tenor,
-      String waktuPengajuan,
-      String jatuhTempo,
-      int penghasilanPerBulan,
-      String statusPinjaman) async {
+class _FormPengajuanPinjamanState extends State<FormPengajuanPinjaman> {
+  Future<void> insertPeminjaman(int jumlahPinjaman, int bagiHasil, String tenor,
+      int penghasilanPerBulan) async {
     final url = 'http://127.0.0.1:8000 /tambah_peminjaman/';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idTipeUser = prefs.getInt('idTipeUser')!;
+
+    print(idTipeUser);
 
     final Map<String, dynamic> userData = {
       "ID_PEMINJAMAN": 0,
-      "jumlah_pinjaman": 0,
+      "jumlah_pinjaman": jumlahPinjaman,
       "status_pinjaman": "Pengajuan",
       "status_pengajuan": "Pengajuan",
-      "waktu_pengajuan": "",
+      "waktu_pengajuan": "20/06/2023",
       "waktu_pendanaan": "",
-      "jatuh_tempo": "",
-      "bagi_hasil": 0,
-      "tenor": "",
-      "penghasilan_perbulan": 0,
+      "jatuh_tempo": "29/10/2023",
+      "bagi_hasil": bagiHasil,
+      "tenor": tenor,
+      "penghasilan_perbulan": penghasilanPerBulan,
       "jumlah_angsuran": jumlahPinjaman / int.parse(tenor),
       "sisa_tenor": tenor,
       "nilai_rating": "",
-      "id_borrower": 0
+      "id_borrower": idTipeUser,
     };
 
     final response = await http.post(
@@ -59,10 +62,10 @@ class FormPengajuanPinjaman extends StatelessWidget {
 
     if (response.statusCode == 201) {
       // User inserted successfully
-      print('Investor berhasil ditambahkan');
+      print('Peminjaman berhasil ditambahkan');
     } else {
       // Error occurred while inserting Investor
-      print('Error saat menambahkan investor');
+      print('Error saat menambahkan peminjaman');
     }
   }
 
@@ -92,7 +95,7 @@ class FormPengajuanPinjaman extends StatelessWidget {
             TextField(
               controller: bagiController,
               decoration: InputDecoration(
-                labelText: 'Bagi Hasil',
+                labelText: 'Bagi Hasil (%)',
               ),
             ),
             SizedBox(height: 16.0),
@@ -101,7 +104,6 @@ class FormPengajuanPinjaman extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Tenor',
               ),
-              obscureText: true,
             ),
             SizedBox(height: 16.0),
             TextField(
@@ -109,12 +111,19 @@ class FormPengajuanPinjaman extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Penghasilan per Bulan',
               ),
-              obscureText: true,
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
               child: Text('Simpan'),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  insertPeminjaman(
+                      int.parse(jumlahController.text),
+                      int.parse(bagiController.text),
+                      tenorUsahaController.text,
+                      int.parse(penghasilanController.text));
+                });
+              },
             ),
           ],
         ),
