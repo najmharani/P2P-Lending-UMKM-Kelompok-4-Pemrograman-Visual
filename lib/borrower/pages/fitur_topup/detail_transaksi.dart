@@ -5,13 +5,14 @@ class TransactionDetailPage extends StatelessWidget {
   final String transactionType;
   final String transactionAmount;
   final String transactionDate;
+  final String transactionDetail;
 
-  TransactionDetailPage({
-    required this.transactionId,
-    required this.transactionType,
-    required this.transactionAmount,
-    required this.transactionDate,
-  });
+  TransactionDetailPage(
+      {required this.transactionId,
+      required this.transactionType,
+      required this.transactionAmount,
+      required this.transactionDate,
+      required this.transactionDetail});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class TransactionDetailPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              '$transactionType dari UMKM Sahabat Jaya',
+              '$transactionDetail',
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -71,22 +72,7 @@ class TransactionDetailPage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Text(
-                  '02 Mei 2023',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Waktu:',
-                  style: TextStyle(fontSize: 15),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  '7:30',
+                  transactionDate,
                   style: TextStyle(fontSize: 15),
                 ),
               ],
@@ -101,7 +87,7 @@ class TransactionDetailPage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Text(
-                  'Pengembalian',
+                  transactionType,
                   style: TextStyle(fontSize: 15),
                 ),
               ],
@@ -116,7 +102,7 @@ class TransactionDetailPage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Text(
-                  '54321',
+                  transactionId,
                   style: TextStyle(fontSize: 15),
                 ),
               ],

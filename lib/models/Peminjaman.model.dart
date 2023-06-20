@@ -94,6 +94,7 @@ class ListPeminjaman {
 
 class ListPeminjamanCubit extends Cubit<ListPeminjaman> {
   String url = "http://localhost:8000/get_peminjaman_belum_didanai";
+  String url_user = "http://localhost:8000//status_aktif_peminjaman/";
 
   ListPeminjamanCubit() : super(ListPeminjaman(listPeminjaman: []));
 
@@ -126,6 +127,17 @@ class ListPeminjamanCubit extends Cubit<ListPeminjaman> {
 
   void fetchData() async {
     final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      setFromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Gagal load');
+    }
+  }
+
+  void fetchDataUser(int idBorrower) async {
+    final response =
+        await http.get(Uri.parse(url_user + idBorrower.toString()));
 
     if (response.statusCode == 200) {
       setFromJson(jsonDecode(response.body));
