@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Transaksi.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/topup.dart';
@@ -10,34 +12,15 @@ import 'package:p2plending_umkm/borrower/pages/fitur_topup/detail_transaksi.dart
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Transaction {
-  final int idTransaksi;
-  final int idUser;
-  final int jumlahTransaksi;
-  final String jenisTransaksi;
-  final String tanggalWaktuTransaksi;
-  final String detailTransaksi;
-
-  Transaction({
-    required this.idTransaksi,
-    required this.idUser,
-    required this.jumlahTransaksi,
-    required this.jenisTransaksi,
-    required this.tanggalWaktuTransaksi,
-    required this.detailTransaksi,
-  });
-}
-
 class AktivitasBorrower extends StatefulWidget {
   @override
   _AktivitasBorrowerState createState() => _AktivitasBorrowerState();
 }
 
 class _AktivitasBorrowerState extends State<AktivitasBorrower> {
-  late int borrowerId;
   String selectedMonth = 'All';
-  late List<Transaction> transactionHistory;
-  late List<Transaction> filteredTransactions;
+  late List<Transaksi> transactionHistory = <Transaksi>[];
+  late List<Transaksi> filteredTransactions;
 
   @override
   void initState() {
@@ -47,32 +30,44 @@ class _AktivitasBorrowerState extends State<AktivitasBorrower> {
     fetchTransactionHistory();
   }
 
+  void setFromJson(Map<String, dynamic> json) {
+    List<Transaksi> listTransaksi = <Transaksi>[];
+    var data = json["data"];
+    for (var val in data) {
+      listTransaksi.add(
+        Transaksi(
+          idTransaksi: val['ID_TRANSAKSI'],
+          idUser: val['is_user'],
+          jumlahTransaksi: val['jumlah_transaksi'],
+          jenisTransaksi: val['jenis_transaksi'],
+          tanggalWaktuTransaksi: val['tanggal_waktu_transaksi'],
+          detailTransaksi: val['detail_transaksi'],
+        ),
+      );
+    }
+  }
+
   Future<void> fetchTransactionHistory() async {
-    final url = 'https://api.example.com/transactions?borrowerId=$borrowerId';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idUser = prefs.getInt('idUser')!;
+    final url = "http://127.0.0.1:8000/get_all_transaksi/$idUser";
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      transactionHistory = [];
+      final json = jsonDecode(response.body);
+      var data = json["data"];
 
-      for (var item in data) {
-        final idTransaksi = item['idTransaksi'];
-        final idUser = item['idUser'];
-        final jumlahTransaksi = item['jumlahTransaksi'];
-        final jenisTransaksi = item['jenisTransaksi'];
-        final tanggalWaktuTransaksi = item['tanggalWaktuTransaksi'];
-        final detailTransaksi = item['detailTransaksi'];
-
-        final transaksi = Transaction(
-          idTransaksi: idTransaksi,
-          idUser: idUser,
-          jumlahTransaksi: jumlahTransaksi,
-          jenisTransaksi: jenisTransaksi,
-          tanggalWaktuTransaksi: tanggalWaktuTransaksi,
-          detailTransaksi: detailTransaksi,
+      for (var val in data) {
+        transactionHistory.add(
+          Transaksi(
+            idTransaksi: val[0],
+            idUser: idUser,
+            jumlahTransaksi: val[1],
+            jenisTransaksi: val[3],
+            tanggalWaktuTransaksi: val[2],
+            detailTransaksi: val[4],
+          ),
         );
-
-        transactionHistory.add(transaksi);
       }
 
       filterTransactionsByMonth(selectedMonth);
@@ -124,7 +119,6 @@ class _AktivitasBorrowerState extends State<AktivitasBorrower> {
                     ),
                     SizedBox(height: 10),
                     BlocBuilder<UserCubit, User>(builder: (context, model) {
-                      borrowerId = model.idUser;
                       return Text(
                         'Rp.${model.saldo.toString()}',
                         style: TextStyle(
@@ -273,7 +267,7 @@ class _AktivitasBorrowerState extends State<AktivitasBorrower> {
                           ),
                         );
                       },
-                      title: Text(transaction.idTransaksi.toString()),
+                      title: Text(transaction.jenisTransaksi),
                       subtitle: Text(transaction.detailTransaksi),
                       trailing: Column(
                         children: [
