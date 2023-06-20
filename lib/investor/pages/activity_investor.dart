@@ -263,6 +263,7 @@ class _AktivitasInvestorState extends State<AktivitasInvestor> {
                               transactionDate: DateFormat('dd/MM/yyyy').format(
                                   DateTime.parse(
                                       transaction.tanggalWaktuTransaksi)),
+                              transactionDetail: transaction.detailTransaksi,
                             ),
                           ),
                         );
