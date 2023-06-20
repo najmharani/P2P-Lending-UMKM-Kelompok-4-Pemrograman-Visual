@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/models/Peminjaman.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/models/Detail.model.dart';
 import 'dart:developer' as developer;
@@ -239,7 +240,7 @@ class HistoryPeminjamanPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return _buildProductCard(
                     context,
-                    model.listDetail[index].namaLengkap,
+                    model.listDetail[index].namaUmkm,
                     model.listDetail[index].jumlahPinjaman.toString(),
                     model.listDetail[index].bagiHasil.toString(),
                     model.listDetail[index].tenor,
@@ -611,12 +612,33 @@ class _PinjamanBorrowerState extends State<PinjamanBorrower>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          AjukanPeminjamanPage(),
-          HistoryPeminjamanPage(),
-        ],
+      body: BlocBuilder<PeminjamanCubit, Peminjaman>(
+        builder: (context, state) {
+          return BlocBuilder<ListPeminjamanCubit, ListPeminjaman>(
+            builder: (context, model) {
+              context
+                  .read<ListPeminjamanCubit>()
+                  .fetchDataUser(state.idBorrower);
+              if (model.listPeminjaman.isEmpty) {
+                return TabBarView(
+                  controller: _tabController,
+                  children: [
+                    AjukanPeminjamanPage(),
+                    HistoryPeminjamanPage(),
+                  ],
+                );
+              } else {
+                return TabBarView(
+                  controller: _tabController,
+                  children: [
+                    PeminjamanPage(),
+                    HistoryPeminjamanPage(),
+                  ],
+                );
+              }
+            },
+          );
+        },
       ),
     );
   }

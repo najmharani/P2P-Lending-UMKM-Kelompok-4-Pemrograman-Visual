@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/borrower/pages/home_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/pinjaman_borrower.dart';
-import 'package:p2plending_umkm/borrower/pages/aktivitas_borrower.dart';
+import 'package:p2plending_umkm/borrower/pages/activity_borrower.dart';
 import 'package:p2plending_umkm/borrower/pages/profile_borrower.dart';
 import 'package:p2plending_umkm/icon.dart';
 
