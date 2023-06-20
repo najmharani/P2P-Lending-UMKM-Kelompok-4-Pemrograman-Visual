@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/investor/navigation_investor.dart';
 import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(RegisterApp());
@@ -40,6 +41,9 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
   final genderController = TextEditingController();
   final nikController = TextEditingController();
   late int idTipe;
+
+  String fotoKtpPath = '';
+  String fotoInvestorPath = '';
 
   Future<void> updateUserIdTipe(int idUser, int idTipe) async {
     final Map<String, dynamic> userData = {
@@ -75,7 +79,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
       String nik,
       String fotoKtp,
       String fotoInvestor) async {
-    final url = 'http://127.0.0.1:8000 /tambah_investor/';
+    final url = 'http://127.0.0.1:8000/tambah_investor/';
 
     final Map<String, dynamic> userData = {
       "nama_lengkap": namaLengkap,
@@ -135,6 +139,26 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
     );
   }
 
+  Future<void> _selectAndUploadImage(String fieldName) async {
+    final ImagePicker _picker = ImagePicker();
+
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      String imagePath = image.path;
+
+      if (fieldName == 'foto_ktp_path') {
+        setState(() {
+          fotoKtpPath = imagePath;
+        });
+      } else if (fieldName == 'foto_investor_path') {
+        setState(() {
+          fotoInvestorPath = imagePath;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,9 +197,10 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
               ),
             ),
             SizedBox(height: 16.0),
-            buildUploadButton('Foto KTP', Icons.attach_file),
+            buildUploadButton('Foto KTP', 'foto_ktp_path', Icons.attach_file),
             SizedBox(height: 8.0),
-            buildUploadButton('Foto Pemilik', Icons.attach_file),
+            buildUploadButton(
+                'Foto Pemilik', 'foto_investor_path', Icons.attach_file),
             SizedBox(height: 16.0),
             ElevatedButton(
               style: ButtonStyle(
@@ -190,8 +215,14 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
               ),
               onPressed: () {
                 setState(() {
-                  insertInvestor(namaController.text, tglLahirController.text,
-                      genderController.text, nikController.text, "", "");
+                  insertInvestor(
+                    namaController.text,
+                    tglLahirController.text,
+                    genderController.text,
+                    nikController.text,
+                    fotoKtpPath, // Update dengan path foto KTP yang diambil
+                    fotoInvestorPath, // Update dengan path foto Pemilik yang diambil
+                  );
                 });
               },
             ),
@@ -218,7 +249,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
     );
   }
 
-  Widget buildUploadButton(String text, IconData icon) {
+  Widget buildUploadButton(String text, String fieldName, IconData icon) {
     return Column(
       children: [
         Text(
@@ -238,7 +269,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
             ),
           ),
           onPressed: () {
-            // Implementasi logika upload di sini
+            _selectAndUploadImage(fieldName);
           },
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 40.0),
