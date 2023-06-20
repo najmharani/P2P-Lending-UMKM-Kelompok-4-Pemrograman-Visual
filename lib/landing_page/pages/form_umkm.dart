@@ -44,6 +44,50 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
   final deskripsiController = TextEditingController();
   late int idTipe;
 
+  List<String> alamatProvinsi = [
+  'Aceh',
+  'Sumatra Utara',
+  'Sumatra Barat',
+  'Riau',
+  'Jambi',
+  'Sumatra Selatan',
+  'Bengkulu',
+  'Lampung',
+  'Kepulauan Bangka Belitung',
+  'Kepulauan Riau',
+  'Daerah Khusus Ibukota Jakarta',
+  'Jawa Barat',
+  'Jawa Tengah',
+  'Daerah Istimewa Yogyakarta',
+  'Jawa Timur',
+  'Banten',
+  'Bali',
+  'Nusa Tenggara Barat',
+  'Nusa Tenggara Timur',
+  'Kalimantan Barat',
+  'Kalimantan Tengah',
+  'Kalimantan Selatan',
+  'Kalimantan Timur',
+  'Kalimantan Utara',
+  'Sulawesi Utara',
+  'Sulawesi Tengah',
+  'Sulawesi Selatan',
+  'Sulawesi Tenggara',
+  'Gorontalo',
+  'Sulawesi Barat',
+  'Maluku',
+  'Maluku Utara',
+  'Papua',
+  'Papua Barat',
+  'Papua Selatan',
+  'Papua Tengah',
+  'Papua Pegunungan',
+  'Papua Barat Daya',
+];
+
+
+  String selectedProvinsi = 'Jawa Barat'; // Default selected province
+
   Future<void> updateUserIdTipe(int idUser, int idTipe) async {
     final Map<String, dynamic> userData = {
       'email': "",
@@ -86,7 +130,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
     final Map<String, dynamic> userData = {
       "ID_BORROWER": 0,
       "nama_umkm": namaUmkm,
-      "alamat_umkm_provinsi": "Jawa Barat",
+      "alamat_umkm_provinsi": selectedProvinsi,
       "alamat_umkm_detail": alamatUmkmDetail,
       "jenis_usaha": jenisUsaha,
       "tahun_berdiri": tahunBerdiri,
@@ -169,6 +213,23 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
               controller: alamatUmkmController,
               decoration: InputDecoration(
                 labelText: 'Alamat UMKM',
+              ),
+            ),
+            DropdownButtonFormField<String>(
+              value: selectedProvinsi,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedProvinsi = newValue!;
+                });
+              },
+              items: alamatProvinsi.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: InputDecoration(
+                labelText: 'Provinsi',
               ),
             ),
             SizedBox(height: 16.0),
