@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/models/Detail.model.dart';
+import 'package:p2plending_umkm/models/DetailSelesai.model.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
 import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:p2plending_umkm/models/Peminjaman.model.dart';
@@ -19,11 +21,23 @@ class P2PLendingUMKMApp extends StatelessWidget {
           BlocProvider<UserCubit>(
             create: (BuildContext context) => UserCubit(),
           ),
+          BlocProvider<DetailCubit>(
+            create: (BuildContext context) => DetailCubit(),
+          ),
+          BlocProvider<DetailSelesaiCubit>(
+            create: (BuildContext context) => DetailSelesaiCubit(),
+          ),
           BlocProvider<PeminjamanCubit>(
             create: (BuildContext context) => PeminjamanCubit(),
           ),
           BlocProvider<ListPeminjamanCubit>(
             create: (BuildContext context) => ListPeminjamanCubit(),
+          ),
+          BlocProvider<ListDetailCubit>(
+            create: (BuildContext context) => ListDetailCubit(),
+          ),
+          BlocProvider<ListDetailSelesaiCubit>(
+            create: (BuildContext context) => ListDetailSelesaiCubit(),
           ),
           BlocProvider<InvestorCubit>(
             create: (BuildContext context) => InvestorCubit(),
