@@ -214,8 +214,7 @@ class ProfileBorrower extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => 
-                      EditNamaUMKMPage(namaUMKM: namaUMKM),
+                  builder: (context) => EditNamaUMKMPage(namaUMKM: namaUMKM),
                 ),
               );
             },
@@ -292,8 +291,7 @@ class ProfileBorrower extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => 
-                      EditFotoUMKMPage(fotoUMKM: fotoUMKM),
+                  builder: (context) => EditFotoUMKMPage(fotoUMKM: fotoUMKM),
                 ),
               );
             },

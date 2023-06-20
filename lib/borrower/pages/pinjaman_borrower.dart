@@ -614,7 +614,7 @@ class _PinjamanBorrowerState extends State<PinjamanBorrower>
       body: TabBarView(
         controller: _tabController,
         children: [
-          PeminjamanPage(),
+          AjukanPeminjamanPage(),
           HistoryPeminjamanPage(),
         ],
       ),

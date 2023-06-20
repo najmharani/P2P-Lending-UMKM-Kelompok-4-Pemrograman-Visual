@@ -1801,14 +1801,18 @@ def update_investasi(response: Response, id_investasi: int, m: Investasi):
     con.close()
     return m
 
-#============= PENGEMBALIAN ==============#
+
+# ============= PENGEMBALIAN ==============#
+
+
 class Pengembalian(BaseModel):
     ID_PENGEMBALIAN: int = None
     batas_waktu_pengembalian: str
     waktu_pengembalian: str
     id_transaksi: int = None
     id_peminjaman: int = None
-    
+
+
 @app.post("/tambah_pengembalian/", response_model=Pengembalian, status_code=201)
 def tambah_pengembalian(m: Pengembalian, response: Response, request: Request):
     try:
@@ -1827,12 +1831,15 @@ def tambah_pengembalian(m: Pengembalian, response: Response, request: Request):
             )
         )
         con.commit()
-        cur.execute(
-            """UPDATE pinjaman
-                SET status_pengajuan = 'Lancar'
-                WHERE date({}) <= date({}) where ID_PEMINJAMAN={}""".format(m.waktu_pengembalian, m.batas_waktu_pengembalian, m.id_peminjaman)
-        )
-        con.commit()
+
+        # cur.execute(
+        #     """UPDATE pinjaman
+        #         SET status_pinjaman = 'Lancar'
+        #         WHERE date({}) <= date({}) AND ID_PEMINJAMAN={}""".format(
+        #         m.waktu_pengembalian, m.batas_waktu_pengembalian, m.id_peminjaman
+        #     )
+        # )
+        # con.commit()
     except:
         return {"status": "terjadi error"}
     finally:
@@ -1840,6 +1847,7 @@ def tambah_pengembalian(m: Pengembalian, response: Response, request: Request):
     # tambah location
     response.headers["location"] = "/pengembalian/{}".format(m.ID_PENGEMBALIAN)
     return m
+
 
 @app.get("/get_all_pengembalian/")
 def get_all_umkm():
@@ -1849,6 +1857,24 @@ def get_all_umkm():
         cur = con.cursor()
         recs = []
         for row in cur.execute("select * from pengembalian"):
+            recs.append(row)
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": recs}
+
+
+@app.get("/get_all_pengembalian/{id_peminjaman}")
+def get_all_pengembalian(id_peminjaman: int):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute(
+            "select * from pengembalian WHERE id_peminjaman={}".format(id_peminjaman)
+        ):
             recs.append(row)
     except:
         return {"status": "terjadi error"}

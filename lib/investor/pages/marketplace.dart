@@ -718,7 +718,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           context
                               .read<TransaksiCubit>()
                               .pendanaan(int.parse(jumlahPinjaman), idPinjaman,
-                                  idBorrower, namaUmkm)
+                                  idBorrower, namaUmkm, tenor)
                               .then((_) {
                             Navigator.push(
                               context,

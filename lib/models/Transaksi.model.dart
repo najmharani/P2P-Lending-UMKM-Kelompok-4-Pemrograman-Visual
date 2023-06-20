@@ -79,7 +79,7 @@ class TransaksiCubit extends Cubit<Transaksi> {
   }
 
   Future<void> pendanaan(int jumlahTransaksi, int idPeminjaman,
-      int idUserTujuan, String namaUMKM) async {
+      int idUserTujuan, String namaUMKM, String tenor) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int idUser = prefs.getInt('idUser')!;
     String datetime = DateTime.now().toString();
@@ -99,31 +99,38 @@ class TransaksiCubit extends Cubit<Transaksi> {
     );
 
     if (response.statusCode == 200) {
+      insertPengembalian(tenor, idPeminjaman);
     } else {
       print('Login failed with status code ${response.statusCode}');
     }
   }
 
-  Future<void> insertPengembalian(int jumlahTransaksi, int idPeminjaman,
-      int idUserTujuan, String namaUMKM) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int idUser = prefs.getInt('idUser')!;
-    String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    final response = await http.post(
-      Uri.parse("http://127.0.0.1:8000/pendanaan_transaksi/"),
-      body: jsonEncode({
-        "ID_PENGEMBALIAN": 0,
-        "batas_waktu_pengembalian": date,
-        "waktu_pengembalian": "",
-        "id_transaksi": 0,
-        "id_peminjaman": idPeminjaman
-      }),
-      headers: {'Content-Type': 'application/json'},
-    );
+  Future<void> insertPengembalian(String tenor, int idPeminjaman) async {
+    int jumlah = int.parse(tenor);
+    DateTime now = DateTime.now();
+    for (var i = 0; i < int.parse(tenor); i++) {
+      DateTime futureDate = now.add(Duration(days: jumlah));
+      String date = DateFormat('yyyy-MM-dd').format(futureDate);
 
-    if (response.statusCode == 200) {
-    } else {
-      print('Login failed with status code ${response.statusCode}');
+      final response = await http.post(
+        Uri.parse("http://127.0.0.1:8000/tambah_pengembalian/"),
+        body: jsonEncode({
+          "ID_PENGEMBALIAN": 0,
+          "batas_waktu_pengembalian": date,
+          "waktu_pengembalian": "",
+          "id_transaksi": 0,
+          "id_peminjaman": idPeminjaman
+        }),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      jumlah += int.parse(tenor);
+
+      if (response.statusCode == 200) {
+        print('Berhasil');
+      } else {
+        print('Login failed with status code ${response.statusCode}');
+      }
     }
   }
 }
