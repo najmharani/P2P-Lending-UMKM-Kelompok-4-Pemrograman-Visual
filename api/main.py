@@ -1800,3 +1800,58 @@ def update_investasi(response: Response, id_investasi: int, m: Investasi):
 
     con.close()
     return m
+
+#============= PENGEMBALIAN ==============#
+class Pengembalian(BaseModel):
+    ID_PENGEMBALIAN: int = None
+    batas_waktu_pengembalian: str
+    waktu_pengembalian: str
+    id_transaksi: int = None
+    id_peminjaman: int = None
+    
+@app.post("/tambah_pengembalian/", response_model=Pengembalian, status_code=201)
+def tambah_pengembalian(m: Pengembalian, response: Response, request: Request):
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        # hanya untuk test, rawan sql injection, gunakan spt SQLAlchemy
+        cur.execute(
+            """insert into pengembalian
+        (batas_waktu_pengembalian,waktu_pengembalian,id_transaksi,id_peminjaman) values (
+        "{}","{}",{},{})""".format(
+                m.batas_waktu_pengembalian,
+                m.waktu_pengembalian,
+                m.id_transaksi,
+                m.id_peminjaman,
+            )
+        )
+        con.commit()
+        cur.execute(
+            """UPDATE pinjaman
+                SET status_pengajuan = 'Lancar'
+                WHERE date({}) <= date({}) where ID_PEMINJAMAN={}""".format(m.waktu_pengembalian, m.batas_waktu_pengembalian, m.id_peminjaman)
+        )
+        con.commit()
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+    # tambah location
+    response.headers["location"] = "/pengembalian/{}".format(m.ID_PENGEMBALIAN)
+    return m
+
+@app.get("/get_all_pengembalian/")
+def get_all_umkm():
+    try:
+        DB_NAME = "m2m.db"
+        con = sqlite3.connect(DB_NAME)
+        cur = con.cursor()
+        recs = []
+        for row in cur.execute("select * from pengembalian"):
+            recs.append(row)
+    except:
+        return {"status": "terjadi error"}
+    finally:
+        con.close()
+        return {"data": recs}

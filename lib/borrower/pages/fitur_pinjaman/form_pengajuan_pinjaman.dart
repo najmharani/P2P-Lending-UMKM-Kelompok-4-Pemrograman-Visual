@@ -34,7 +34,7 @@ class _FormPengajuanPinjamanState extends State<FormPengajuanPinjaman> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int idTipeUser = prefs.getInt('idTipeUser')!;
-
+    String datetime = DateTime.now().toString();
     print(idTipeUser);
 
     final Map<String, dynamic> userData = {
@@ -42,13 +42,13 @@ class _FormPengajuanPinjamanState extends State<FormPengajuanPinjaman> {
       "jumlah_pinjaman": jumlahPinjaman,
       "status_pinjaman": "Pengajuan",
       "status_pengajuan": "Pengajuan",
-      "waktu_pengajuan": "20/06/2023",
+      "waktu_pengajuan": datetime,
       "waktu_pendanaan": "",
-      "jatuh_tempo": "29/10/2023",
+      "jatuh_tempo": "",
       "bagi_hasil": bagiHasil,
       "tenor": tenor,
       "penghasilan_perbulan": penghasilanPerBulan,
-      "jumlah_angsuran": jumlahPinjaman / int.parse(tenor),
+      "jumlah_angsuran": jumlahPinjaman * (bagiHasil / 100) / int.parse(tenor),
       "sisa_tenor": tenor,
       "nilai_rating": "",
       "id_borrower": idTipeUser,

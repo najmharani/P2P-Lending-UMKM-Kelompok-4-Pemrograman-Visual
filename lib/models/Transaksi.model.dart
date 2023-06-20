@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -57,13 +57,13 @@ class TransaksiCubit extends Cubit<Transaksi> {
   Future<void> withdraw(int jumlahTransaksi, String bank) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int idUser = prefs.getInt('idUser')!;
-    //String datetime = DateTime.now().toString();
+    String datetime = DateTime.now().toString();
     final response = await http.post(
       Uri.parse("http://127.0.0.1:8000/witdhdraw_transaksi/"),
       body: jsonEncode({
         "ID_TRANSAKSI": 0,
         "jumlah_transaksi": jumlahTransaksi,
-        "tanggal_waktu_transaksi": "datetime",
+        "tanggal_waktu_transaksi": datetime,
         "jenis_transaksi": "Penarikan",
         "detail_transaksi": "Penarikan ke ${bank}",
         "id_user": idUser
@@ -93,6 +93,29 @@ class TransaksiCubit extends Cubit<Transaksi> {
         "detail_transaksi": "Pendanaan Peminjaman ${namaUMKM}",
         "id_user": idUser,
         "id_user_tujuan": idUserTujuan,
+        "id_peminjaman": idPeminjaman
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+    } else {
+      print('Login failed with status code ${response.statusCode}');
+    }
+  }
+
+  Future<void> insertPengembalian(int jumlahTransaksi, int idPeminjaman,
+      int idUserTujuan, String namaUMKM) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idUser = prefs.getInt('idUser')!;
+    String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final response = await http.post(
+      Uri.parse("http://127.0.0.1:8000/pendanaan_transaksi/"),
+      body: jsonEncode({
+        "ID_PENGEMBALIAN": 0,
+        "batas_waktu_pengembalian": date,
+        "waktu_pengembalian": "",
+        "id_transaksi": 0,
         "id_peminjaman": idPeminjaman
       }),
       headers: {'Content-Type': 'application/json'},
