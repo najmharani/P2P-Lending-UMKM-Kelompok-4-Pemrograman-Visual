@@ -1076,7 +1076,7 @@ def tambah_pemilik(m: PemilikUmkm, response: Response, request: Request):
     finally:
         con.close()
     # tambah location
-    response.headers["location"] = "/pemilik_umkm/{}".format(m.ID_PEMILIK)
+    response.headers["location"] = "/get_pemilik/{}".format(id_pemilik)
     return id_pemilik
 
 
@@ -1212,12 +1212,13 @@ class Umkm(BaseModel):
     tahun_berdiri: str
     surat_izin_usaha: str
     npwp: str
-    laporan_keuangan:str
+    laporan_keuangan: str
     foto_umkm: str
     rating: str
     omzet: int
     deskripsi_umkm: str
-    id_pemilik_umkm:int
+    id_pemilik_umkm: int
+
 
 @app.post("/tambah_umkm/", response_model=int, status_code=201)
 def tambah_umkm(m: Umkm, response: Response, request: Request):
@@ -1235,17 +1236,18 @@ def tambah_umkm(m: Umkm, response: Response, request: Request):
                 m.alamat_umkm_detail,
                 m.jenis_usaha,
                 m.tahun_berdiri,
+                m.surat_izin_usaha,
                 m.npwp,
                 m.laporan_keuangan,
                 m.foto_umkm,
                 m.rating,
                 m.omzet,
                 m.deskripsi_umkm,
-                m.id_pemilik_umkm
+                m.id_pemilik_umkm,
             )
         )
 
-        id_pemilik = cur.lastrowid
+        id_umkm = cur.lastrowid
 
         con.commit()
     except:
@@ -1253,8 +1255,8 @@ def tambah_umkm(m: Umkm, response: Response, request: Request):
     finally:
         con.close()
     # tambah location
-    response.headers["location"] = "/umkm/{}".format(m.ID_BORROWER)
-    return id_pemilik
+    response.headers["location"] = "/get_umkm/{}".format(id_umkm)
+    return id_umkm
 
 
 @app.get("/get_all_umkm/")
@@ -1336,13 +1338,17 @@ def update_umkm(response: Response, id_umkm: int, m: Umkm):
 
         if m.alamat_umkm_provinsi != "":
             if m.alamat_umkm_provinsi != None:
-                sqlstr = sqlstr + " alamat_umkm_provinsi = '{}' ,".format(m.alamat_umkm_provinsi)
+                sqlstr = sqlstr + " alamat_umkm_provinsi = '{}' ,".format(
+                    m.alamat_umkm_provinsi
+                )
             else:
                 sqlstr = sqlstr + " alamat_umkm_provinsi = null ,"
 
         if m.alamat_umkm_detail != "":
             if m.alamat_umkm_detail != None:
-                sqlstr = sqlstr + " alamat_umkm_detail = '{}' ,".format(m.alamat_umkm_detail)
+                sqlstr = sqlstr + " alamat_umkm_detail = '{}' ,".format(
+                    m.alamat_umkm_detail
+                )
             else:
                 sqlstr = sqlstr + " alamat_umkm_detail = null ,"
 
@@ -1360,46 +1366,50 @@ def update_umkm(response: Response, id_umkm: int, m: Umkm):
 
         if m.surat_izin_usaha != "":
             if m.surat_izin_usaha != None:
-                sqlstr = sqlstr + " surat_izin_usaha = '{}' ,".format(m.surat_izin_usaha)
+                sqlstr = sqlstr + " surat_izin_usaha = '{}' ,".format(
+                    m.surat_izin_usaha
+                )
             else:
                 sqlstr = sqlstr + " surat_izin_usaha = null, "
-            
+
         if m.npwp != "":
             if m.npwp != None:
                 sqlstr = sqlstr + " npwp = '{}' ,".format(m.npwp)
             else:
                 sqlstr = sqlstr + " npwp = null, "
-                
+
         if m.laporan_keuangan != "":
             if m.laporan_keuangan != None:
-                sqlstr = sqlstr + " laporan_keuangan = '{}' ,".format(m.laporan_keuangan)
+                sqlstr = sqlstr + " laporan_keuangan = '{}' ,".format(
+                    m.laporan_keuangan
+                )
             else:
                 sqlstr = sqlstr + " laporan_keuangan = null, "
-                
+
         if m.foto_umkm != "":
             if m.foto_umkm != None:
                 sqlstr = sqlstr + " foto_umkm = '{}' ,".format(m.foto_umkm)
             else:
                 sqlstr = sqlstr + " foto_umkm = null, "
-                
+
         if m.rating != "":
             if m.rating != None:
                 sqlstr = sqlstr + " rating = '{}' ,".format(m.rating)
             else:
                 sqlstr = sqlstr + " rating = null, "
-                
+
         if m.omzet != 0:
             if m.omzet != None:
                 sqlstr = sqlstr + " omzet = '{}' ,".format(m.omzet)
             else:
                 sqlstr = sqlstr + " omzet = null, "
-                
+
         if m.deskripsi_umkm != "":
             if m.deskripsi_umkm != None:
                 sqlstr = sqlstr + " deskripsi_umkm = '{}' ,".format(m.deskripsi_umkm)
             else:
                 sqlstr = sqlstr + " deskripsi_umkm = null, "
-                
+
         if m.id_pemilik_umkm != 0:
             if m.id_pemilik_umkm != None:
                 sqlstr = sqlstr + " id_pemilik_umkm = '{}' ,".format(m.id_pemilik_umkm)

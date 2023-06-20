@@ -40,23 +40,29 @@ class _RegisterPemilikNextPageState extends State<RegisterPemilikNextPage> {
   final tglLahirController = TextEditingController();
   final genderController = TextEditingController();
   final nikController = TextEditingController();
-  late int idTipe;
+  late int idPemilik;
 
-  Future<void> updatUmkmIdPemilik(int idTipeUser, int idPemilik) async {
+  Future<void> updateUmkmIdPemilik(int idTipeUser, int idPemilik) async {
     final Map<String, dynamic> userData = {
-      'email': "",
-      'password': "",
-      'no_telp': "",
-      'foto_profil': "",
-      'saldo': 0,
-      'tipe_user': "",
-      'id_tipe_user': idTipe,
+      "nama_umkm": "",
+      "alamat_umkm_provinsi": "",
+      "alamat_umkm_detail": "",
+      "jenis_usaha": "",
+      "tahun_berdiri": "",
+      "surat_izin_usaha": "",
+      "npwp": "",
+      "laporan_keuangan": "",
+      "foto_umkm": "",
+      "rating": "",
+      "omzet": 0,
+      "deskripsi_umkm": "",
+      "id_pemilik_umkm": idPemilik
     };
 
     print('id tipe: $idTipeUser');
 
     final response = await http.patch(
-      Uri.parse("http://127.0.0.1:8000/update_borrower/$idTipeUser"),
+      Uri.parse("http://127.0.0.1:8000/update_umkm/$idTipeUser"),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(userData),
     );
@@ -84,7 +90,7 @@ class _RegisterPemilikNextPageState extends State<RegisterPemilikNextPage> {
       "jenis_kelamin": jenisKelamin,
       "nik": nik,
       "foto_ktp": fotoKtp,
-      "foto_investor": fotoPemilik,
+      "foto_borrower": fotoPemilik,
       "aset": 0
     };
 
@@ -96,11 +102,11 @@ class _RegisterPemilikNextPageState extends State<RegisterPemilikNextPage> {
 
     if (response.statusCode == 201) {
       // User inserted successfully
-      idTipe = jsonDecode(response.body);
+      idPemilik = jsonDecode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('idTipeUser', idTipe);
-      updatUmkmIdPemilik(prefs.getInt('idUser')!, idTipe);
-      print('$idTipe');
+      await prefs.setInt('idPemilik', idPemilik);
+      updateUmkmIdPemilik(prefs.getInt('idTipeUser')!, idPemilik);
+      print('$idPemilik');
       pemilikRegister();
       print('Pemilik berhasil ditambahkan');
     } else {

@@ -41,6 +41,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
   final alamatUmkmController = TextEditingController();
   final jenisUsahaController = TextEditingController();
   final tahunBerdiriController = TextEditingController();
+  final deskripsiController = TextEditingController();
   late int idTipe;
 
   Future<void> updateUserIdTipe(int idUser, int idTipe) async {
@@ -75,22 +76,28 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
       String alamatUmkmDetail,
       String jenisUsaha,
       String tahunBerdiri,
+      String deskripsi,
       String npwp,
       String suratIzinUsaha,
       String laporanKeuangan,
       String fotoUmkm) async {
-    final url = 'http://127.0.0.1:8000 /tambah_borrower/';
+    final url = 'http://127.0.0.1:8000/tambah_umkm/';
 
     final Map<String, dynamic> userData = {
+      "ID_BORROWER": 0,
       "nama_umkm": namaUmkm,
-      "alamat_umkm": alamatUmkmDetail,
+      "alamat_umkm_provinsi": "Jawa Barat",
+      "alamat_umkm_detail": alamatUmkmDetail,
       "jenis_usaha": jenisUsaha,
       "tahun_berdiri": tahunBerdiri,
+      "surat_izin_usaha": suratIzinUsaha,
       "npwp": npwp,
-      "izin_usaha": suratIzinUsaha,
       "laporan_keuangan": laporanKeuangan,
       "foto_umkm": fotoUmkm,
-      "aset": 0
+      "rating": "",
+      "omzet": 0,
+      "deskripsi_umkm": deskripsi,
+      "id_pemilik_umkm": 0
     };
 
     final response = await http.post(
@@ -179,6 +186,13 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
               ),
             ),
             SizedBox(height: 16.0),
+            TextField(
+              controller: deskripsiController,
+              decoration: InputDecoration(
+                labelText: 'Deskripsi UMKM',
+              ),
+            ),
+            SizedBox(height: 16.0),
             buildUploadButton('NPWP', Icons.attach_file),
             SizedBox(height: 8.0),
             buildUploadButton('Izin Usaha', Icons.attach_file),
@@ -204,6 +218,7 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
                       alamatUmkmController.text,
                       jenisUsahaController.text,
                       tahunBerdiriController.text,
+                      deskripsiController.text,
                       "",
                       "",
                       "",
