@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(BorrowerApp());
@@ -15,19 +20,61 @@ class BorrowerApp extends StatelessWidget {
   }
 }
 
-class FormPengajuanPinjaman extends StatelessWidget {
-  // final UserType userType;
+class FormPengajuanPinjaman extends StatefulWidget {
+  const FormPengajuanPinjaman();
 
-  // const RegisterPage({required this.userType});
+  @override
+  State<FormPengajuanPinjaman> createState() => _FormPengajuanPinjamanState();
+}
+
+class _FormPengajuanPinjamanState extends State<FormPengajuanPinjaman> {
+  Future<void> insertPeminjaman(int jumlahPinjaman, int bagiHasil, String tenor,
+      int penghasilanPerBulan) async {
+    final url = 'http://127.0.0.1:8000 /tambah_peminjaman/';
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idTipeUser = prefs.getInt('idTipeUser')!;
+
+    print(idTipeUser);
+
+    final Map<String, dynamic> userData = {
+      "ID_PEMINJAMAN": 0,
+      "jumlah_pinjaman": jumlahPinjaman,
+      "status_pinjaman": "Pengajuan",
+      "status_pengajuan": "Pengajuan",
+      "waktu_pengajuan": "20/06/2023",
+      "waktu_pendanaan": "",
+      "jatuh_tempo": "29/10/2023",
+      "bagi_hasil": bagiHasil,
+      "tenor": tenor,
+      "penghasilan_perbulan": penghasilanPerBulan,
+      "jumlah_angsuran": jumlahPinjaman / int.parse(tenor),
+      "sisa_tenor": tenor,
+      "nilai_rating": "",
+      "id_borrower": idTipeUser,
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(userData),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      // User inserted successfully
+      print('Peminjaman berhasil ditambahkan');
+    } else {
+      // Error occurred while inserting Investor
+      print('Error saat menambahkan peminjaman');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // String title;
-    // if (userType == UserType.borrower) {
-    //   title = 'Register as Borrower';
-    // } else {
-    //   title = 'Register as Investor';
-    // }
+    final jumlahController = TextEditingController();
+    final bagiController = TextEditingController();
+    final tenorUsahaController = TextEditingController();
+    final penghasilanController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -39,47 +86,43 @@ class FormPengajuanPinjaman extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
+              controller: jumlahController,
               decoration: InputDecoration(
                 labelText: 'Jumlah Pinjaman',
               ),
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: bagiController,
               decoration: InputDecoration(
-                labelText: 'Bagi Hasil',
+                labelText: 'Bagi Hasil (%)',
               ),
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: tenorUsahaController,
               decoration: InputDecoration(
                 labelText: 'Tenor',
               ),
-              obscureText: true,
             ),
             SizedBox(height: 16.0),
             TextField(
+              controller: penghasilanController,
               decoration: InputDecoration(
                 labelText: 'Penghasilan per Bulan',
               ),
-              obscureText: true,
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
               child: Text('Simpan'),
               onPressed: () {
-                // if (userType == UserType.borrower) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => RegisterBorrowerNextPage()),
-                //   );
-                // } else if (userType == UserType.investor) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => RegisterInvestorNextPage()),
-                //   );
-                // }
+                setState(() {
+                  insertPeminjaman(
+                      int.parse(jumlahController.text),
+                      int.parse(bagiController.text),
+                      tenorUsahaController.text,
+                      int.parse(penghasilanController.text));
+                });
               },
             ),
           ],

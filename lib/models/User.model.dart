@@ -112,6 +112,8 @@ class UserCubit extends Cubit<User> {
       await prefs.setString('tipeUser', token['tipeUser']);
       await prefs.setInt('idTipeUser', token['idTipeUser']);
 
+      print(prefs.getInt("idTipeUser"));
+
       Map<String, dynamic> decodedToken = token;
 
       emit(User(

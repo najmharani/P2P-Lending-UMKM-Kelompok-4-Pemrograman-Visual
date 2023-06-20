@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p2plending_umkm/borrower/navigation_borrower.dart';
 import 'package:p2plending_umkm/colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -10,10 +11,10 @@ import 'package:p2plending_umkm/models/Investor.model.dart';
 import 'package:p2plending_umkm/models/User.model.dart';
 
 void main() {
-  runApp(RegisterApp());
+  runApp(PemilikUMKMForm());
 }
 
-class RegisterApp extends StatelessWidget {
+class PemilikUMKMForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,61 +22,67 @@ class RegisterApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: primary,
       ),
-      home: RegisterInvestorNextPage(),
+      home: RegisterPemilikNextPage(),
     );
   }
 }
 
-class RegisterInvestorNextPage extends StatefulWidget {
-  const RegisterInvestorNextPage();
+class RegisterPemilikNextPage extends StatefulWidget {
+  const RegisterPemilikNextPage();
 
   @override
-  State<RegisterInvestorNextPage> createState() =>
-      _RegisterInvestorNextPageState();
+  State<RegisterPemilikNextPage> createState() =>
+      _RegisterPemilikNextPageState();
 }
 
-class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
+class _RegisterPemilikNextPageState extends State<RegisterPemilikNextPage> {
   final namaController = TextEditingController();
   final tglLahirController = TextEditingController();
   final genderController = TextEditingController();
   final nikController = TextEditingController();
-  late int idTipe;
+  late int idPemilik;
 
-  Future<void> updateUserIdTipe(int idUser, int idTipe) async {
+  Future<void> updateUmkmIdPemilik(int idTipeUser, int idPemilik) async {
     final Map<String, dynamic> userData = {
-      'email': "",
-      'password': "",
-      'no_telp': "",
-      'foto_profil': "",
-      'saldo': 0,
-      'tipe_user': "",
-      'id_tipe_user': idTipe,
+      "nama_umkm": "",
+      "alamat_umkm_provinsi": "",
+      "alamat_umkm_detail": "",
+      "jenis_usaha": "",
+      "tahun_berdiri": "",
+      "surat_izin_usaha": "",
+      "npwp": "",
+      "laporan_keuangan": "",
+      "foto_umkm": "",
+      "rating": "",
+      "omzet": 0,
+      "deskripsi_umkm": "",
+      "id_pemilik_umkm": idPemilik
     };
 
-    print('id tipe: $idTipe');
+    print('id tipe: $idTipeUser');
 
     final response = await http.patch(
-      Uri.parse("http://127.0.0.1:8000/update_user/$idUser"),
+      Uri.parse("http://127.0.0.1:8000/update_umkm/$idTipeUser"),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(userData),
     );
 
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('idTipeUser', idTipe);
+      await prefs.setInt('idPemilik', idPemilik);
     } else {
       print('Gagal patch ${response.statusCode}');
     }
   }
 
-  Future<void> insertInvestor(
+  Future<void> insertPemilik(
       String namaLengkap,
       String tglLahir,
       String jenisKelamin,
       String nik,
       String fotoKtp,
-      String fotoInvestor) async {
-    final url = 'http://127.0.0.1:8000 /tambah_investor/';
+      String fotoPemilik) async {
+    final url = 'http://127.0.0.1:8000 /tambah_pemilik/';
 
     final Map<String, dynamic> userData = {
       "nama_lengkap": namaLengkap,
@@ -83,7 +90,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
       "jenis_kelamin": jenisKelamin,
       "nik": nik,
       "foto_ktp": fotoKtp,
-      "foto_investor": fotoInvestor,
+      "foto_borrower": fotoPemilik,
       "aset": 0
     };
 
@@ -95,20 +102,20 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
 
     if (response.statusCode == 201) {
       // User inserted successfully
-      idTipe = jsonDecode(response.body);
+      idPemilik = jsonDecode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('idTipeUser', idTipe);
-      updateUserIdTipe(prefs.getInt('idUser')!, idTipe);
-      print('$idTipe');
-      investorRegister();
-      print('Investor berhasil ditambahkan');
+      await prefs.setInt('idPemilik', idPemilik);
+      updateUmkmIdPemilik(prefs.getInt('idTipeUser')!, idPemilik);
+      print('$idPemilik');
+      pemilikRegister();
+      print('Pemilik berhasil ditambahkan');
     } else {
-      // Error occurred while inserting Investor
-      print('Error saat menambahkan investor');
+      // Error occurred while inserting pemilik
+      print('Error saat menambahkan pemilik');
     }
   }
 
-  void investorRegister() {
+  void pemilikRegister() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         shape: RoundedRectangleBorder(
@@ -119,7 +126,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
         ),
         backgroundColor: Color.fromARGB(255, 0, 97, 175),
         content: Text(
-          "Berhasil Membuat Akun Investor",
+          "Berhasil Membuat Akun Pemilik",
           style: TextStyle(
             fontFamily: "lexend",
           ),
@@ -129,7 +136,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return InvestorApp();
+          return BorrowerApp();
         },
       ),
     );
@@ -190,7 +197,7 @@ class _RegisterInvestorNextPageState extends State<RegisterInvestorNextPage> {
               ),
               onPressed: () {
                 setState(() {
-                  insertInvestor(namaController.text, tglLahirController.text,
+                  insertPemilik(namaController.text, tglLahirController.text,
                       genderController.text, nikController.text, "", "");
                 });
               },

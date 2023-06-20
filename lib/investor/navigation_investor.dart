@@ -4,7 +4,7 @@ import 'package:p2plending_umkm/colors.dart';
 import 'package:p2plending_umkm/icon.dart';
 import 'package:p2plending_umkm/investor/pages/home_investor.dart';
 import 'package:p2plending_umkm/investor/pages/marketplace.dart';
-import 'package:p2plending_umkm/investor/pages/aktivitas_investor.dart';
+import 'package:p2plending_umkm/investor/pages/activity_investor.dart';
 import 'package:p2plending_umkm/investor/pages/profile_investor.dart';
 
 void main() {

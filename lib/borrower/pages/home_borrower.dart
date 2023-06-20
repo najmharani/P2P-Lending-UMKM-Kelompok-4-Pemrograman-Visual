@@ -1,6 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:p2plending_umkm/models/User.model.dart';
+import 'package:p2plending_umkm/models/Umkm.model.dart';
+import 'package:p2plending_umkm/models/PemilikUmkm.model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/withdraw.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_topup/topup.dart';
 
@@ -9,11 +13,15 @@ class HomeBorrower extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello, Borrower!',style: TextStyle(
-                  color: Colors.white,
-                ),),
+        title: Text(
+          'Hello, Borrower!',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
+            color: Colors.white,
             icon: Icon(Icons.notifications),
             onPressed: () {
               // Aksi saat tombol notifikasi ditekan
@@ -31,48 +39,53 @@ class HomeBorrower extends StatelessWidget {
                 alignment: AlignmentDirectional.topCenter,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 60),
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                    decoration: BoxDecoration(
-                      color: primary.shade300,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'UMKM Jaya',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Najma Qalbi Dwiharani',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        // SizedBox(height: 16),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //   children: [
-                        //     Column(
-                        //       children: [Text('PLAFOND'), Text('Rp 5.000.000')],
-                        //     ),
-                        //     Column(
-                        //       children: [Text('%BAGI HASIL'), Text('12%')],
-                        //     ),
-                        //     Column(
-                        //       children: [Text('TENOR'), Text('50 Minggu')],
-                        //     ),
-                        //   ],
-                        // ),
-                      ],
-                    ),
-                  ),
+                      margin: EdgeInsets.only(top: 60),
+                      width: double.infinity,
+                      padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                      decoration: BoxDecoration(
+                        color: primary.shade300,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: BlocBuilder<UmkmCubit, Umkm>(builder: (
+                        context,
+                        model,
+                      ) {
+                        context.read<UmkmCubit>().fetchData();
+                        return Column(
+                          children: [
+                            Text(
+                              model.namaUmkm,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              model.alamatUmkmProvinsi,
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            // SizedBox(height: 16),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //   children: [
+                            //     Column(
+                            //       children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                            //     ),
+                            //     Column(
+                            //       children: [Text('%BAGI HASIL'), Text('12%')],
+                            //     ),
+                            //     Column(
+                            //       children: [Text('TENOR'), Text('50 Minggu')],
+                            //     ),
+                            //   ],
+                            // ),
+                          ],
+                        );
+                      })),
                   CircleAvatar(
                     backgroundImage: AssetImage('assets/logo.png'),
                     radius: 50,
@@ -99,14 +112,20 @@ class HomeBorrower extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
+                        BlocBuilder<UserCubit, User>(builder: (
+                          context,
+                          model,
+                        ) {
+                          context.read<UserCubit>().fetchData();
+                          return Text(
+                            '${model.saldo.toString()}',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }),
                         SizedBox(height: 10),
-                        Text(
-                          'Rp300.000',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                       ],
                     ),
                     Row(
