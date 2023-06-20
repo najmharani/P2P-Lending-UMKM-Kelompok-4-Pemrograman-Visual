@@ -22,8 +22,8 @@ class PemilikUmkm {
   });
 }
 
-class UmkmCubit extends Cubit<PemilikUmkm> {
-  UmkmCubit()
+class PemilikUmkmCubit extends Cubit<PemilikUmkm> {
+  PemilikUmkmCubit()
       : super(PemilikUmkm(
           idPemilik: 0,
           namaLengkap: "",
