@@ -683,10 +683,12 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
             Container(
+              alignment: Alignment.bottomCenter,
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(color: Colors.grey),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     "Rp" + jumlahPinjaman,
