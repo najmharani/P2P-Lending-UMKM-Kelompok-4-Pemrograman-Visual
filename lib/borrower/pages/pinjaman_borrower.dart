@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:p2plending_umkm/borrower/pages/fitur_pinjaman/form_pengajuan_pinjaman.dart';
 import 'package:p2plending_umkm/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2plending_umkm/models/Detail.model.dart';
+import 'dart:developer' as developer;
 
 class AjukanPeminjamanPage extends StatelessWidget {
   @override
@@ -222,16 +225,55 @@ class HistoryPeminjamanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          itemCount: 5, // Replace with the actual number of history items
-          itemBuilder: (context, index) {
-            return _buildProductCard(context, 'Peminjaman 1', 'Investor A');
-          }),
+      body: BlocBuilder<ListDetailCubit, ListDetail>(
+          buildWhen: (previousState, state) {
+        developer.log("${previousState.listDetail} -> ${state.listDetail}",
+            name: 'listlog');
+        return true;
+      }, builder: (context, model) {
+        context.read<ListDetailCubit>().fetchData();
+        if (model.listDetail.isNotEmpty) {
+          return ListView.builder(
+              itemCount: model.listDetail
+                  .length, // Replace with the actual number of history items
+              itemBuilder: (context, index) {
+                return _buildProductCard(
+                    context,
+                    model.listDetail[index].namaLengkap,
+                    model.listDetail[index].jumlahPinjaman.toString(),
+                    model.listDetail[index].bagiHasil.toString(),
+                    model.listDetail[index].tenor,
+                    model.listDetail[index].nilaiRating,
+                    model.listDetail[index].statusPinjaman,
+                    model.listDetail[index].waktuPengajuan,
+                    model.listDetail[index].waktuPendanaan,
+                    model.listDetail[index].jatuhTempo,
+                    model.listDetail[index].penghasilanPerBulan.toString(),
+                    model.listDetail[index].jumlahAngsuran.toString());
+              });
+        } else {
+          return Center(
+            child: const Text("Belum ada history"),
+          );
+        }
+      }),
     );
   }
 
   Widget _buildProductCard(
-      BuildContext context, String name, String description) {
+    BuildContext context,
+    String name,
+    String jumlahPinjaman,
+    String bagiHasil,
+    String tenor,
+    String nilaiRating,
+    String statusPinjaman,
+    String waktuPengajuan,
+    String waktuPendanaan,
+    String jatuhTempo,
+    String penghasilanPerBulan,
+    String jumlahAngsuran,
+  ) {
     return Card(
       elevation: 2.0,
       child: Column(
@@ -255,16 +297,12 @@ class HistoryPeminjamanPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          description,
-                          style: TextStyle(fontSize: 16.0),
-                        ),
                       ],
                     ),
                     CircleAvatar(
                         radius: 20,
                         backgroundColor: Color.fromARGB(95, 182, 233, 183),
-                        child: Text("A")),
+                        child: Text(nilaiRating)),
                   ],
                 ),
                 SizedBox(height: 8.0),
@@ -275,13 +313,13 @@ class HistoryPeminjamanPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: [Text('PLAFOND'), Text('Rp 5.000.000')],
+                children: [Text('PLAFOND'), Text('Rp.' + jumlahPinjaman)],
               ),
               Column(
-                children: [Text('%BAGI HASIL'), Text('12%')],
+                children: [Text('%BAGI HASIL'), Text(bagiHasil + '%')],
               ),
               Column(
-                children: [Text('TENOR'), Text('50 Minggu')],
+                children: [Text('TENOR'), Text(tenor)],
               ),
             ],
           ),
@@ -294,7 +332,18 @@ class HistoryPeminjamanPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => HistoryPinjamanDetailsScreen(
-                        name: name, description: description),
+                      name: name,
+                      jumlahPinjaman: jumlahPinjaman,
+                      bagiHasil: bagiHasil,
+                      tenor: tenor,
+                      nilaiRating: nilaiRating,
+                      statusPinjaman: statusPinjaman,
+                      waktuPengajuan: waktuPengajuan,
+                      waktuPendanaan: waktuPendanaan,
+                      jatuhTempo: jatuhTempo,
+                      penghasilanPerBulan: penghasilanPerBulan,
+                      jumlahAngsuran: jumlahAngsuran,
+                    ),
                   ),
                 );
               },
@@ -309,11 +358,29 @@ class HistoryPeminjamanPage extends StatelessWidget {
 
 class HistoryPinjamanDetailsScreen extends StatelessWidget {
   final String name;
-  final String description;
+  final String jumlahPinjaman;
+  final String bagiHasil;
+  final String tenor;
+  final String nilaiRating;
+  final String statusPinjaman;
+  final String waktuPengajuan;
+  final String waktuPendanaan;
+  final String jatuhTempo;
+  final String penghasilanPerBulan;
+  final String jumlahAngsuran;
 
   const HistoryPinjamanDetailsScreen({
     required this.name,
-    required this.description,
+    required this.jumlahPinjaman,
+    required this.bagiHasil,
+    required this.tenor,
+    required this.nilaiRating,
+    required this.statusPinjaman,
+    required this.waktuPengajuan,
+    required this.waktuPendanaan,
+    required this.jatuhTempo,
+    required this.penghasilanPerBulan,
+    required this.jumlahAngsuran,
   });
 
   @override
@@ -344,17 +411,10 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Peminjaman 1',
+                            name,
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Investor A',
-                            style: TextStyle(
-                              fontSize: 18,
                             ),
                           ),
                           SizedBox(height: 16),
@@ -364,14 +424,17 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                               Column(
                                 children: [
                                   Text('PLAFOND'),
-                                  Text('Rp 5.000.000')
+                                  Text(jumlahPinjaman)
                                 ],
                               ),
                               Column(
-                                children: [Text('%BAGI HASIL'), Text('12%')],
+                                children: [
+                                  Text('%BAGI HASIL'),
+                                  Text(bagiHasil + '%')
+                                ],
                               ),
                               Column(
-                                children: [Text('TENOR'), Text('50 Minggu')],
+                                children: [Text('TENOR'), Text(tenor)],
                               ),
                             ],
                           ),
@@ -404,7 +467,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Selesai',
+                      statusPinjaman,
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -419,7 +482,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      '1 Mei 2023',
+                      waktuPengajuan,
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -434,7 +497,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      '3 Mei 2023',
+                      waktuPendanaan,
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -449,7 +512,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      '3 Juni 2023',
+                      jatuhTempo,
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -464,7 +527,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Rp. 3.500.000',
+                      penghasilanPerBulan,
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -479,7 +542,7 @@ class HistoryPinjamanDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Rp. 700.000',
+                      jumlahAngsuran,
                       style: TextStyle(fontSize: 15),
                     ),
                   ],

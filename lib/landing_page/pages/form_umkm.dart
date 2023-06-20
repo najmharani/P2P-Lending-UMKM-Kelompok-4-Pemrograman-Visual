@@ -208,13 +208,6 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
                 labelText: 'Nama UMKM',
               ),
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: alamatUmkmController,
-              decoration: InputDecoration(
-                labelText: 'Alamat UMKM',
-              ),
-            ),
             DropdownButtonFormField<String>(
               value: selectedProvinsi,
               onChanged: (newValue) {
@@ -229,7 +222,14 @@ class _RegisterBorrowerNextPageState extends State<RegisterBorrowerNextPage> {
                 );
               }).toList(),
               decoration: InputDecoration(
-                labelText: 'Provinsi',
+                labelText: 'Provinsi UMKM',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: alamatUmkmController,
+              decoration: InputDecoration(
+                labelText: 'Alamat UMKM',
               ),
             ),
             SizedBox(height: 16.0),
