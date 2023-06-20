@@ -5,6 +5,8 @@ import 'package:p2plending_umkm/models/Detail.model.dart';
 import 'package:p2plending_umkm/models/Peminjaman.model.dart';
 import 'package:p2plending_umkm/models/Detail.model.dart';
 import 'dart:developer' as developer;
+import 'package:p2plending_umkm/investor/navigation_investor.dart';
+import 'package:p2plending_umkm/models/Transaksi.model.dart';
 
 enum FilterOptions {
   JenisUMKM,
@@ -111,6 +113,8 @@ class MarketplaceState extends State<Marketplace> {
                     itemBuilder: (context, index) {
                       return _buildProductCard(
                         context,
+                        model.listDetail[index].idPeminjaman,
+                        model.listDetail[index].idBorrower,
                         model.listDetail[index].namaUmkm,
                         model.listDetail[index].jenisUsaha,
                         model.listDetail[index].alamatUmkmProvinsi,
@@ -349,6 +353,8 @@ class MarketplaceState extends State<Marketplace> {
 
   Widget _buildProductCard(
     BuildContext context,
+    int idPinjaman,
+    int idBorrower,
     String namaUmkm,
     String jenisUsaha,
     String alamatProvinsi,
@@ -462,6 +468,8 @@ class MarketplaceState extends State<Marketplace> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
+                      idPinjaman: idPinjaman,
+                      idBorrower: idBorrower,
                       namaUmkm: namaUmkm,
                       jenisUsaha: jenisUsaha,
                       alamatProvinsi: alamatProvinsi,
@@ -488,6 +496,8 @@ class MarketplaceState extends State<Marketplace> {
 }
 
 class ProductDetailsScreen extends StatelessWidget {
+  final int idPinjaman;
+  final int idBorrower;
   final String namaUmkm;
   final String jenisUsaha;
   final String alamatProvinsi;
@@ -502,6 +512,8 @@ class ProductDetailsScreen extends StatelessWidget {
   final String rating;
 
   const ProductDetailsScreen({
+    required this.idPinjaman,
+    required this.idBorrower,
     required this.namaUmkm,
     required this.jenisUsaha,
     required this.alamatProvinsi,
@@ -697,15 +709,30 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Logika yang ingin Anda lakukan ketika tombol "Danai" ditekan
-                      },
-                      child: Text('Danai'),
-                    ),
-                  ),
+                  BlocBuilder<TransaksiCubit, Transaksi>(
+                      builder: (context, model) {
+                    return Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<TransaksiCubit>()
+                              .pendanaan(int.parse(jumlahPinjaman), idPinjaman,
+                                  idBorrower, namaUmkm)
+                              .then((_) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InvestorApp()),
+                            );
+                          }).catchError((error) {
+                            print('Login failed: $error');
+                          });
+                        },
+                        child: Text('Danai'),
+                      ),
+                    );
+                  })
                 ],
               ),
             )

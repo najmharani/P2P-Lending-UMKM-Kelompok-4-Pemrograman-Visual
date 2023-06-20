@@ -330,7 +330,7 @@ class HomeInvestor extends StatelessWidget {
                           );
                         });
                   } else {
-                    return const Text("Tidak ada UMKM aktif");
+                    return const Text("Tidak ada UMKM Riwayat");
                   }
                 }),
               ),

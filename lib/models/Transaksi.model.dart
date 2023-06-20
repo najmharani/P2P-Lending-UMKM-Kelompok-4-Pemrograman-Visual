@@ -77,7 +77,36 @@ class TransaksiCubit extends Cubit<Transaksi> {
       print('Login failed with status code ${response.statusCode}');
     }
   }
+
+  Future<void> pendanaan(int jumlahTransaksi, int idPeminjaman,
+      int idUserTujuan, String namaUMKM) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int idUser = prefs.getInt('idUser')!;
+    String datetime = DateTime.now().toString();
+    final response = await http.post(
+      Uri.parse("http://127.0.0.1:8000/pendanaan_transaksi/"),
+      body: jsonEncode({
+        "ID_TRANSAKSI": 0,
+        "jumlah_transaksi": jumlahTransaksi,
+        "tanggal_waktu_transaksi": datetime,
+        "jenis_transaksi": "Pendanaan",
+        "detail_transaksi": "Pendanaan Peminjaman ${namaUMKM}",
+        "id_user": idUser,
+        "id_user_tujuan": idUserTujuan,
+        "id_peminjaman": idPeminjaman
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+    } else {
+      print('Login failed with status code ${response.statusCode}');
+    }
+  }
 }
+
+
+
 
 // class ListTransaksi {
 //   List<Transaksi> listTransaksi = <Transaksi>[];

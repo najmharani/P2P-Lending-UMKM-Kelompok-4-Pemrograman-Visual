@@ -512,7 +512,7 @@ def detail_pinjaman_belum_didanai():
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-            WHERE peminjaman.status_pengajuan = 'pengajuan'
+            WHERE peminjaman.status_pengajuan = 'Pengajuan'
         """
         ):
             recs.append(row)
@@ -536,7 +536,7 @@ def detail_pinjaman_aktif():
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-            WHERE peminjaman.status_pengajuan = 'aktif'
+            WHERE peminjaman.status_pengajuan = 'Aktif'
         """
         ):
             recs.append(row)
@@ -560,7 +560,7 @@ def detail_pinjaman_selesai():
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-            WHERE peminjaman.status_pengajuan = 'selesai'
+            WHERE peminjaman.status_pengajuan = 'Selesai'
         """
         ):
             recs.append(row)
@@ -584,7 +584,7 @@ def detail_pinjaman_belum_didanai():
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-            WHERE peminjaman.status_pengajuan = 'pengajuan'
+            WHERE peminjaman.status_pengajuan = 'Pengajuan'
         """
         ):
             recs.append(row)
@@ -608,7 +608,7 @@ def detail_pinjaman_aktif():
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-            WHERE peminjaman.status_pengajuan = 'aktif'
+            WHERE peminjaman.status_pengajuan = 'Aktif'
         """
         ):
             recs.append(row)
@@ -632,7 +632,7 @@ def detail_pinjaman_selesai():
             FROM peminjaman
             JOIN umkm ON umkm.ID_BORROWER= peminjaman.id_borrower
 			JOIN pemilik_umkm ON pemilik_umkm.ID_PEMILIK = umkm.id_pemilik_umkm
-            WHERE peminjaman.status_pengajuan = 'selesai'
+            WHERE peminjaman.status_pengajuan = 'Selesai'
         """
         ):
             recs.append(row)
@@ -723,6 +723,7 @@ class TransaksiM2m(BaseModel):
     detail_transaksi: str
     id_user: int | None = None
     id_user_tujuan: int | None = None
+    id_peminjaman: int | None = None
 
 
 # Status code 201 standard return creation
@@ -837,7 +838,7 @@ def pendanaan_transaksi(m: TransaksiM2m, response: Response, request: Request):
         cur.execute(
             """insert into transaksi
         (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user) values (
-        {},"{}","{}","{}",{}, {})""".format(
+        {},"{}","{}","{}",{})""".format(
                 m.jumlah_transaksi,
                 m.tanggal_waktu_transaksi,
                 m.jenis_transaksi,
@@ -847,25 +848,44 @@ def pendanaan_transaksi(m: TransaksiM2m, response: Response, request: Request):
         )
         con.commit()
 
+        # cur.execute(
+        #     """insert into transaksi
+        # (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user) values (
+        # {},"{}","{}","{}",{}, {})""".format(
+        #         m.jumlah_transaksi,
+        #         m.tanggal_waktu_transaksi,
+        #         m.jenis_transaksi,
+        #         m.detail_transaksi,
+        #         m.id_user_tujuan,
+        #     )
+        # )
+        # con.commit()
+
         cur.execute(
-            """insert into transaksi
-        (jumlah_transaksi, tanggal_waktu_transaksi, jenis_transaksi, detail_transaksi, id_user) values (
-        {},"{}","{}","{}",{}, {})""".format(
-                m.jumlah_transaksi,
-                m.tanggal_waktu_transaksi,
-                m.jenis_transaksi,
-                m.detail_transaksi,
-                m.id_user_tujuan,
+            """insert into investasi
+        (bagi_hasil_diterima, id_user, id_peminjaman) values (
+        {},"{}","{}")""".format(
+                0,
+                m.id_user,
+                m.id_peminjaman,
             )
         )
         con.commit()
 
         cur.execute(
-            """UPDATE user set saldo = saldo + {} where tipe_user='Borrower' AND id_user ={}""".format(
+            """UPDATE peminjaman set status_pengajuan = 'Aktif' where ID_PEMINJAMAN ={}""".format(
+                m.id_peminjaman
+            )
+        )
+        con.commit()
+
+        cur.execute(
+            """UPDATE user set saldo = saldo + {} where tipe_user='Borrower' AND id_tipe_user ={}""".format(
                 m.jumlah_transaksi, m.id_user_tujuan
             )
         )
         con.commit()
+
         cur.execute(
             """UPDATE user set saldo = saldo - {} where tipe_user='Investor' AND id_user ={}""".format(
                 m.jumlah_transaksi, m.id_user
